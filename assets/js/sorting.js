@@ -110,7 +110,6 @@ class Sorting {
             let j = i + 1;
             this.animateMark([j], [this.colors.second]);
             while (j > 0 && this.array[j] < this.array[j - 1]) {
-                // this.animateCompare(j, j - 1);
                 this.animateMark([j - 1], [this.colors.first]);
                 this.animateSwap(j, j - 1);
 
@@ -125,8 +124,6 @@ class Sorting {
                 this.animateMark([j - 1], [this.colors.first]);
                 this.animateLeave([j - 1]);
             }
-
-            // this.animateLeave([j])
 
             this.animateMarkSorted(j);
         }
@@ -160,6 +157,46 @@ class Sorting {
 
             this.animateMarkSorted(this.sortingBlocks.length - i - 1);
         }
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareSelectionSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        for (let i = 0; i < this.array.length - 1; i++) {
+            let minVal = this.array[i];
+            let minInd = i;
+            this.animateMark([i], [this.colors.second]);
+            for(let j = i + 1; j < this.array.length; j++) {
+                this.animateMark([j], [this.colors.first]);
+                if(this.array[j] < minVal) {
+                    this.animateLeave([minInd]);
+                    this.animateMark([j], [this.colors.second]);
+                    minVal = this.array[j];
+                    minInd = j;
+                } else {
+                    this.animateLeave([j]);
+                }
+            }
+
+            if(minInd !== i) {
+                this.animateSwap(i, minInd);
+                [this.array[i], this.array[minInd]] = [this.array[minInd], this.array[i]];
+                [this.sortingBlocks[i], this.sortingBlocks[minInd]] = [this.sortingBlocks[minInd], this.sortingBlocks[i]];
+            }
+
+            this.animateMarkSorted(i);
+        }
+
+        this.animateMarkSorted(this.array.length - 1);
 
         this.timeLine.restart();
         this.timeLine.pause();
