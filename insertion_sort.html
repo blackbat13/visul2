@@ -51,8 +51,10 @@
     </div>
     <div class="row controls-row">
         <div class="col-4">
+            <input id="size-input" type="number" min="2" max="15" step="1" value="10" />
             <button id="prep-random-array-button" type="button" class="btn btn-primary">Losowa tablica</button>
             <button id="prep-random-order-button" type="button" class="btn btn-primary">Losowy porządek</button>
+            <button id="prep-reverse-order-button" type="button" class="btn btn-primary">Odwrócony porządek</button>
         </div>
         <div class="col-4 controls-div">
             <button id="start-button" type="button" class="btn btn-primary">Start</button>
@@ -75,20 +77,29 @@
         let sorting = new Sorting();
         let $prepRandomArrayButton = $("#prep-random-array-button");
         let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
         sorting.prepareRandomArray(10);
         sorting.showArray();
         sorting.prepareInsertionSort();
         sorting.bindControls();
 
         $prepRandomArrayButton.click(function() {
-            sorting.prepareRandomArray(10);
+            sorting.prepareRandomArray($sizeInput.val());
             sorting.showArray();
             sorting.prepareInsertionSort();
             sorting.bindControls();
         });
 
         $prepRandomOrderButton.click(function() {
-            sorting.prepareRandomOrder(10);
+            sorting.prepareRandomOrder($sizeInput.val());
+            sorting.showArray();
+            sorting.prepareInsertionSort();
+            sorting.bindControls();
+        });
+
+        $prepReverseOrderButton.click(function() {
+            sorting.prepareReverseOrder($sizeInput.val());
             sorting.showArray();
             sorting.prepareInsertionSort();
             sorting.bindControls();

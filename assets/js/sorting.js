@@ -47,6 +47,13 @@ class Sorting {
         this.array = _.shuffle(this.array);
     }
 
+    prepareReverseOrder(n) {
+        this.array = [];
+        for (let i = n; i >= 1; i--) {
+            this.array.push(i);
+        }
+    }
+
     prepareRandomArray(n) {
         this.array = [];
         for (let i = 0; i < n; i++) {
