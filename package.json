@@ -15,5 +15,8 @@
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "underscore": "^1.13.1"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1"
   }
 }
