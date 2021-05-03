@@ -112,10 +112,6 @@ class Sorting {
             while (j > 0 && this.array[j] < this.array[j - 1]) {
                 this.animateMark([j - 1], [this.colors.first]);
                 this.animateSwap(j, j - 1);
-
-                [this.array[j], this.array[j - 1]] = [this.array[j - 1], this.array[j]];
-                [this.sortingBlocks[j], this.sortingBlocks[j - 1]] = [this.sortingBlocks[j - 1], this.sortingBlocks[j]];
-
                 this.animateLeave([j]);
                 j--;
             }
@@ -147,9 +143,6 @@ class Sorting {
 
                 if (this.array[j] > this.array[j + 1]) {
                     this.animateSwap(j, j + 1);
-
-                    [this.array[j], this.array[j + 1]] = [this.array[j + 1], this.array[j]];
-                    [this.sortingBlocks[j], this.sortingBlocks[j + 1]] = [this.sortingBlocks[j + 1], this.sortingBlocks[j]];
                 }
 
                 this.animateLeave([j, j + 1]);
@@ -175,9 +168,9 @@ class Sorting {
             let minVal = this.array[i];
             let minInd = i;
             this.animateMark([i], [this.colors.second]);
-            for(let j = i + 1; j < this.array.length; j++) {
+            for (let j = i + 1; j < this.array.length; j++) {
                 this.animateMark([j], [this.colors.first]);
-                if(this.array[j] < minVal) {
+                if (this.array[j] < minVal) {
                     this.animateLeave([minInd]);
                     this.animateMark([j], [this.colors.second]);
                     minVal = this.array[j];
@@ -187,16 +180,82 @@ class Sorting {
                 }
             }
 
-            if(minInd !== i) {
+            if (minInd !== i) {
                 this.animateSwap(i, minInd);
-                [this.array[i], this.array[minInd]] = [this.array[minInd], this.array[i]];
-                [this.sortingBlocks[i], this.sortingBlocks[minInd]] = [this.sortingBlocks[minInd], this.sortingBlocks[i]];
             }
 
             this.animateMarkSorted(i);
         }
 
         this.animateMarkSorted(this.array.length - 1);
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareGnomeSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        let pos = 0;
+        this.animateMark([pos], [this.colors.second]);
+        while (pos < this.array.length) {
+            if (pos === 0 || this.array[pos] >= this.array[pos - 1]) {
+                this.animateLeave([pos]);
+                pos += 1;
+                if (pos < this.array.length) {
+                    this.animateMark([pos], [this.colors.second]);
+                }
+            } else {
+                this.animateSwap(pos, pos - 1);
+                pos -= 1;
+            }
+        }
+
+        for (let i = 0; i < this.array.length; i++) {
+            this.animateMarkSorted(i);
+        }
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareCocktailShakerSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        for (let i = 0; i <= this.array.length / 2; i++) {
+            for (let j = i; j < this.array.length - i - 1; j++) {
+                this.animateCompare(j, j + 1);
+                if (this.array[j] > this.array[j + 1]) {
+                    this.animateSwap(j, j + 1);
+                }
+
+                this.animateLeave([j, j + 1]);
+            }
+            this.animateMarkSorted(this.array.length - i - 1);
+
+            for (let j = this.array.length - i - 2; j > i; j--) {
+                this.animateCompare(j, j - 1);
+                if (this.array[j] < this.array[j - 1]) {
+                    this.animateSwap(j, j - 1);
+                }
+
+                this.animateLeave([j, j - 1]);
+            }
+
+            this.animateMarkSorted(i);
+        }
 
         this.timeLine.restart();
         this.timeLine.pause();
@@ -226,6 +285,9 @@ class Sorting {
             left: this.firstLeft + i * this.blockWidth,
             easing: 'easeInOutQuad'
         }, '-=750');
+
+        [this.array[i], this.array[j]] = [this.array[j], this.array[i]];
+        [this.sortingBlocks[i], this.sortingBlocks[j]] = [this.sortingBlocks[j], this.sortingBlocks[i]];
     }
 
     animateLeave(ind) {

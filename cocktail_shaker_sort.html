@@ -20,8 +20,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="bubble_sort.html">Sortowanie bąbelkowe</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="insertion_sort.html">Sortowanie przez wstawianie <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="insertion_sort.html">Sortowanie przez wstawianie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="selection_sort.html">Sortowanie przez wybieranie</a>
@@ -29,8 +29,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="gnome_sort.html">Sortowanie gnoma</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cocktail_shaker_sort.html">Sortowanie koktajlowe</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="cocktail_shaker_sort.html">Sortowanie koktajlowe <span class="sr-only">(current)</span></a>
                 </li>
                 <!--                <li class="nav-item dropdown">-->
                 <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
@@ -90,27 +90,27 @@
         let $sizeInput = $("#size-input");
         sorting.prepareRandomArray(10);
         sorting.showArray();
-        sorting.prepareInsertionSort();
+        sorting.prepareCocktailShakerSort();
         sorting.bindControls();
 
         $prepRandomArrayButton.click(function() {
             sorting.prepareRandomArray($sizeInput.val());
             sorting.showArray();
-            sorting.prepareInsertionSort();
+            sorting.prepareCocktailShakerSort();
             sorting.bindControls();
         });
 
         $prepRandomOrderButton.click(function() {
             sorting.prepareRandomOrder($sizeInput.val());
             sorting.showArray();
-            sorting.prepareInsertionSort();
+            sorting.prepareCocktailShakerSort();
             sorting.bindControls();
         });
 
         $prepReverseOrderButton.click(function() {
             sorting.prepareReverseOrder($sizeInput.val());
             sorting.showArray();
-            sorting.prepareInsertionSort();
+            sorting.prepareCocktailShakerSort();
             sorting.bindControls();
         });
     });
