@@ -1,7 +1,19 @@
-.container {
-    position: absolute;
+.container-fluid {
+    padding: 0;
 }
 
 .visul-container {
     position: absolute;
+}
+
+.container-row {
+    min-height: 40vh;
+}
+
+.controls-div {
+    text-align: center;
+}
+
+.controls-row {
+    margin-top: 50px;
 }

@@ -1,9 +1,9 @@
 class Sorting {
     colors = {
-        "sorted": "#ffd700",
-        "normal": "#29B6F6",
-        "first": "#43A047",
-        "second": "#D32F2F",
+        sorted: "#ffd700",
+        normal: "#29B6F6",
+        first: "#43A047",
+        second: "#D32F2F",
     };
 
     constructor() {
@@ -11,9 +11,40 @@ class Sorting {
         this.$visulContainer = $("#visul-container");
         this.blockWidth = 50;
         this.sortingBlocks = [];
-        this.firstIndex = 0;
-        this.secondIndex = 0;
-        this.completedAnimation = 0;
+        this.timeLine = null;
+        this.$timeRange = $("#time-range");
+        this.$startButton = $("#start-button");
+        this.$restartButton = $("#restart-button");
+        this.$pauseButton = $("#pause-button");
+    }
+
+    bindControls() {
+        this.$startButton.click(function () {
+            this.timeLine.play();
+        }.bind(this));
+
+        this.$restartButton.click(function () {
+            this.timeLine.restart();
+        }.bind(this));
+
+        this.$pauseButton.click(function () {
+            this.timeLine.pause();
+        }.bind(this));
+
+        this.$timeRange.on("input", function () {
+            this.timeLine.seek(this.timeLine.duration * (this.$timeRange.val() / 100));
+        }.bind(this));
+
+        this.$timeRange.val(0);
+    }
+
+    prepareRandomOrder(n) {
+        this.array = [];
+        for (let i = 1; i <= n; i++) {
+            this.array.push(i);
+        }
+
+        this.array = _.shuffle(this.array);
     }
 
     prepareRandomArray(n) {
@@ -43,7 +74,8 @@ class Sorting {
         $sortingBlock.css("width", this.blockWidth.toString() + "px");
         $sortingBlock.css("left", left.toString() + "px");
         $sortingBlock.attr("id", "sorting-block-" + orderId.toString());
-        $sortingBlock.css("background-color", this.colors["normal"]);
+        $sortingBlock.attr("s-color", this.colors.normal);
+        $sortingBlock.css("background-color", this.colors.normal);
 
         $sortingBlock.append(this.prepareSortingNumber(number));
         return $sortingBlock;
@@ -56,149 +88,139 @@ class Sorting {
         return $sortingNumber;
     }
 
-    startInsertionSort() {
-        this.firstIndex = 1;
-        this.secondIndex = 1;
-        this.highlightBlock(0, this.colors["sorted"]);
-        this.animateInsertionSort();
-    }
-
-    animateInsertionSort() {
-        if (this.completedAnimation > 0) {
-            requestAnimationFrame(this.animateInsertionSort.bind(this));
-            return;
-        }
-
-        this.insertionSort();
-        requestAnimationFrame(this.animateInsertionSort.bind(this));
-    }
-
-    insertionSort() {
-        let tmp;
-        while (this.firstIndex < this.array.length) {
-            while (this.secondIndex > 0 && this.array[this.secondIndex] < this.array[this.secondIndex - 1]) {
-
-                this.animateSwap(this.secondIndex, this.secondIndex - 1);
-                tmp = this.array[this.secondIndex];
-                this.array[this.secondIndex] = this.array[this.secondIndex - 1];
-                this.array[this.secondIndex - 1] = tmp;
-
-                tmp = this.sortingBlocks[this.secondIndex];
-                this.sortingBlocks[this.secondIndex] = this.sortingBlocks[this.secondIndex - 1];
-                this.sortingBlocks[this.secondIndex - 1] = tmp;
-
-
-                this.secondIndex--;
-                return;
-            }
-
-            this.highlightBlock(this.secondIndex, this.colors["sorted"]);
-            this.firstIndex++;
-            this.secondIndex = this.firstIndex;
-            return;
-        }
-    }
-
-    startBubbleSort($timeRange) {
-        let tl = anime.timeline({
+    prepareInsertionSort() {
+        this.timeLine = anime.timeline({
             easing: 'easeOutExpo',
             duration: 750,
-            update: function(anim) {
-                $timeRange.val(tl.progress);
-            }
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
         });
-        let order = [];
-        let k = -1;
+
+        this.animateMarkSorted(0);
+
+        for (let i = 0; i < this.array.length - 1; i++) {
+            let j = i + 1;
+            this.animateMark([j], [this.colors.second]);
+            while (j > 0 && this.array[j] < this.array[j - 1]) {
+                // this.animateCompare(j, j - 1);
+                this.animateMark([j - 1], [this.colors.first]);
+                this.animateSwap(j, j - 1);
+
+                [this.array[j], this.array[j - 1]] = [this.array[j - 1], this.array[j]];
+                [this.sortingBlocks[j], this.sortingBlocks[j - 1]] = [this.sortingBlocks[j - 1], this.sortingBlocks[j]];
+
+                this.animateLeave([j]);
+                j--;
+            }
+
+            if (j > 0) {
+                this.animateMark([j - 1], [this.colors.first]);
+                this.animateLeave([j - 1]);
+            }
+
+            // this.animateLeave([j])
+
+            this.animateMarkSorted(j);
+        }
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareBubbleSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
 
         for (let i = 0; i < this.array.length; i++) {
             for (let j = 0; j < this.array.length - i - 1; j++) {
-                order.push({id: '#' + this.sortingBlocks[j].attr("id"), left: this.firstLeft + (j+1) * this.blockWidth});
-                order.push({id:'#' + this.sortingBlocks[j+1].attr("id"), left: this.firstLeft + (j) * this.blockWidth});
-                k += 2;
-                tl.add({
-                    targets: order[k].id,
-                    backgroundColor: this.colors.first,
-                    easing: 'easeInOutQuad'
-                });
-                tl.add({
-                    targets: order[k-1].id,
-                    backgroundColor: this.colors.second,
-                    easing: 'easeInOutQuad'
-                }, '-=750');
+                this.animateCompare(j, j + 1);
+
                 if (this.array[j] > this.array[j + 1]) {
-
-
-                    tl.add({
-                        targets: order[k].id,
-                        left: order[k].left,
-                        easing: 'easeInOutQuad'
-                    });
-                    tl.add({
-                        targets: order[k-1].id,
-                        left: order[k-1].left,
-                        easing: 'easeInOutQuad'
-                    }, '-=750');
+                    this.animateSwap(j, j + 1);
 
                     [this.array[j], this.array[j + 1]] = [this.array[j + 1], this.array[j]];
                     [this.sortingBlocks[j], this.sortingBlocks[j + 1]] = [this.sortingBlocks[j + 1], this.sortingBlocks[j]];
                 }
 
-                tl.add({
-                    targets: order[k].id,
-                    backgroundColor: this.colors.normal,
-                    easing: 'easeInOutQuad'
-                });
-                tl.add({
-                    targets: order[k-1].id,
-                    backgroundColor: this.colors.normal,
-                    easing: 'easeInOutQuad'
-                }, '-=750');
+                this.animateLeave([j, j + 1]);
             }
 
-            order.push({id: '#' + this.sortingBlocks[this.sortingBlocks.length - i - 1].attr("id")});
-            k++;
-            tl.add({
-                targets: order[k].id,
-                backgroundColor: this.colors.sorted,
-                easing: 'easeInOutQuad'
-            });
+            this.animateMarkSorted(this.sortingBlocks.length - i - 1);
         }
 
-        return tl;
+        this.timeLine.restart();
+        this.timeLine.pause();
     }
 
-    highlightBlock(i, color) {
-        this.completedAnimation += 1;
-        anime({
+    animateCompare(i, j) {
+        this.timeLine.add({
             targets: '#' + this.sortingBlocks[i].attr("id"),
-            backgroundColor: color,
-            complete: function (anim) {
-                this.completedAnimation--;
-            }.bind(this)
+            backgroundColor: this.colors.first,
+            easing: 'easeInOutQuad'
         });
-    }
-
-    animateSwap(i, j, color1, color2) {
-        this.completedAnimation += 2;
-
-        anime({
-            targets: '#' + this.sortingBlocks[i].attr("id"),
-            left: this.sortingBlocks[j].css("left"),
-            easing: 'easeInOutQuad',
-            complete: function (anim) {
-                this.completedAnimation--;
-                this.highlightBlock(i, color1);
-            }.bind(this)
-        });
-
-        anime({
+        this.timeLine.add({
             targets: '#' + this.sortingBlocks[j].attr("id"),
-            left: this.sortingBlocks[i].css("left"),
-            easing: 'easeInOutQuad',
-            complete: function (anim) {
-                this.completedAnimation--;
-                this.highlightBlock(j, color2);
-            }.bind(this)
+            backgroundColor: this.colors.second,
+            easing: 'easeInOutQuad'
+        }, '-=750');
+    }
+
+    animateSwap(i, j) {
+        this.timeLine.add({
+            targets: '#' + this.sortingBlocks[i].attr("id"),
+            left: this.firstLeft + j * this.blockWidth,
+            easing: 'easeInOutQuad'
         });
+        this.timeLine.add({
+            targets: '#' + this.sortingBlocks[j].attr("id"),
+            left: this.firstLeft + i * this.blockWidth,
+            easing: 'easeInOutQuad'
+        }, '-=750');
+    }
+
+    animateLeave(ind) {
+        this.timeLine.add({
+            targets: '#' + this.sortingBlocks[ind[0]].attr("id"),
+            backgroundColor: this.sortingBlocks[ind[0]].attr("s-color"),
+            easing: 'easeInOutQuad'
+        });
+        for (let i = 1; i < ind.length; i++) {
+            this.timeLine.add({
+                targets: '#' + this.sortingBlocks[ind[i]].attr("id"),
+                backgroundColor: this.sortingBlocks[ind[i]].attr("s-color"),
+                easing: 'easeInOutQuad'
+            }, '-=750');
+        }
+    }
+
+    animateMark(ind, colors) {
+        this.timeLine.add({
+            targets: '#' + this.sortingBlocks[ind[0]].attr("id"),
+            backgroundColor: colors[0],
+            easing: 'easeInOutQuad'
+        });
+        for (let i = 1; i < ind.length; i++) {
+            this.timeLine.add({
+                targets: '#' + this.sortingBlocks[ind[i]].attr("id"),
+                backgroundColor: colors[i],
+                easing: 'easeInOutQuad'
+            }, '-=750');
+        }
+    }
+
+    animateMarkSorted(i) {
+        this.timeLine.add({
+            targets: '#' + this.sortingBlocks[i].attr("id"),
+            backgroundColor: this.colors.sorted,
+            easing: 'easeInOutQuad'
+        });
+
+        this.sortingBlocks[i].attr("s-color", this.colors.sorted)
     }
 }
