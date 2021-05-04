@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sortowanie koktajlowe</title>
+    <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/sorting.css"/>
+
+</head>
+
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Visul</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="../bubble_sort">Sortowanie bąbelkowe</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie <span
+                            class="sr-only">(current)</span></a>
+                <!--                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie <span class="sr-only">(current)</span></a>-->
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="../selection_sort">Sortowanie przez wybieranie</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="../gnome_sort">Sortowanie gnoma</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="">Sortowanie koktajlowe</a>
+            </li>
+            <!--                <li class="nav-item dropdown">-->
+            <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+            <!--                        Dropdown-->
+            <!--                    </a>-->
+            <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+            <!--                        <a class="dropdown-item" href="#">Action</a>-->
+            <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+            <!--                        <div class="dropdown-divider"></div>-->
+            <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+            <!--                    </div>-->
+            <!--                </li>-->
+            <!--                <li class="nav-item">-->
+            <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+            <!--                </li>-->
+        </ul>
+        <!--            <form class="form-inline my-2 my-lg-0">-->
+        <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+        <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+        <!--            </form>-->
+    </div>
+</nav>
+
+
+    <div class="row container-row">
+    <div class="col-12 visul-container" id="visul-container">
+    </div>
+</div>
+
+
+    <div class="row controls-row">
+    <div class="col-4">
+        <input id="size-input" type="number" min="2" max="15" step="1" value="10"/>
+        <button id="prep-random-array-button" type="button" class="btn btn-primary">Losowa tablica</button>
+        <button id="prep-random-order-button" type="button" class="btn btn-primary">Losowy porządek</button>
+        <button id="prep-reverse-order-button" type="button" class="btn btn-primary">Odwrócony porządek</button>
+    </div>
+    <div class="col-4 controls-div">
+        <button id="start-button" type="button" class="btn btn-primary">Start</button>
+        <button id="pause-button" type="button" class="btn btn-primary">Pauza</button>
+        <button id="restart-button" type="button" class="btn btn-primary">Restart</button>
+        <input id="time-range" type="range" min="0" max="100" step=".001" value="0"/>
+    </div>
+    <div class="col-4">
+    </div>
+</div>
+
+</div>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
+<script src="/visul2/node_modules/underscore/underscore-min.js"></script>
+<script src="/visul2/assets/js/sorting.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let sorting = new Sorting();
+        let $prepRandomArrayButton = $("#prep-random-array-button");
+        let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
+
+        sorting.prepareRandomArray(10);
+        sorting.showArray();
+        sorting.prepareCocktailShakerSort();
+        sorting.bindControls();
+
+        $prepRandomArrayButton.click(function () {
+            sorting.prepareRandomArray($sizeInput.val());
+            sorting.showArray();
+            sorting.prepareCocktailShakerSort();
+            sorting.bindControls();
+        });
+
+        $prepRandomOrderButton.click(function () {
+            sorting.prepareRandomOrder($sizeInput.val());
+            sorting.showArray();
+            sorting.prepareCocktailShakerSort();
+            sorting.bindControls();
+        });
+
+        $prepReverseOrderButton.click(function () {
+            sorting.prepareReverseOrder($sizeInput.val());
+            sorting.showArray();
+            sorting.prepareCocktailShakerSort();
+            sorting.bindControls();
+        });
+    });
+</script>
+
+</body>
+</html>
