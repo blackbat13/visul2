@@ -38,6 +38,15 @@ class Sorting {
         this.$timeRange.val(0);
     }
 
+    loadOrPrepareArray() {
+        let params = new URLSearchParams(decodeURIComponent(window.location.hash.substr(1)));
+        if(params.has("array")) {
+            this.array = JSON.parse(params.get("array"));
+        } else {
+            this.prepareRandomArray(10);
+        }
+    }
+
     prepareRandomOrder(n) {
         this.array = [];
         for (let i = 1; i <= n; i++) {
@@ -72,6 +81,9 @@ class Sorting {
             this.$visulContainer.append(this.sortingBlocks[i]);
             left += this.blockWidth;
         }
+
+        let params = {array: JSON.stringify(this.array)};
+        window.location.hash = $.param(params);
     }
 
     prepareSortingBlock(number, left, orderId) {
