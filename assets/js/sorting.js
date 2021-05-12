@@ -1,11 +1,4 @@
 class Sorting extends Animation {
-    colors = {
-        sorted: "#ffd700",
-        normal: "#29B6F6",
-        first: "#43A047",
-        second: "#D32F2F",
-    };
-
     constructor() {
         super();
     }

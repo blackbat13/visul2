@@ -2,6 +2,7 @@
 title: Sortowanie przez wstawianie
 insertion_sort: active
 alg: prepareInsertionSort
+name: insertion_sort
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,17 @@ alg: prepareInsertionSort
 
     {% include _sorting_visul.liquid %}
 
-    {% include _sorting_controls.liquid %}
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include _sorting_settings.liquid %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include _visul_sim_controls.liquid %}
+        </div>
+        <div class="col-4">
+            {% include _alg_insertion_sort.liquid %}
+        </div>
+    </div>
 </div>
 
 {% include _sorting_scripts.liquid %}

@@ -1,0 +1,18 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{GnomeSort}
+    \begin{algorithmic}
+    \PROCEDURE{GnomeSort}{$A, n$}
+        \STATE $i \gets 0$
+        \WHILE{$i < n$}
+            \IF{$p = 0$ \OR $A[i] \geq A[i-1]$}
+                \STATE $i \gets i + 1$
+            \ELSE
+                \STATE exchange $A[i]$ with $A[i-1]$
+                \STATE $i \gets i - 1$
+            \ENDIF
+        \ENDWHILE
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

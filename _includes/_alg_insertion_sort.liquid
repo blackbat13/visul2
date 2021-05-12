@@ -1,0 +1,16 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{InsertionSort}
+    \begin{algorithmic}
+    \PROCEDURE{InsertionSort}{$A, n$}
+        \FOR{$i \gets 1$ \TO $n - 1$}
+            \STATE $j \gets i$
+            \WHILE{$j > 0$ \AND $A[j] < A[j-1]$}
+                \STATE \CALL{swap}{$A[j]$, $A[j-1]$}
+                \STATE $j \gets j-1$
+            \ENDWHILE
+        \ENDFOR
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

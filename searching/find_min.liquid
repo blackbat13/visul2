@@ -1,14 +1,14 @@
 ---
-title: Sortowanie przez wybieranie
-selection_sort: active
-alg: prepareSelectionSort
+title: Wyszukiwanie minimum
+find_min: active
+alg: prepareFindMin
 ---
 <!DOCTYPE html>
 <html lang="en">
-{% include _sorting_head.liquid %}
+{% include _searching_head.liquid %}
 <body>
 <div class="container-fluid">
-    {% include _sorting_nav.liquid %}
+    {% include _searching_nav.liquid %}
 
     {% include _sorting_visul.liquid %}
 
@@ -20,12 +20,12 @@ alg: prepareSelectionSort
             {% include _visul_sim_controls.liquid %}
         </div>
         <div class="col-4">
-            {% include _alg_selection_sort.liquid %}
+            {% include _alg_insertion_sort.liquid %}
         </div>
     </div>
 </div>
 
 {% include _sorting_scripts.liquid %}
-{% include _sorting_script.liquid %}
+{% include _searching_script.liquid %}
 </body>
 </html>

@@ -1,0 +1,23 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{SelectionSort}
+    \begin{algorithmic}
+    \FUNCTION{FindMin}{A, b, n}
+        \STATE $minInd \gets b$
+        \FOR{$i \gets b + 1$ \TO $n - 1$}
+            \IF{$A[i] < A[minInd]$}
+                \STATE $minInd \gets i$
+            \ENDIF
+        \ENDFOR
+        \RETURN $minInd$
+    \ENDFUNCTION
+
+    \PROCEDURE{SelectionSort}{$A, n$}
+        \FOR{$i \gets 0$ \TO $n - 2$}
+            \STATE $j \gets $ \CALL{FindMin}{$A$, $i$, $n$}
+            \STATE \CALL{swap}{$A[i]$, $A[j]$}
+        \ENDFOR
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

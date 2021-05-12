@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "minify-js": "minify assets/js/animation.js assets/js/sorting.js > assets/js/visul2.min.js",
+    "minify-js": "minify assets/js/animation.js assets/js/sorting.js assets/js/searching.js > assets/js/visul2.min.js",
     "build": "npx @11ty/eleventy --pathprefix visul2",
     "serve": "npx @11ty/eleventy --pathprefix visul2 --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,8 @@
     "animejs": "^3.2.1",
     "bootstrap": "^5.0.0-beta3",
     "jquery": "^3.6.0",
+    "mathjax": "^3.1.4",
+    "pseudocode": "^2.2.0",
     "underscore": "^1.13.1"
   },
   "devDependencies": {

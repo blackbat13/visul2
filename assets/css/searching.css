@@ -1,0 +1,16 @@
+.visul-container {
+    min-height: 40vh;
+}
+
+.sorting-block {
+    position: absolute;
+    bottom: 10px;
+    border: 1px solid black;
+}
+
+.sorting-number {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

@@ -1,0 +1,35 @@
+<script>
+    $(document).ready(function () {
+        let searching = new Searching();
+        let $prepRandomArrayButton = $("#prep-random-array-button");
+        let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
+
+        searching.loadOrPrepareArray();
+        searching.showArray();
+        searching.{{ alg }}();
+        searching.bindControls();
+
+        $prepRandomArrayButton.click(function () {
+            searching.prepareRandomArray($sizeInput.val());
+            searching.showArray();
+            searching.{{ alg }}();
+            searching.bindControls();
+        });
+
+        $prepRandomOrderButton.click(function () {
+            searching.prepareRandomOrder($sizeInput.val());
+            searching.showArray();
+            searching.{{ alg }}();
+            searching.bindControls();
+        });
+
+        $prepReverseOrderButton.click(function () {
+            searching.prepareReverseOrder($sizeInput.val());
+            searching.showArray();
+            searching.{{ alg }}();
+            searching.bindControls();
+        });
+    });
+</script>
