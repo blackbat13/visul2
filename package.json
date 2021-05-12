@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "minify-js": "minify assets/js/animation.js assets/js/sorting.js > assets/js/visul2.min.js",
     "build": "npx @11ty/eleventy --pathprefix visul2",
     "serve": "npx @11ty/eleventy --pathprefix visul2 --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,13 +13,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "animejs": "^3.2.1",
     "bootstrap": "^5.0.0-beta3",
     "jquery": "^3.6.0",
-    "@popperjs/core": "^2.9.2",
     "underscore": "^1.13.1"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0-canary.20"
+    "@11ty/eleventy": "^1.0.0-canary.20",
+    "minify": "^7.0.2"
   }
 }
