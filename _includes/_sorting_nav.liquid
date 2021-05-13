@@ -1,52 +1,53 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
-    <a class="navbar-brand" href="{{ '/' | url }}">Visul2</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ '/' | url }}">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item {{ bubble_sort }}">
-                <a class="nav-link" href="../bubble_sort">Sortowanie bąbelkowe</a>
-            </li>
-            <li class="nav-item {{ insertion_sort }}">
-                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie</a>
-                <!--                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie <span class="sr-only">(current)</span></a>-->
-            </li>
-            <li class="nav-item {{ selection_sort }}">
-                <a class="nav-link" href="../selection_sort">Sortowanie przez wybieranie</a>
-            </li>
-            <li class="nav-item {{ gnome_sort }}">
-                <a class="nav-link" href="../gnome_sort">Sortowanie gnoma</a>
-            </li>
-            <li class="nav-item {{ cocktail_shaker_sort }}">
-                <a class="nav-link" href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
-            </li>
-            <li class="nav-item {{ comb_sort }}">
-                <a class="nav-link" href="../comb_sort">Sortowanie grzebieniowe</a>
-            </li>
-            <li class="nav-item {{ odd_even_sort }}">
-                <a class="nav-link" href="../odd_even_sort">Odd-even sort</a>
-            </li>
-            <!--                <li class="nav-item dropdown">-->
-            <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-            <!--                        Dropdown-->
-            <!--                    </a>-->
-            <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-            <!--                        <a class="dropdown-item" href="#">Action</a>-->
-            <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-            <!--                        <div class="dropdown-divider"></div>-->
-            <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-            <!--                    </div>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-            <!--                </li>-->
-        </ul>
-        <!--            <form class="form-inline my-2 my-lg-0">-->
-        <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--            </form>-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {{ bubble_sort }}" href="../bubble_sort">Sortowanie bąbelkowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ insertion_sort }}" href="../insertion_sort">Sortowanie przez wstawianie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ selection_sort }}" href="../selection_sort">Sortowanie przez wybieranie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ gnome_sort }}" href="../gnome_sort">Sortowanie gnoma</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ cocktail_shaker_sort }}" href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ comb_sort }}" href="../comb_sort">Sortowanie grzebieniowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ odd_even_sort }}" href="../odd_even_sort">Odd-even sort</a>
+                </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                <!--                        Dropdown-->
+                <!--                    </a>-->
+                <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                    </div>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+                <!--                </li>-->
+            </ul>
+            <!--            <form class="form-inline my-2 my-lg-0">-->
+            <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            <!--            </form>-->
+        </div>
     </div>
 </nav>
