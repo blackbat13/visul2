@@ -1,0 +1,21 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{CocktailShakerSort}
+    \begin{algorithmic}
+    \PROCEDURE{CocktailShakerSort}{$A, n$}
+        \FOR{$i \gets 0$ \TO $n / 2$}
+            \FOR{$j \gets i$ \TO $n - i - 2$}
+                \IF{$A[j] > A[j+1]$}
+                    \STATE exchange $A[j]$ with $A[j+1]$
+                \ENDIF
+            \ENDFOR
+            \FOR{$j \gets n - i - 2$ \DOWNTO $i + 1$}
+                \IF{$A[j] < A[j-1]$}
+                    \STATE exchange $A[j]$ with $A[j-1]$
+                \ENDIF
+            \ENDFOR
+        \ENDFOR
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
