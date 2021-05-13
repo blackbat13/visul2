@@ -180,23 +180,60 @@ class Sorting extends Animation {
         let shrink = 1.3;
         let sorted = false;
 
-        while(!sorted) {
+        while (!sorted) {
             gap = Math.floor(gap / shrink);
-            if(gap <= 1) {
+            if (gap <= 1) {
                 gap = 1;
                 sorted = true;
             }
 
             let i = 0;
-            while( i + gap < this.array.length) {
+            while (i + gap < this.array.length) {
                 this.animateCompare(i, i + gap);
-                if(this.array[i] > this.array[i + gap]) {
+                if (this.array[i] > this.array[i + gap]) {
                     this.animateSwap(i, i + gap);
                     sorted = false;
                 }
 
                 this.animateLeave([i, i + gap]);
                 i++;
+            }
+        }
+
+        this.animateMarkSortedAll();
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareOddEvenSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        let sorted = false;
+        while (!sorted) {
+            sorted = true;
+            for (let i = 1; i < this.array.length - 1; i += 2) {
+                this.animateCompare(i, i + 1);
+                if (this.array[i] > this.array[i + 1]) {
+                    this.animateSwap(i, i + 1);
+                    sorted = false;
+                }
+                this.animateLeave([i, i + 1]);
+            }
+
+            for (let i = 0; i < this.array.length - 1; i += 2) {
+                this.animateCompare(i, i + 1);
+                if (this.array[i] > this.array[i + 1]) {
+                    this.animateSwap(i, i + 1);
+                    sorted = false;
+                }
+                this.animateLeave([i, i + 1]);
             }
         }
 

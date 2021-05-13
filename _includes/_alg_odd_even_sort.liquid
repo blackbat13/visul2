@@ -1,0 +1,25 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{OddEvenSort}
+    \begin{algorithmic}
+    \PROCEDURE{OddEvenSort}{$A, n$}
+        \STATE $sorted \gets$ \FALSE
+        \WHILE{\NOT $sorted$}
+            \STATE $sorted \gets$ \TRUE
+            \FOR{$i \gets 1$ \TO $n - 2$, $i \gets i + 2$}
+                \IF{$A[i] > A[i+1]$}
+                    \STATE \CALL{swap}{$A[i]$, $A[i+1]$}
+                    \STATE $sorted \gets$ \FALSE
+                \ENDIF
+            \ENDFOR
+            \FOR{$i \gets 0$ \TO $n - 2$, $i \gets i + 2$}
+                \IF{$A[i] > A[i+1]$}
+                    \STATE \CALL{swap}{$A[i]$, $A[i+1]$}
+                    \STATE $sorted \gets$ \FALSE
+                \ENDIF
+            \ENDFOR
+        \ENDWHILE
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
