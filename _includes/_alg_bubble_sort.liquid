@@ -6,7 +6,7 @@
         \FOR{$i \gets 1$ \TO $n - 1$}
             \FOR{$j \gets 0$ \TO $n - i$}
                 \IF{$A[j] > A[j+1]$}
-                    \STATE exchange $A[j]$ with $A[j+1]$
+                    \STATE \CALL{swap}{$A[j]$, $A[j+1]$}
                 \ENDIF
             \ENDFOR
         \ENDFOR

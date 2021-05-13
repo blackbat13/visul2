@@ -1,0 +1,27 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{CombSort}
+    \begin{algorithmic}
+    \PROCEDURE{CombSort}{$A, n$}
+        \STATE $gap \gets n$
+        \STATE $shrink \gets 1.3$
+        \STATE $sorted \gets$ \FALSE
+        \WHILE{\NOT $sorted$}
+            \STATE $gap \gets \left \lfloor{gap / shrink}\right \rfloor$
+            \IF{$gap \leq 1$}
+                \STATE $gap \gets 1$
+                \STATE $sorted \gets$ \TRUE
+            \ENDIF
+            \STATE $i \gets 0$
+            \WHILE{$i + gap < n$}
+                \IF{A[i] > A[i + gap]}
+                    \STATE \CALL{swap}{$A[i]$, $A[i + gap]$}
+                    \STATE $sorted \gets$ \FALSE
+                \ENDIF
+                \STATE $i \gets i + 1$
+            \ENDWHILE
+        \ENDWHILE
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

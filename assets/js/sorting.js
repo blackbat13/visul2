@@ -125,9 +125,7 @@ class Sorting extends Animation {
             }
         }
 
-        for (let i = 0; i < this.array.length; i++) {
-            this.animateMarkSorted(i);
-        }
+        this.animateMarkSortedAll();
 
         this.timeLine.restart();
         this.timeLine.pause();
@@ -164,6 +162,45 @@ class Sorting extends Animation {
 
             this.animateMarkSorted(i);
         }
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareCombSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        let gap = this.array.length;
+        let shrink = 1.3;
+        let sorted = false;
+
+        while(!sorted) {
+            gap = Math.floor(gap / shrink);
+            if(gap <= 1) {
+                gap = 1;
+                sorted = true;
+            }
+
+            let i = 0;
+            while( i + gap < this.array.length) {
+                this.animateCompare(i, i + gap);
+                if(this.array[i] > this.array[i + gap]) {
+                    this.animateSwap(i, i + gap);
+                    sorted = false;
+                }
+
+                this.animateLeave([i, i + gap]);
+                i++;
+            }
+        }
+
+        this.animateMarkSortedAll();
 
         this.timeLine.restart();
         this.timeLine.pause();

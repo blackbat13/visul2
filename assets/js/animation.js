@@ -175,4 +175,10 @@ class Animation {
 
         this.arrayBlocks[i].attr("s-color", this.colors.sorted)
     }
+
+    animateMarkSortedAll() {
+        for (let i = 0; i < this.array.length; i++) {
+            this.animateMarkSorted(i);
+        }
+    }
 }

@@ -1,0 +1,31 @@
+---
+title: Sortowanie grzebieniowe
+comb_sort: active
+alg: prepareCombSort
+---
+<!DOCTYPE html>
+<html lang="en">
+{% include _sorting_head.liquid %}
+<body>
+<div class="container-fluid">
+    {% include _sorting_nav.liquid %}
+
+    {% include _sorting_visul.liquid %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include _sorting_settings.liquid %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include _visul_sim_controls.liquid %}
+        </div>
+        <div class="col-4">
+            {% include _alg_comb_sort.liquid %}
+        </div>
+    </div>
+</div>
+
+{% include _sorting_scripts.liquid %}
+{% include _sorting_script.liquid %}
+</body>
+</html>
