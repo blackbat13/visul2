@@ -5,12 +5,15 @@ alg: prepareCombSort
 ---
 <!DOCTYPE html>
 <html lang="en">
-{% include _sorting_head.liquid %}
+<head>
+    {% include _visul_head.liquid %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/sorting.css' | url }}"/>
+</head>
 <body>
 <div class="container-fluid">
     {% include _sorting_nav.liquid %}
 
-    {% include _sorting_visul.liquid %}
+    {% include _visul_container.liquid %}
 
     <div class="row controls-row ps-2">
         <div class="col-4">
@@ -25,7 +28,7 @@ alg: prepareCombSort
     </div>
 </div>
 
-{% include _sorting_scripts.liquid %}
+{% include _visul_scripts.liquid %}
 {% include _sorting_script.liquid %}
 </body>
 </html>

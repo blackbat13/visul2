@@ -6,6 +6,8 @@
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
         let $sizeInput = $("#size-input");
 
+        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+
         searching.loadOrPrepareArray();
         searching.showArray();
         searching.{{ alg }}();

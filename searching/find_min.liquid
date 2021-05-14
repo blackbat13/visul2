@@ -5,12 +5,15 @@ alg: prepareFindMin
 ---
 <!DOCTYPE html>
 <html lang="en">
-{% include _searching_head.liquid %}
+<head>
+    {% include _visul_head.liquid %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/searching.css' | url }}"/>
+</head>
 <body>
 <div class="container-fluid">
     {% include _searching_nav.liquid %}
 
-    {% include _sorting_visul.liquid %}
+    {% include _visul_container.liquid %}
 
     <div class="row controls-row ps-2">
         <div class="col-4">
@@ -20,12 +23,12 @@ alg: prepareFindMin
             {% include _visul_sim_controls.liquid %}
         </div>
         <div class="col-4">
-            {% include _alg_insertion_sort.liquid %}
+            {% include _alg_find_min.liquid %}
         </div>
     </div>
 </div>
 
-{% include _sorting_scripts.liquid %}
+{% include _visul_scripts.liquid %}
 {% include _searching_script.liquid %}
 </body>
 </html>
