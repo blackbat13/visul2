@@ -21,14 +21,20 @@ class Animation {
     bindControls() {
         this.$startButton.click(function () {
             this.timeLine.play();
+            this.activateButton(this.$startButton);
+            this.deactivateButton(this.$pauseButton);
         }.bind(this));
 
         this.$restartButton.click(function () {
             this.timeLine.restart();
+            this.activateButton(this.$startButton);
+            this.deactivateButton(this.$pauseButton);
         }.bind(this));
 
         this.$pauseButton.click(function () {
             this.timeLine.pause();
+            this.activateButton(this.$pauseButton);
+            this.deactivateButton(this.$startButton);
         }.bind(this));
 
         this.$timeRange.on("input", function () {
@@ -36,11 +42,32 @@ class Animation {
         }.bind(this));
 
         this.$timeRange.val(0);
+        this.activateButton(this.$pauseButton);
+    }
+
+    activateButton($button) {
+        anime({
+            targets: "#" + $button.attr("id"),
+            backgroundColor: "#ffca2c",
+            borderColor: "ffca2c",
+            color: "#000",
+            duration: 200
+        })
+    }
+
+    deactivateButton($button) {
+        anime({
+            targets: "#" + $button.attr("id"),
+            backgroundColor: "#0d6efd",
+            borderColor: "#0d6efd",
+            color: "#fff",
+            duration: 200
+        })
     }
 
     loadOrPrepareArray() {
         let params = new URLSearchParams(decodeURIComponent(window.location.hash.substr(1)));
-        if(params.has("array")) {
+        if (params.has("array")) {
             this.array = JSON.parse(params.get("array"));
         } else {
             this.prepareRandomArray(10);
@@ -84,6 +111,9 @@ class Animation {
 
         let params = {array: JSON.stringify(this.array)};
         window.location.hash = $.param(params);
+
+        this.activateButton(this.$pauseButton);
+        this.deactivateButton(this.$startButton);
     }
 
     prepareSortingBlock(number, left, orderId) {
