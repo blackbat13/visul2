@@ -1,0 +1,70 @@
+---
+title: Budowanie drzewa binarnego
+build_binary_tree: active
+alg: prepareBuildBinaryTree
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include _visul_head.liquid %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/trees.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include _trees_nav.liquid %}
+
+    {% include _visul_container.liquid %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include _sorting_settings.liquid %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include _visul_sim_controls.liquid %}
+        </div>
+        <div class="col-4">
+            {% include _alg_find_max.liquid %}
+        </div>
+    </div>
+</div>
+
+{% include _visul_scripts.liquid %}
+<script>
+    $(document).ready(function () {
+        let trees = new Trees();
+        let $prepRandomArrayButton = $("#prep-random-array-button");
+        let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
+
+        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+
+        trees.loadOrPrepareArray();
+        trees.showArray();
+        trees.prepareBuildBinaryTree();
+        trees.bindControls();
+
+        $prepRandomArrayButton.click(function () {
+            trees.prepareRandomArray($sizeInput.val());
+            trees.showArray();
+            trees.{{ alg }}();
+            trees.bindControls();
+        });
+
+        $prepRandomOrderButton.click(function () {
+            trees.prepareRandomOrder($sizeInput.val());
+            trees.showArray();
+            trees.{{ alg }}();
+            trees.bindControls();
+        });
+
+        $prepReverseOrderButton.click(function () {
+            trees.prepareReverseOrder($sizeInput.val());
+            trees.showArray();
+            trees.{{ alg }}();
+            trees.bindControls();
+        });
+    });
+</script>
+</body>
+</html>
