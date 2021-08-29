@@ -2,60 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sortowanie przez wstawianie</title>
-    <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<title>Sortowanie przez wstawianie</title>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
-<link rel="stylesheet" type="text/css" href="/visul2/assets/css/sorting.css"/>
 
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/sorting.css"/>
 </head>
-
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/visul2/">Visul2</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/visul2/">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item ">
-                <a class="nav-link" href="../bubble_sort">Sortowanie bąbelkowe</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie <span
-                            class="sr-only">(current)</span></a>
-                <!--                <a class="nav-link" href="../insertion_sort">Sortowanie przez wstawianie <span class="sr-only">(current)</span></a>-->
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="../selection_sort">Sortowanie przez wybieranie</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="../gnome_sort">Sortowanie gnoma</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
-            </li>
-            <!--                <li class="nav-item dropdown">-->
-            <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-            <!--                        Dropdown-->
-            <!--                    </a>-->
-            <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-            <!--                        <a class="dropdown-item" href="#">Action</a>-->
-            <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-            <!--                        <div class="dropdown-divider"></div>-->
-            <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-            <!--                    </div>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-            <!--                </li>-->
-        </ul>
-        <!--            <form class="form-inline my-2 my-lg-0">-->
-        <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--            </form>-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="../bubble_sort">Sortowanie bąbelkowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">Sortowanie przez wstawianie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../selection_sort">Sortowanie przez wybieranie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../gnome_sort">Sortowanie gnoma</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../comb_sort">Sortowanie grzebieniowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../odd_even_sort">Odd-even sort</a>
+                </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                <!--                        Dropdown-->
+                <!--                    </a>-->
+                <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                    </div>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+                <!--                </li>-->
+            </ul>
+            <!--            <form class="form-inline my-2 my-lg-0">-->
+            <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            <!--            </form>-->
+        </div>
     </div>
 </nav>
 
@@ -66,30 +73,75 @@
 </div>
 
 
-    <div class="row controls-row">
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1 class="text-center">Ustawienia symulacji</h1>
+<form class="row g-3 mt-5">
+    <div class="row col-12">
+        <label for="size-input" class="col-8 col-form-label">Rozmiar tablicy:</label>
+        <div class="col-4">
+            <input id="size-input" type="number" class="form-control" min="2" max="15" step="1" value="10"/>
+        </div>
+    </div>
     <div class="col-4">
-        <input id="size-input" type="number" min="2" max="15" step="1" value="10"/>
         <button id="prep-random-array-button" type="button" class="btn btn-primary">Losowa tablica</button>
+    </div>
+    <div class="col-4">
         <button id="prep-random-order-button" type="button" class="btn btn-primary">Losowy porządek</button>
+    </div>
+    <div class="col-4">
         <button id="prep-reverse-order-button" type="button" class="btn btn-primary">Odwrócony porządek</button>
     </div>
-    <div class="col-4 controls-div">
-        <button id="start-button" type="button" class="btn btn-primary">Start</button>
-        <button id="pause-button" type="button" class="btn btn-primary">Pauza</button>
-        <button id="restart-button" type="button" class="btn btn-primary">Restart</button>
-        <input id="time-range" type="range" min="0" max="100" step=".001" value="0"/>
-    </div>
-    <div class="col-4">
-    </div>
-</div>
+</form>
 
+
+        </div>
+        <div class="col-4 controls-div">
+            <button id="start-button" type="button" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i></button>
+<button id="pause-button" type="button" class="btn btn-primary"><i class="fa fa-pause" aria-hidden="true"></i></button>
+<button id="restart-button" type="button" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<input id="time-range" class="form-range" type="range" min="0" max="100" step=".001" value="0"/>
+
+        </div>
+        <div class="col-4">
+            <pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{InsertionSort}
+    \begin{algorithmic}
+    \PROCEDURE{InsertionSort}{$A, n$}
+        \FOR{$i \gets 1$ \TO $n - 1$}
+            \STATE $j \gets i$
+            \WHILE{$j > 0$ \AND $A[j] < A[j-1]$}
+                \STATE \CALL{swap}{$A[j]$, $A[j-1]$}
+                \STATE $j \gets j-1$
+            \ENDWHILE
+        \ENDFOR
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
+
+        </div>
+    </div>
 </div>
 
 <script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
 <script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
 <script src="/visul2/node_modules/underscore/underscore-min.js"></script>
-<script src="/visul2/assets/js/sorting.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
+<script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
+<script src="/visul2/assets/js/visul2.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -98,6 +150,8 @@
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
         let $sizeInput = $("#size-input");
+
+        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
 
         sorting.loadOrPrepareArray();
         sorting.showArray();

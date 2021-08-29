@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<title>Sortowanie bąbelkowe</title>
+<title>Wyszukiwanie minimum</title>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
 
-    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/sorting.css"/>
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/searching.css"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -21,28 +21,23 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Sortowanie bąbelkowe</a>
+                    <a class="nav-link active" href="">Wyszukiwanie minimum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="../insertion_sort">Sortowanie przez wstawianie</a>
+                    <a class="nav-link " href="../find_max">Wyszukiwanie maksimum</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../selection_sort">Sortowanie przez wybieranie</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../gnome_sort">Sortowanie gnoma</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../comb_sort">Sortowanie grzebieniowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../odd_even_sort">Odd-even sort</a>
-                </li>
+
+
+
+
+
+
+
+
+
+
                 <!--                <li class="nav-item dropdown">-->
                 <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                 <!--                        Dropdown-->
@@ -106,17 +101,17 @@
         <div class="col-4">
             <pre id="pseudocode" style="display : none;">
     \begin{algorithm}
-    \caption{BubbleSort}
+    \caption{FindMin}
     \begin{algorithmic}
-    \PROCEDURE{BubbleSort}{$A, n$}
+    \FUNCTION{FindMin}{A, n}
+        \STATE $min \gets A[0]$
         \FOR{$i \gets 1$ \TO $n - 1$}
-            \FOR{$j \gets 0$ \TO $n - i$}
-                \IF{$A[j] > A[j+1]$}
-                    \STATE \CALL{swap}{$A[j]$, $A[j+1]$}
-                \ENDIF
-            \ENDFOR
+            \IF{$A[i] < min$}
+                \STATE $min \gets A[i]$
+            \ENDIF
         \ENDFOR
-    \ENDPROCEDURE
+        \RETURN $min$
+    \ENDFUNCTION
     \end{algorithmic}
     \end{algorithm}
 </pre>
@@ -145,7 +140,7 @@
 
 <script>
     $(document).ready(function () {
-        let sorting = new Sorting();
+        let searching = new Searching();
         let $prepRandomArrayButton = $("#prep-random-array-button");
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
@@ -153,30 +148,30 @@
 
         pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
 
-        sorting.loadOrPrepareArray();
-        sorting.showArray();
-        sorting.prepareBubbleSort();
-        sorting.bindControls();
+        searching.loadOrPrepareArray();
+        searching.showArray();
+        searching.prepareFindMin();
+        searching.bindControls();
 
         $prepRandomArrayButton.click(function () {
-            sorting.prepareRandomArray($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            searching.prepareRandomArray($sizeInput.val());
+            searching.showArray();
+            searching.prepareFindMin();
+            searching.bindControls();
         });
 
         $prepRandomOrderButton.click(function () {
-            sorting.prepareRandomOrder($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            searching.prepareRandomOrder($sizeInput.val());
+            searching.showArray();
+            searching.prepareFindMin();
+            searching.bindControls();
         });
 
         $prepReverseOrderButton.click(function () {
-            sorting.prepareReverseOrder($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            searching.prepareReverseOrder($sizeInput.val());
+            searching.showArray();
+            searching.prepareFindMin();
+            searching.bindControls();
         });
     });
 </script>

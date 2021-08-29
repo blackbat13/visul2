@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<title>Sortowanie bąbelkowe</title>
+<title>Budowanie drzewa binarnego</title>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
 
-    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/sorting.css"/>
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/trees.css"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -23,45 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Sortowanie bąbelkowe</a>
+                    <a class="nav-link active" href="">Budowanie drzewa binarnego</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../insertion_sort">Sortowanie przez wstawianie</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../selection_sort">Sortowanie przez wybieranie</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../gnome_sort">Sortowanie gnoma</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../comb_sort">Sortowanie grzebieniowe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="../odd_even_sort">Odd-even sort</a>
-                </li>
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--                        Dropdown-->
-                <!--                    </a>-->
-                <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                <!--                        <a class="dropdown-item" href="#">Action</a>-->
-                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-                <!--                        <div class="dropdown-divider"></div>-->
-                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-                <!--                    </div>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-                <!--                </li>-->
+
             </ul>
-            <!--            <form class="form-inline my-2 my-lg-0">-->
-            <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-            <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-            <!--            </form>-->
         </div>
     </div>
 </nav>
@@ -106,17 +71,17 @@
         <div class="col-4">
             <pre id="pseudocode" style="display : none;">
     \begin{algorithm}
-    \caption{BubbleSort}
+    \caption{FindMax}
     \begin{algorithmic}
-    \PROCEDURE{BubbleSort}{$A, n$}
+    \FUNCTION{FindMax}{A, n}
+        \STATE $max \gets A[0]$
         \FOR{$i \gets 1$ \TO $n - 1$}
-            \FOR{$j \gets 0$ \TO $n - i$}
-                \IF{$A[j] > A[j+1]$}
-                    \STATE \CALL{swap}{$A[j]$, $A[j+1]$}
-                \ENDIF
-            \ENDFOR
+            \IF{$A[i] > max$}
+                \STATE $max \gets A[i]$
+            \ENDIF
         \ENDFOR
-    \ENDPROCEDURE
+        \RETURN $max$
+    \ENDFUNCTION
     \end{algorithmic}
     \end{algorithm}
 </pre>
@@ -145,7 +110,7 @@
 
 <script>
     $(document).ready(function () {
-        let sorting = new Sorting();
+        let trees = new Trees();
         let $prepRandomArrayButton = $("#prep-random-array-button");
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
@@ -153,33 +118,32 @@
 
         pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
 
-        sorting.loadOrPrepareArray();
-        sorting.showArray();
-        sorting.prepareBubbleSort();
-        sorting.bindControls();
+        trees.loadOrPrepareArray();
+        trees.showArray();
+        trees.prepareBuildBinaryTree();
+        trees.bindControls();
 
         $prepRandomArrayButton.click(function () {
-            sorting.prepareRandomArray($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            trees.prepareRandomArray($sizeInput.val());
+            trees.showArray();
+            trees.prepareBuildBinaryTree();
+            trees.bindControls();
         });
 
         $prepRandomOrderButton.click(function () {
-            sorting.prepareRandomOrder($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            trees.prepareRandomOrder($sizeInput.val());
+            trees.showArray();
+            trees.prepareBuildBinaryTree();
+            trees.bindControls();
         });
 
         $prepReverseOrderButton.click(function () {
-            sorting.prepareReverseOrder($sizeInput.val());
-            sorting.showArray();
-            sorting.prepareBubbleSort();
-            sorting.bindControls();
+            trees.prepareReverseOrder($sizeInput.val());
+            trees.showArray();
+            trees.prepareBuildBinaryTree();
+            trees.bindControls();
         });
     });
 </script>
-
 </body>
 </html>

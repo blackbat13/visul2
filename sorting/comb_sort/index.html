@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<title>Sortowanie bąbelkowe</title>
+<title>Sortowanie grzebieniowe</title>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Sortowanie bąbelkowe</a>
+                    <a class="nav-link " href="../bubble_sort">Sortowanie bąbelkowe</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="../insertion_sort">Sortowanie przez wstawianie</a>
@@ -38,7 +38,7 @@
                     <a class="nav-link " href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="../comb_sort">Sortowanie grzebieniowe</a>
+                    <a class="nav-link active" href="">Sortowanie grzebieniowe</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="../odd_even_sort">Odd-even sort</a>
@@ -106,16 +106,27 @@
         <div class="col-4">
             <pre id="pseudocode" style="display : none;">
     \begin{algorithm}
-    \caption{BubbleSort}
+    \caption{CombSort}
     \begin{algorithmic}
-    \PROCEDURE{BubbleSort}{$A, n$}
-        \FOR{$i \gets 1$ \TO $n - 1$}
-            \FOR{$j \gets 0$ \TO $n - i$}
-                \IF{$A[j] > A[j+1]$}
-                    \STATE \CALL{swap}{$A[j]$, $A[j+1]$}
+    \PROCEDURE{CombSort}{$A, n$}
+        \STATE $gap \gets n$
+        \STATE $shrink \gets 1.3$
+        \STATE $sorted \gets$ \FALSE
+        \WHILE{\NOT $sorted$}
+            \STATE $gap \gets \left \lfloor{gap / shrink}\right \rfloor$
+            \IF{$gap \leq 1$}
+                \STATE $gap \gets 1$
+                \STATE $sorted \gets$ \TRUE
+            \ENDIF
+            \STATE $i \gets 0$
+            \WHILE{$i + gap < n$}
+                \IF{A[i] > A[i + gap]}
+                    \STATE \CALL{swap}{$A[i]$, $A[i + gap]$}
+                    \STATE $sorted \gets$ \FALSE
                 \ENDIF
-            \ENDFOR
-        \ENDFOR
+                \STATE $i \gets i + 1$
+            \ENDWHILE
+        \ENDWHILE
     \ENDPROCEDURE
     \end{algorithmic}
     \end{algorithm}
@@ -155,27 +166,27 @@
 
         sorting.loadOrPrepareArray();
         sorting.showArray();
-        sorting.prepareBubbleSort();
+        sorting.prepareCombSort();
         sorting.bindControls();
 
         $prepRandomArrayButton.click(function () {
             sorting.prepareRandomArray($sizeInput.val());
             sorting.showArray();
-            sorting.prepareBubbleSort();
+            sorting.prepareCombSort();
             sorting.bindControls();
         });
 
         $prepRandomOrderButton.click(function () {
             sorting.prepareRandomOrder($sizeInput.val());
             sorting.showArray();
-            sorting.prepareBubbleSort();
+            sorting.prepareCombSort();
             sorting.bindControls();
         });
 
         $prepReverseOrderButton.click(function () {
             sorting.prepareReverseOrder($sizeInput.val());
             sorting.showArray();
-            sorting.prepareBubbleSort();
+            sorting.prepareCombSort();
             sorting.bindControls();
         });
     });
