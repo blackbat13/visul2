@@ -111,7 +111,7 @@
     \PROCEDURE{GnomeSort}{$A, n$}
         \STATE $i \gets 0$
         \WHILE{$i < n$}
-            \IF{$p = 0$ \OR $A[i] \geq A[i-1]$}
+            \IF{$i = 0$ \OR $A[i] \geq A[i-1]$}
                 \STATE $i \gets i + 1$
             \ELSE
                 \STATE \CALL{swap}{$A[i]$, $A[i-1]$}
