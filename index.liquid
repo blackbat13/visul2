@@ -1,29 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Visul2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interaktywne wizualizacje algorytmów sortowania, wyszukiwania i struktur danych.">
+    <title>Visul2 — algorytmy w ruchu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ '/node_modules/bootstrap/dist/css/bootstrap.min.css' | url }}"/>
     <link rel="stylesheet" type="text/css" href="{{ '/assets/css/main.css' | url }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/home.css' | url }}"/>
 </head>
-<body>
-<div class="container-fluid">
-    <div class="bg-light py-5 px-3">
-        <h1>Visul2</h1>
-        <p>Wizualizacje różnych algorytmów i nie tylko.</p>
-    </div>
-    <div class="row p-2">
-        <div class="col-4">
-            <h1><a href="sorting/bubble_sort/">Algorytmy sortowania</a></h1>
+<body class="home-page">
+<header class="home-header">
+    <a class="home-brand" href="{{ '/' | url }}" aria-label="Visul2 — strona główna">
+        <span class="home-brand-mark">V2</span>
+        <span>Visul2</span>
+    </a>
+    <nav class="home-nav" aria-label="Główna nawigacja">
+        <a href="#algorithms">Algorytmy</a>
+        <a href="#about">O projekcie</a>
+    </nav>
+    <span class="home-header-note">LABORATORIUM / 01</span>
+</header>
+
+<main>
+    <section class="home-hero" aria-labelledby="hero-title">
+        <div class="home-hero-inner">
+            <div class="hero-copy">
+                <p class="hero-kicker"><span class="hero-kicker-dot"></span> INTERAKTYWNE LABORATORIUM ALGORYTMÓW</p>
+                <h1 id="hero-title">Visul<span>2</span></h1>
+                <p class="hero-description">Zobacz, jak myśli algorytm. Krok po kroku, porównanie po porównaniu.</p>
+                <a class="hero-cta" href="#algorithms">
+                    Odkrywaj wizualizacje
+                    <span aria-hidden="true">&#8595;</span>
+                </a>
+                <p class="hero-footnote"><span>01</span> SORTUJ &nbsp; <span>02</span> SZUKAJ &nbsp; <span>03</span> BUDUJ</p>
+            </div>
+
+            <figure class="algorithm-scene" aria-label="Animowany podgląd porównywania elementów w sortowaniu bąbelkowym">
+                <div class="scene-heading">
+                    <span class="scene-label">SORTOWANIE BABELKOWE</span>
+                    <span class="scene-status"><span></span> KROK 04 / 09</span>
+                </div>
+                <div class="scene-chart" role="img" aria-label="Słupki o wartościach 8, 3, 6, 2, 7, 1, 5 i 4; aktualnie porównywane są wartości 6 i 2">
+                    <div class="chart-baseline"></div>
+                    <div class="chart-bars" aria-hidden="true">
+                        <div class="chart-bar" style="--bar-size: 74%"><span>8</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 33%"><span>3</span><i></i></div>
+                        <div class="chart-bar is-active" style="--bar-size: 58%"><span>6</span><i></i></div>
+                        <div class="chart-bar is-compare" style="--bar-size: 24%"><span>2</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 66%"><span>7</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 16%"><span>1</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 49%"><span>5</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 41%"><span>4</span><i></i></div>
+                    </div>
+                </div>
+                <figcaption class="scene-caption">
+                    <span><i class="legend-dot legend-current"></i> aktualny element</span>
+                    <span><i class="legend-dot legend-compare"></i> porównanie</span>
+                    <span class="scene-caption-index">A[2] &gt; A[3]</span>
+                </figcaption>
+            </figure>
         </div>
-        <div class="col-4">
-            <h1><a href="searching/find_min/">Algorytmy wyszukiwania</a></h1>
+        <div class="hero-coordinate" aria-hidden="true">52&deg;13' N<br>21&deg;00' E</div>
+    </section>
+
+    <section class="algorithm-directory" id="algorithms" aria-labelledby="directory-title">
+        <div class="directory-heading">
+            <p class="section-kicker">01 / KATALOG</p>
+            <h2 id="directory-title">Wybierz, co<br>rozłożyć na kroki.</h2>
+            <p class="directory-intro">Każda wizualizacja pokazuje przebieg algorytmu na żywej strukturze danych.</p>
         </div>
-        <div class="col-4">
-            <h1><a href="trees/build_binary_tree/">Drzewa</a></h1>
+
+        <div class="directory-groups">
+            <section class="directory-group" aria-labelledby="sorting-title">
+                <div class="group-heading">
+                    <span class="group-index">01</span>
+                    <div>
+                        <h3 id="sorting-title">Sortowanie</h3>
+                        <p>7 wizualizacji</p>
+                    </div>
+                    <span class="group-symbol sorting-symbol" aria-hidden="true">&#8645;</span>
+                </div>
+                <ul class="algorithm-list">
+                    <li><a href="{{ '/sorting/bubble_sort/' | url }}">Bąbelkowe <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/cocktail_shaker_sort/' | url }}">Koktajlowe <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/comb_sort/' | url }}">Grzebieniowe <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/gnome_sort/' | url }}">Gnome sort <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/insertion_sort/' | url }}">Przez wstawianie <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/odd_even_sort/' | url }}">Nieparzysto-parzyste <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/sorting/selection_sort/' | url }}">Przez wybór <span>&#8599;</span></a></li>
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="searching-title">
+                <div class="group-heading">
+                    <span class="group-index">02</span>
+                    <div>
+                        <h3 id="searching-title">Wyszukiwanie</h3>
+                        <p>4 wizualizacje</p>
+                    </div>
+                    <span class="group-symbol searching-symbol" aria-hidden="true">&#8981;</span>
+                </div>
+                <ul class="algorithm-list">
+                    <li><a href="{{ '/searching/find_min/' | url }}">Minimum <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/searching/find_max/' | url }}">Maksimum <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/searching/linear_search/' | url }}">Liniowe <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/searching/binary_search/' | url }}">Binarne <span>&#8599;</span></a></li>
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="trees-title">
+                <div class="group-heading">
+                    <span class="group-index">03</span>
+                    <div>
+                        <h3 id="trees-title">Drzewa</h3>
+                        <p>2 wizualizacje</p>
+                    </div>
+                    <span class="group-symbol trees-symbol" aria-hidden="true">&#9698;</span>
+                </div>
+                <ul class="algorithm-list">
+                    <li><a href="{{ '/trees/build_binary_tree/' | url }}">Drzewo binarne <span>&#8599;</span></a></li>
+                    <li><a href="{{ '/trees/build_binary_search_tree/' | url }}">Drzewo BST <span>&#8599;</span></a></li>
+                </ul>
+            </section>
         </div>
-    </div>
-</div>
+    </section>
+
+    <section class="home-note" id="about" aria-label="Informacje o projekcie">
+        <span class="note-mark">V2</span>
+        <p>Struktury danych i algorytmy — widoczne w każdym kroku.</p>
+        <span class="note-meta">VISUL2 / 2026</span>
+    </section>
+</main>
 
 <script src="{{ '/node_modules/jquery/dist/jquery.min.js' | url }}"></script>
 <script src="{{ '/node_modules/bootstrap/dist/js/bootstrap.min.js' | url }}"></script>
