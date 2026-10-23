@@ -1,9 +1,9 @@
 class Animation {
     colors = {
-        sorted: "#ffd700",
-        normal: "#29B6F6",
-        first: "#43A047",
-        second: "#D32F2F",
+        sorted: "#d8f36a",
+        normal: "#6e8a80",
+        first: "#b9efc5",
+        second: "#f0745c",
     };
 
     constructor() {
@@ -48,9 +48,9 @@ class Animation {
     activateButton($button) {
         anime({
             targets: "#" + $button.attr("id"),
-            backgroundColor: "#ffca2c",
-            borderColor: "ffca2c",
-            color: "#000",
+            backgroundColor: "#d8f36a",
+            borderColor: "#d8f36a",
+            color: "#14211f",
             duration: 200
         })
     }
@@ -58,8 +58,8 @@ class Animation {
     deactivateButton($button) {
         anime({
             targets: "#" + $button.attr("id"),
-            backgroundColor: "#0d6efd",
-            borderColor: "#0d6efd",
+            backgroundColor: "#14211f",
+            borderColor: "#14211f",
             color: "#fff",
             duration: 200
         })

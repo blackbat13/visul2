@@ -5,7 +5,9 @@
 .sorting-block {
     position: absolute;
     bottom: 48px;
-    border: 1px solid black;
+    border: 1px solid rgba(20, 33, 31, 0.42);
+    border-radius: 2px;
+    box-shadow: 0 3px 8px rgba(20, 33, 31, 0.12);
 }
 
 .sorting-number {
@@ -13,4 +15,8 @@
     bottom: 0;
     width: 100%;
     text-align: center;
+    color: #14211f;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
 }
