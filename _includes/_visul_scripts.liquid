@@ -15,3 +15,11 @@
 <script src="{{ '/node_modules/mathjax/es5/tex-chtml.js' | url }}"></script>
 <script src="{{ '/node_modules/pseudocode/build/pseudocode.min.js' | url }}"></script>
 <script src="{{ '/assets/js/visul2.min.js' | url }}"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>

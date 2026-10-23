@@ -37,7 +37,7 @@ alg: prepareBuildBinaryTree
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
         let $sizeInput = $("#size-input");
 
-        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+        renderPseudocode();
 
         trees.loadOrPrepareArray();
         trees.showArray();

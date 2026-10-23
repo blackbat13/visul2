@@ -1,10 +1,10 @@
 .visul-container {
-    min-height: 40vh;
+    min-height: max(40vh, 490px);
 }
 
 .sorting-block {
     position: absolute;
-    bottom: 10px;
+    bottom: 48px;
     border: 1px solid black;
 }
 
