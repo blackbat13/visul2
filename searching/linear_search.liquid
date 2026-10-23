@@ -1,0 +1,35 @@
+---
+title: Wyszukiwanie liniowe
+linear_search: active
+alg: prepareLinearSearch
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/searching.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_searching_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include "_sorting_settings.liquid" %}
+            {% include "_linear_search_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_linear_search.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_searching_script.liquid" %}
+</body>
+</html>

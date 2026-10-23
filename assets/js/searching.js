@@ -3,6 +3,8 @@ class Searching extends Animation {
         super();
         this.pointerCurrentId = "searching-pointer-current";
         this.pointerBestId = "searching-pointer-best";
+        this.$searchTarget = $("#search-target");
+        this.$searchResult = $("#search-result");
     }
 
     createPointer(id, label, directionClass) {
@@ -42,6 +44,10 @@ class Searching extends Animation {
             ...(pointerId === this.pointerCurrentId ? {top: pointerTop} : {}),
             easing: "easeInOutQuad"
         });
+    }
+
+    randomizeSearchTarget() {
+        this.$searchTarget.val(Math.floor(Math.random() * 15) + 1);
     }
 
     prepareFindMin() {
@@ -111,6 +117,54 @@ class Searching extends Animation {
         }
 
         this.animateMarkSorted(maxInd);
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    prepareLinearSearch() {
+        let target = parseInt(this.$searchTarget.val(), 10);
+        if (!Number.isInteger(target)) {
+            this.$searchResult.text("Wpisz poprawną wartość do wyszukania.");
+            return;
+        }
+
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, "Sprawdzany", "searching-pointer-top"));
+        this.$searchResult.text("Wyszukiwany element: " + target + ".");
+
+        let foundIndex = -1;
+        for (let i = 0; i < this.array.length; i++) {
+            this.animateMovePointer(this.pointerCurrentId, i);
+            this.animateMark([i], [this.colors.first]);
+
+            if (this.array[i] === target) {
+                foundIndex = i;
+                this.animateMarkSorted(i);
+                break;
+            }
+
+            this.animateLeave([i]);
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                if (foundIndex === -1) {
+                    this.$searchResult.text("Nie znaleziono elementu " + target + ".");
+                } else {
+                    this.$searchResult.text("Znaleziono element " + target + " na pozycji " + (foundIndex + 1) + ".");
+                }
+            }.bind(this)
+        });
 
         this.timeLine.restart();
         this.timeLine.pause();
