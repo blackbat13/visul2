@@ -1,0 +1,33 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{BuildBinarySearchTree}
+    \begin{algorithmic}
+    \FUNCTION{BuildBST}{A, n}
+        \STATE $root \gets null$
+        \FOR{$i \gets 0$ \TO $n - 1$}
+            \IF{$root = null$}
+                \STATE $root \gets A[i]$
+            \ELSE
+                \STATE $current \gets root$
+                \WHILE{true}
+                    \IF{$A[i] < current$}
+                        \IF{$left(current) = null$}
+                            \STATE $left(current) \gets A[i]$
+                            \BREAK
+                        \ENDIF
+                        \STATE $current \gets left(current)$
+                    \ELSE
+                        \IF{$right(current) = null$}
+                            \STATE $right(current) \gets A[i]$
+                            \BREAK
+                        \ENDIF
+                        \STATE $current \gets right(current)$
+                    \ENDIF
+                \ENDWHILE
+            \ENDIF
+        \ENDFOR
+        \RETURN $root$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

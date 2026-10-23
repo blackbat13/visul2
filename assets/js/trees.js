@@ -63,6 +63,87 @@ class Trees extends Animation {
         this.timeLine.pause();
     }
 
+    prepareBuildBinarySearchTree() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        let nodes = this.array.map(function (value, index) {
+            return {value: value, index: index, left: null, right: null, parent: null, depth: 0};
+        });
+
+        for (let i = 1; i < nodes.length; i++) {
+            let current = nodes[0];
+            while (true) {
+                let side = nodes[i].value < current.value ? "left" : "right";
+                if (current[side] === null) {
+                    current[side] = nodes[i];
+                    nodes[i].parent = current;
+                    nodes[i].depth = current.depth + 1;
+                    break;
+                }
+                current = current[side];
+            }
+        }
+
+        let inorderIndex = 0;
+        let maxDepth = 0;
+        let assignInorderPositions = function (node) {
+            if (node === null) {
+                return;
+            }
+
+            assignInorderPositions(node.left);
+            node.inorderIndex = inorderIndex++;
+            maxDepth = Math.max(maxDepth, node.depth);
+            assignInorderPositions(node.right);
+        };
+        assignInorderPositions(nodes[0]);
+
+        let containerWidth = this.$visulContainer.width();
+        let nodeSpacing = Math.max(this.blockWidth + 12, containerWidth / (nodes.length + 1));
+        let treeWidth = nodeSpacing * (nodes.length + 1);
+        let visualWidth = Math.max(containerWidth, treeWidth);
+        let levelGap = 88;
+        let treeTop = 24;
+        let stagingTop = treeTop + (maxDepth + 1) * levelGap;
+        let containerHeight = stagingTop + this.blockWidth + 24;
+
+        this.$visulContainer.css({width: visualWidth + "px", height: containerHeight + "px"});
+        this.$visulContainer.closest(".container-row").css({minHeight: containerHeight + "px", overflowX: "auto"});
+
+        for (let i = 0; i < this.arrayBlocks.length; i++) {
+            this.arrayBlocks[i].css({left: this.firstLeft + i * this.blockWidth + "px", top: stagingTop + "px", borderRadius: "0%"});
+        }
+
+        for (let i = 0; i < nodes.length; i++) {
+            let node = nodes[i];
+            let left = ((node.inorderIndex + 1) * nodeSpacing) - this.blockWidth / 2 + (visualWidth - treeWidth) / 2;
+            let top = treeTop + node.depth * levelGap;
+
+            this.timeLine.add({
+                targets: "#" + this.arrayBlocks[i].attr("id"),
+                left: left + "px",
+                top: top + "px",
+                backgroundColor: [this.colors.first, this.colors.normal],
+                borderRadius: ["0%", "50%"],
+                easing: "easeInOutQuad",
+                complete: function () {
+                    if (node.parent !== null) {
+                        this.addEdge(this.arrayBlocks[node.index], this.arrayBlocks[node.parent.index], node.index);
+                    }
+                }.bind(this)
+            });
+        }
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
     addEdge(node1, node2, id) {
         let childLeft = parseFloat(node1.css("left"));
         let parentLeft = parseFloat(node2.css("left"));
