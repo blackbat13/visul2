@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wyszukiwanie maksimum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
@@ -26,18 +30,18 @@
                     <a class="nav-link " href="../find_min">Wyszukiwanie minimum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Wyszukiwanie maksimum</a>
+                    <a class="nav-link active" href="../find_max">Wyszukiwanie maksimum</a>
                 </li>
-
-
-
-
-
-
-
-
-
-
+                
+                    
+                        
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../linear_search">Wyszukiwanie liniowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../binary_search">Wyszukiwanie binarne</a>
+                </li>
                 <!--                <li class="nav-item dropdown">-->
                 <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                 <!--                        Dropdown-->
@@ -137,6 +141,14 @@
 <script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
 <script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
 <script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
 
 <script>
     $(document).ready(function () {
@@ -145,33 +157,54 @@
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
         let $sizeInput = $("#size-input");
+        let $searchTarget = $("#search-target");
 
-        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+        function prepareSimulation(randomizeTarget) {
+            if ("prepareFindMax" === "prepareBinarySearch") {
+                searching.array.sort(function (a, b) { return a - b; });
+            }
+
+            searching.showArray();
+            if ($searchTarget.length) {
+                if (randomizeTarget) {
+                    searching.randomizeSearchTarget();
+                }
+                searching.prepareFindMax();
+            } else {
+                searching.prepareFindMax();
+            }
+        }
+
+        renderPseudocode();
 
         searching.loadOrPrepareArray();
-        searching.showArray();
-        searching.prepareFindMax();
+        prepareSimulation($searchTarget.length > 0);
         searching.bindControls();
 
         $prepRandomArrayButton.click(function () {
             searching.prepareRandomArray($sizeInput.val());
-            searching.showArray();
-            searching.prepareFindMax();
-            searching.bindControls();
+            prepareSimulation($searchTarget.length > 0);
         });
 
         $prepRandomOrderButton.click(function () {
             searching.prepareRandomOrder($sizeInput.val());
-            searching.showArray();
-            searching.prepareFindMax();
-            searching.bindControls();
+            prepareSimulation($searchTarget.length > 0);
         });
 
         $prepReverseOrderButton.click(function () {
             searching.prepareReverseOrder($sizeInput.val());
-            searching.showArray();
-            searching.prepareFindMax();
-            searching.bindControls();
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $searchTarget.on("change", function () {
+            if (this.checkValidity()) {
+                prepareSimulation(false);
+            }
+        });
+
+        $("#random-search-target-button").click(function () {
+            searching.randomizeSearchTarget();
+            prepareSimulation(false);
         });
     });
 </script>

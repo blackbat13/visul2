@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sortowanie koktajlowe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
@@ -35,7 +39,7 @@
                     <a class="nav-link " href="../gnome_sort">Sortowanie gnoma</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="">Sortowanie koktajlowe</a>
+                    <a class="nav-link active" href="../cocktail_shaker_sort">Sortowanie koktajlowe</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="../comb_sort">Sortowanie grzebieniowe</a>
@@ -147,6 +151,14 @@
 <script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
 <script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
 <script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
 
 <script>
     $(document).ready(function () {
@@ -156,7 +168,7 @@
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
         let $sizeInput = $("#size-input");
 
-        pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+        renderPseudocode();
 
         sorting.loadOrPrepareArray();
         sorting.showArray();

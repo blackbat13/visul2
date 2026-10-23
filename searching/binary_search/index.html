@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wyszukiwanie binarne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/searching.css"/>
+</head>
+<body class="binary-search-page">
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/visul2/">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="../find_min">Wyszukiwanie minimum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../find_max">Wyszukiwanie maksimum</a>
+                </li>
+                
+                    
+                        
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../linear_search">Wyszukiwanie liniowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="../binary_search">Wyszukiwanie binarne</a>
+                </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                <!--                        Dropdown-->
+                <!--                    </a>-->
+                <!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                    </div>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+                <!--                </li>-->
+            </ul>
+            <!--            <form class="form-inline my-2 my-lg-0">-->
+            <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            <!--            </form>-->
+        </div>
+    </div>
+</nav>
+
+
+    <div class="row container-row">
+    <div class="col-12 visul-container" id="visul-container">
+    </div>
+</div>
+
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1 class="text-center">Ustawienia symulacji</h1>
+<form class="row g-3 mt-5">
+    <div class="row col-12">
+        <label for="size-input" class="col-8 col-form-label">Rozmiar tablicy:</label>
+        <div class="col-4">
+            <input id="size-input" type="number" class="form-control" min="2" max="15" step="1" value="10"/>
+        </div>
+    </div>
+    <div class="col-12">
+        <button id="prep-random-array-button" type="button" class="btn btn-primary">Losuj posortowaną tablicę</button>
+    </div>
+</form>
+            <div class="row col-12 mt-3">
+    <label for="search-target" class="col-8 col-form-label">Wyszukiwany element:</label>
+    <div class="col-4">
+        <input id="search-target" type="number" class="form-control" min="1" max="15" step="1" required/>
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <button id="random-search-target-button" type="button" class="btn btn-outline-primary">
+        <i class="fa fa-random" aria-hidden="true"></i> Losuj element
+    </button>
+</div>
+<p id="search-result" class="mt-3" aria-live="polite"></p>
+        </div>
+        <div class="col-4 controls-div">
+            <button id="start-button" type="button" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i></button>
+<button id="pause-button" type="button" class="btn btn-primary"><i class="fa fa-pause" aria-hidden="true"></i></button>
+<button id="restart-button" type="button" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<input id="time-range" class="form-range" type="range" min="0" max="100" step=".001" value="0"/>
+
+        </div>
+        <div class="col-4">
+            <pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{BinarySearch}
+    \begin{algorithmic}
+    \FUNCTION{BinarySearch}{A, n, target}
+        \STATE $left \gets 0$
+        \STATE $right \gets n - 1$
+        \WHILE{$left \le right$}
+            \STATE $middle \gets \lfloor \frac{left + right}{2} \rfloor$
+            \IF{$A[middle] = target$}
+                \RETURN $middle$
+            \ELIF{$A[middle] < target$}
+                \STATE $left \gets middle + 1$
+            \ELSE
+                \STATE $right \gets middle - 1$
+            \ENDIF
+        \ENDWHILE
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
+        </div>
+    </div>
+</div>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
+<script src="/visul2/node_modules/underscore/underscore-min.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
+<script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
+<script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        let searching = new Searching();
+        let $prepRandomArrayButton = $("#prep-random-array-button");
+        let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
+        let $searchTarget = $("#search-target");
+
+        function prepareSimulation(randomizeTarget) {
+            if ("prepareBinarySearch" === "prepareBinarySearch") {
+                searching.array.sort(function (a, b) { return a - b; });
+            }
+
+            searching.showArray();
+            if ($searchTarget.length) {
+                if (randomizeTarget) {
+                    searching.randomizeSearchTarget();
+                }
+                searching.prepareBinarySearch();
+            } else {
+                searching.prepareBinarySearch();
+            }
+        }
+
+        renderPseudocode();
+
+        searching.loadOrPrepareArray();
+        prepareSimulation($searchTarget.length > 0);
+        searching.bindControls();
+
+        $prepRandomArrayButton.click(function () {
+            searching.prepareRandomArray($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $prepRandomOrderButton.click(function () {
+            searching.prepareRandomOrder($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $prepReverseOrderButton.click(function () {
+            searching.prepareReverseOrder($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $searchTarget.on("change", function () {
+            if (this.checkValidity()) {
+                prepareSimulation(false);
+            }
+        });
+
+        $("#random-search-target-button").click(function () {
+            searching.randomizeSearchTarget();
+            prepareSimulation(false);
+        });
+    });
+</script>
+
+</body>
+</html>
