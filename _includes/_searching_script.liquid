@@ -8,12 +8,16 @@
         let $searchTarget = $("#search-target");
 
         function prepareSimulation(randomizeTarget) {
+            if ("{{ alg }}" === "prepareBinarySearch") {
+                searching.array.sort(function (a, b) { return a - b; });
+            }
+
             searching.showArray();
             if ($searchTarget.length) {
                 if (randomizeTarget) {
                     searching.randomizeSearchTarget();
                 }
-                searching.prepareLinearSearch();
+                searching.{{ alg }}();
             } else {
                 searching.{{ alg }}();
             }

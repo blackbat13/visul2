@@ -2,6 +2,11 @@
     min-height: max(40vh, 490px);
 }
 
+.binary-search-page .container-row,
+.binary-search-page .visul-container {
+    min-height: 620px;
+}
+
 .searching-pointer {
     position: absolute;
     left: 0;
