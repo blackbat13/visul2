@@ -6,29 +6,29 @@ alg: prepareFindMin
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include _visul_head.liquid %}
+    {% include "_visul_head.liquid" %}
     <link rel="stylesheet" type="text/css" href="{{ '/assets/css/searching.css' | url }}"/>
 </head>
 <body>
 <div class="container-fluid">
-    {% include _searching_nav.liquid %}
+    {% include "_searching_nav.liquid" %}
 
-    {% include _visul_container.liquid %}
+    {% include "_visul_container.liquid" %}
 
     <div class="row controls-row ps-2">
         <div class="col-4">
-            {% include _sorting_settings.liquid %}
+            {% include "_sorting_settings.liquid" %}
         </div>
         <div class="col-4 controls-div">
-            {% include _visul_sim_controls.liquid %}
+            {% include "_visul_sim_controls.liquid" %}
         </div>
         <div class="col-4">
-            {% include _alg_find_min.liquid %}
+            {% include "_alg_find_min.liquid" %}
         </div>
     </div>
 </div>
 
-{% include _visul_scripts.liquid %}
-{% include _searching_script.liquid %}
+{% include "_visul_scripts.liquid" %}
+{% include "_searching_script.liquid" %}
 </body>
 </html>
