@@ -1,10 +1,57 @@
 .visul-container {
-    min-height: 40vh;
+    min-height: max(40vh, 490px);
+}
+
+.searching-pointer {
+    position: absolute;
+    left: 0;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+    z-index: 4;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.searching-pointer-label {
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2px 6px;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.searching-pointer-arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.searching-pointer-top {
+    top: 4px;
+}
+
+.searching-pointer-top .searching-pointer-arrow::before {
+    content: "↓";
+    color: #0d6efd;
+}
+
+.searching-pointer-bottom {
+    bottom: 4px;
+    flex-direction: column-reverse;
+}
+
+.searching-pointer-bottom .searching-pointer-arrow::before {
+    content: "↑";
+    color: #dc3545;
 }
 
 .sorting-block {
     position: absolute;
-    bottom: 10px;
+    bottom: 48px;
     border: 1px solid black;
 }
 

@@ -7,7 +7,8 @@
 }
 
 .container-row {
-    min-height: 40vh;
+    position: relative;
+    min-height: max(40vh, 490px);
 }
 
 .controls-div {
