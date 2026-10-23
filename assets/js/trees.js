@@ -26,7 +26,7 @@ class Trees extends Animation {
             }.bind(this)
         });
 
-        let treeHeight = Math.ceil(Math.log2(this.array.length));
+        let treeHeight = Math.floor(Math.log2(this.array.length)) + 1;
         let lastLevel = Math.pow(2, treeHeight);
         let containerWidth = this.$visulContainer.width();
         let maxLevelWidth = lastLevel * this.blockWidth;
@@ -57,12 +57,6 @@ class Trees extends Animation {
                 }.bind(this)
             });
 
-            if (parentIndex >= 0) {
-                this.timeLine.add({
-                    targets: '#line-' + i.toString(),
-                    x2: 5
-                })
-            }
         }
 
         this.timeLine.restart();
@@ -70,32 +64,33 @@ class Trees extends Animation {
     }
 
     addEdge(node1, node2, id) {
-        let left1 = parseInt(node1.css("left"));
-        let left2 = parseInt(node2.css("left"));
-        let top1 = parseInt(node1.css("top"));
-        let top2 = parseInt(node2.css("top"));
-        let left = Math.min(left1, left2) + this.blockWidth / 2;
-        let width = Math.max(left1, left2) - left + this.blockWidth / 2;
-        let top = Math.min(top1, top2) + this.blockWidth;
-        let height = Math.max(top1, top2) - top;
+        let childLeft = parseFloat(node1.css("left"));
+        let parentLeft = parseFloat(node2.css("left"));
+        let childTop = parseFloat(node1.css("top"));
+        let parentTop = parseFloat(node2.css("top"));
+        let parentCenter = parentLeft + this.blockWidth / 2;
+        let childCenter = childLeft + this.blockWidth / 2;
+        let left = Math.min(parentCenter, childCenter);
+        let width = Math.abs(childCenter - parentCenter);
+        let top = parentTop + this.blockWidth;
+        let height = childTop - top;
         let $edge = $("<div></div>");
-        if (left1 > left2) {
-            $edge.addClass("edge");
-            let $svg = $("<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 10 10'></svg>");
-            let $line = $("<line x1='0' y1='0' x2='10' y2='10' />");
-            $line.css("stroke", "#000");
-            $line.css("stroke-width", 1);
-            $line.attr("id", "line-" + id.toString());
-            $svg.append($line);
-            $edge.append($svg);
-        } else {
-            $edge.addClass("edger");
-        }
+        $edge.addClass("tree-edge");
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+        svg.setAttribute("preserveAspectRatio", "none");
+        svg.setAttribute("aria-hidden", "true");
+        let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", (parentCenter - left).toString());
+        line.setAttribute("y1", "0");
+        line.setAttribute("x2", (childCenter - left).toString());
+        line.setAttribute("y2", height.toString());
+        svg.appendChild(line);
+        $edge.append(svg);
         $edge.css("left", left.toString() + "px");
         $edge.css("top", top.toString() + "px");
         $edge.css("width", width.toString() + "px");
         $edge.css("height", height.toString() + "px");
-        // $edge.css("visibility", "hidden");
         $edge.attr("id", "edge-" + id.toString());
         this.$visulContainer.append($edge);
     }
