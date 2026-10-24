@@ -55,6 +55,18 @@
     color: #f0745c;
 }
 
+.searching-group-label {
+    position: absolute;
+    top: auto;
+    bottom: 6px;
+    transform: translateX(-50%);
+    font-weight: 700;
+    color: #14211f;
+    white-space: nowrap;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
 .sorting-block {
     position: absolute;
     bottom: 80px;

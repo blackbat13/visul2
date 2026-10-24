@@ -143,6 +143,142 @@ class Searching extends Animation {
         this.timeLine.pause();
     }
 
+    prepareMinMaxOptimal() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        this.preparePointers("Aktualne min");
+        let maxCurrentId = this.pointerCurrentId + "-max";
+        let maxBestId = this.pointerBestId + "-max";
+        this.$visulContainer.append(this.createPointer(maxCurrentId, "Sprawdzany", "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(maxBestId, "Aktualne max", "searching-pointer-bottom"));
+        this.$visulContainer.find(".searching-pointer").css("opacity", 0);
+        this.$visulContainer.find(".searching-pointer-bottom").css("bottom", "36px");
+
+        // Dla nieparzystej liczby elementów dodajemy kopię ostatniego elementu.
+        if (this.array.length % 2 === 1) {
+            let last = this.array.length - 1;
+            let $copy = this.prepareSortingBlock(this.array[last], this.firstLeft + this.array.length * this.blockWidth, this.array.length);
+            $copy.css("opacity", 0);
+            this.$visulContainer.append($copy);
+            this.array.push(this.array[last]);
+            this.arrayBlocks.push($copy);
+            this.timeLine.add({
+                targets: "#" + $copy.attr("id"),
+                opacity: 1,
+                easing: "easeInOutQuad"
+            });
+        }
+
+        let bw = this.blockWidth;
+        let pairs = this.array.length / 2;
+
+        // Tablica początkowa jest w górnym rzędzie, kandydaci w dolnym; słupki są skalowane, by rzędy się nie nakładały.
+        let rowHeight = 150;
+        let candidatesBottom = this.barBottom + 28;
+        let originalBottom = this.barBottom + rowHeight + 100;
+        this.$visulContainer.css("min-height", (originalBottom + rowHeight + 60) + "px");
+        let maxValue = Math.max(1, ...this.array);
+        for (let i = 0; i < this.arrayBlocks.length; i++) {
+            this.arrayBlocks[i].css({
+                height: Math.max(3, this.array[i] / maxValue * rowHeight) + "px",
+                bottom: originalBottom + "px"
+            });
+        }
+
+        let gap = 2 * bw;
+        let leftStart = Math.floor((this.$visulContainer.width() - (2 * pairs * bw + gap)) / 2);
+        let rightStart = leftStart + (pairs * bw) + gap;
+        let minIdx = [];
+        let maxIdx = [];
+
+        let addGroupLabel = function (text, start) {
+            let $label = $("<div></div>");
+            $label.addClass("searching-group-label");
+            $label.text(text);
+            $label.css({left: start + pairs * bw / 2});
+            this.$visulContainer.append($label);
+        }.bind(this);
+        addGroupLabel("Kandydaci min", leftStart);
+        addGroupLabel("Kandydaci max", rightStart);
+
+        // Każda para jest rozdzielana: mniejszy element trafia do tablicy kandydatów na min, większy do kandydatów na max.
+        for (let p = 0; p < pairs; p++) {
+            let a = 2 * p;
+            let b = a + 1;
+            let minI = this.array[a] <= this.array[b] ? a : b;
+            let maxI = minI === a ? b : a;
+            minIdx.push(minI);
+            maxIdx.push(maxI);
+
+            this.animateCompare(a, b);
+            this.timeLine.add({
+                targets: "#" + this.arrayBlocks[minI].attr("id"),
+                left: leftStart + p * bw,
+                bottom: candidatesBottom + "px",
+                easing: "easeInOutQuad"
+            });
+            this.timeLine.add({
+                targets: "#" + this.arrayBlocks[maxI].attr("id"),
+                left: rightStart + p * bw,
+                bottom: candidatesBottom + "px",
+                easing: "easeInOutQuad"
+            }, "-=750");
+            this.animateLeave([a, b]);
+        }
+
+        let movePointer = function (pointerId, idx, x, offset) {
+            let $pointer = this.$visulContainer.find("#" + pointerId);
+            let top = this.$visulContainer.height() - candidatesBottom - parseFloat(this.arrayBlocks[idx].css("height")) - $pointer.outerHeight() - 4;
+            this.timeLine.add({
+                targets: "#" + pointerId,
+                left: x + bw / 2,
+                ...($pointer.hasClass("searching-pointer-top") ? {top: top} : {}),
+                easing: "easeInOutQuad"
+            }, offset);
+        }.bind(this);
+
+        let pass = function (indices, start, currentId, bestId, better) {
+            let $current = this.$visulContainer.find("#" + currentId);
+            let $best = this.$visulContainer.find("#" + bestId);
+            let first = indices[0];
+            $current.css({
+                left: start + bw / 2,
+                top: this.$visulContainer.height() - candidatesBottom - parseFloat(this.arrayBlocks[first].css("height")) - $current.outerHeight() - 4
+            });
+            $best.css("left", start + bw / 2);
+
+            this.timeLine.add({targets: ["#" + currentId, "#" + bestId], opacity: 1, duration: 1});
+            let best = 0;
+            this.animateMark([first], [this.colors.second]);
+            for (let j = 1; j < indices.length; j++) {
+                movePointer(currentId, indices[j], start + j * bw);
+                this.animateMark([indices[j]], [this.colors.first]);
+                if (better(this.array[indices[j]], this.array[indices[best]])) {
+                    this.animateLeave([indices[best]]);
+                    movePointer(bestId, indices[j], start + j * bw);
+                    this.animateMark([indices[j]], [this.colors.second]);
+                    best = j;
+                } else {
+                    this.animateLeave([indices[j]]);
+                }
+            }
+            this.animateMarkSorted(indices[best]);
+            this.timeLine.add({targets: ["#" + currentId, "#" + bestId], opacity: 0, duration: 1});
+        }.bind(this);
+
+        pass(minIdx, leftStart, this.pointerCurrentId, this.pointerBestId, (a, b) => a < b);
+        pass(maxIdx, rightStart, maxCurrentId, maxBestId, (a, b) => a > b);
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
     prepareLinearSearch() {
         let target = parseFloat(this.$searchTarget.val());
         if (!isFinite(target)) {

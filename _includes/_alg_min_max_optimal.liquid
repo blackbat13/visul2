@@ -1,0 +1,36 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{MinMaxOptimal}
+    \begin{algorithmic}
+    \FUNCTION{MinMaxOptimal}{A, n}
+        \IF{$n \bmod 2 = 1$}
+            \STATE $A[n] \gets A[n - 1]$
+            \STATE $n \gets n + 1$
+        \ENDIF
+        \STATE $k \gets n / 2$
+        \FOR{$i \gets 0$ \TO $k - 1$}
+            \IF{$A[2i] < A[2i + 1]$}
+                \STATE $minCand[i] \gets A[2i]$
+                \STATE $maxCand[i] \gets A[2i + 1]$
+            \ELSE
+                \STATE $minCand[i] \gets A[2i + 1]$
+                \STATE $maxCand[i] \gets A[2i]$
+            \ENDIF
+        \ENDFOR
+        \STATE $min \gets minCand[0]$
+        \FOR{$i \gets 1$ \TO $k - 1$}
+            \IF{$minCand[i] < min$}
+                \STATE $min \gets minCand[i]$
+            \ENDIF
+        \ENDFOR
+        \STATE $max \gets maxCand[0]$
+        \FOR{$i \gets 1$ \TO $k - 1$}
+            \IF{$maxCand[i] > max$}
+                \STATE $max \gets maxCand[i]$
+            \ENDIF
+        \ENDFOR
+        \RETURN $(min, max)$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
