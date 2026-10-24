@@ -56,6 +56,24 @@ body:not(.home-page) .navbar-toggler-icon {
     filter: invert(1);
 }
 
+body:not(.home-page) .simulation-language-switch {
+    flex: 0 0 auto;
+    margin-left: 12px;
+    padding: 7px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 2px;
+    color: var(--visul-white);
+    font: 600 11px var(--visul-mono);
+    text-decoration: none;
+    transition: border-color 150ms ease, color 150ms ease;
+}
+
+body:not(.home-page) .simulation-language-switch:hover,
+body:not(.home-page) .simulation-language-switch:focus-visible {
+    border-color: var(--visul-lime);
+    color: var(--visul-lime);
+}
+
 body:not(.home-page) .navbar-nav {
     gap: 4px;
 }

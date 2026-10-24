@@ -1,0 +1,118 @@
+{
+  "pl": {
+    "languageName": "English",
+    "languageLabel": "Zmień język",
+    "toggleNavigation": "Przełącz nawigację",
+    "labels": {
+      "settings": "Ustawienia symulacji",
+      "arraySize": "Rozmiar tablicy:",
+      "randomArray": "Losowa tablica",
+      "randomOrder": "Losowy porządek",
+      "reverseOrder": "Odwrócony porządek",
+      "sortedArray": "Losuj posortowaną tablicę",
+      "customArray": "Własna tablica (2–15 liczb z zakresu 0–999, oddzielonych spacją lub przecinkiem, separator dziesiętny: kropka):",
+      "customArrayPlaceholder": "np. 5 3.5 12 0.25 8",
+      "useArray": "Użyj tablicy",
+      "searchTarget": "Wyszukiwany element:",
+      "randomSearchTarget": "Losuj element",
+      "play": "Odtwórz symulację",
+      "pause": "Wstrzymaj symulację",
+      "restart": "Uruchom ponownie symulację",
+      "timeline": "Oś czasu symulacji"
+    },
+    "algorithms": {
+      "bubble_sort": "Sortowanie bąbelkowe",
+      "cocktail_shaker_sort": "Sortowanie koktajlowe",
+      "comb_sort": "Sortowanie grzebieniowe",
+      "gnome_sort": "Sortowanie gnoma",
+      "insertion_sort": "Sortowanie przez wstawianie",
+      "odd_even_sort": "Sortowanie nieparzysto-parzyste",
+      "selection_sort": "Sortowanie przez wybieranie",
+      "find_min": "Wyszukiwanie minimum",
+      "find_max": "Wyszukiwanie maksimum",
+      "min_max_optimal": "Optymalne wyszukiwanie minimum i maksimum",
+      "linear_search": "Wyszukiwanie liniowe",
+      "binary_search": "Wyszukiwanie binarne",
+      "build_binary_tree": "Budowanie drzewa binarnego",
+      "build_binary_search_tree": "Budowanie drzewa BST"
+    },
+    "sorting": [
+      { "id": "bubble_sort", "name": "Sortowanie bąbelkowe" },
+      { "id": "insertion_sort", "name": "Sortowanie przez wstawianie" },
+      { "id": "selection_sort", "name": "Sortowanie przez wybieranie" },
+      { "id": "gnome_sort", "name": "Sortowanie gnoma" },
+      { "id": "cocktail_shaker_sort", "name": "Sortowanie koktajlowe" },
+      { "id": "comb_sort", "name": "Sortowanie grzebieniowe" },
+      { "id": "odd_even_sort", "name": "Sortowanie nieparzysto-parzyste" }
+    ],
+    "searching": [
+      { "id": "find_min", "name": "Wyszukiwanie minimum" },
+      { "id": "find_max", "name": "Wyszukiwanie maksimum" },
+      { "id": "min_max_optimal", "name": "Optymalne wyszukiwanie minimum i maksimum" },
+      { "id": "linear_search", "name": "Wyszukiwanie liniowe" },
+      { "id": "binary_search", "name": "Wyszukiwanie binarne" }
+    ],
+    "trees": [
+      { "id": "build_binary_tree", "name": "Budowanie drzewa binarnego" },
+      { "id": "build_binary_search_tree", "name": "Budowanie drzewa BST" }
+    ]
+  },
+  "en": {
+    "languageName": "Polski",
+    "languageLabel": "Change language",
+    "toggleNavigation": "Toggle navigation",
+    "labels": {
+      "settings": "Simulation settings",
+      "arraySize": "Array size:",
+      "randomArray": "Random array",
+      "randomOrder": "Random order",
+      "reverseOrder": "Reverse order",
+      "sortedArray": "Generate sorted array",
+      "customArray": "Custom array (2–15 numbers from 0–999, separated by spaces or commas; use a period as the decimal separator):",
+      "customArrayPlaceholder": "e.g. 5 3.5 12 0.25 8",
+      "useArray": "Use array",
+      "searchTarget": "Search for:",
+      "randomSearchTarget": "Randomize target",
+      "play": "Play simulation",
+      "pause": "Pause simulation",
+      "restart": "Restart simulation",
+      "timeline": "Simulation timeline"
+    },
+    "algorithms": {
+      "bubble_sort": "Bubble sort",
+      "cocktail_shaker_sort": "Cocktail shaker sort",
+      "comb_sort": "Comb sort",
+      "gnome_sort": "Gnome sort",
+      "insertion_sort": "Insertion sort",
+      "odd_even_sort": "Odd-even sort",
+      "selection_sort": "Selection sort",
+      "find_min": "Find minimum",
+      "find_max": "Find maximum",
+      "min_max_optimal": "Optimal min and max search",
+      "linear_search": "Linear search",
+      "binary_search": "Binary search",
+      "build_binary_tree": "Build binary tree",
+      "build_binary_search_tree": "Build binary search tree (BST)"
+    },
+    "sorting": [
+      { "id": "bubble_sort", "name": "Bubble sort" },
+      { "id": "insertion_sort", "name": "Insertion sort" },
+      { "id": "selection_sort", "name": "Selection sort" },
+      { "id": "gnome_sort", "name": "Gnome sort" },
+      { "id": "cocktail_shaker_sort", "name": "Cocktail shaker sort" },
+      { "id": "comb_sort", "name": "Comb sort" },
+      { "id": "odd_even_sort", "name": "Odd-even sort" }
+    ],
+    "searching": [
+      { "id": "find_min", "name": "Find minimum" },
+      { "id": "find_max", "name": "Find maximum" },
+      { "id": "min_max_optimal", "name": "Optimal min and max search" },
+      { "id": "linear_search", "name": "Linear search" },
+      { "id": "binary_search", "name": "Binary search" }
+    ],
+    "trees": [
+      { "id": "build_binary_tree", "name": "Build binary tree" },
+      { "id": "build_binary_search_tree", "name": "Build binary search tree (BST)" }
+    ]
+  }
+}

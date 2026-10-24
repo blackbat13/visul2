@@ -1,13 +1,13 @@
-<h1 class="text-center">Ustawienia symulacji</h1>
+<h1 class="text-center">{{ copy.labels.settings }}</h1>
 <form class="row g-3 mt-5">
     <div class="row col-12">
-        <label for="size-input" class="col-8 col-form-label">Rozmiar tablicy:</label>
+        <label for="size-input" class="col-8 col-form-label">{{ copy.labels.arraySize }}</label>
         <div class="col-4">
             <input id="size-input" type="number" class="form-control" min="2" max="15" step="1" value="10"/>
         </div>
     </div>
     <div class="col-12">
-        <button id="prep-random-array-button" type="button" class="btn btn-primary">Losuj posortowaną tablicę</button>
+        <button id="prep-random-array-button" type="button" class="btn btn-primary">{{ copy.labels.sortedArray }}</button>
     </div>
     {% include "_custom_array_input.liquid" %}
 </form>

@@ -2,9 +2,16 @@
 title: Sortowanie koktajlowe
 cocktail_shaker_sort: active
 alg: prepareCocktailShakerSort
+name: cocktail_shaker_sort
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/sorting/cocktail_shaker_sort/index.html{% else %}sorting/cocktail_shaker_sort/index.html{% endif %}"
 ---
+{% assign copy = simulation[locale] %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}">
 <head>
     {% include "_visul_head.liquid" %}
     <link rel="stylesheet" type="text/css" href="{{ '/assets/css/sorting.css' | url }}"/>

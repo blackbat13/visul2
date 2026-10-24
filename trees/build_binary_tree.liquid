@@ -2,9 +2,16 @@
 title: Budowanie drzewa binarnego
 build_binary_tree: active
 alg: prepareBuildBinaryTree
+name: build_binary_tree
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/trees/build_binary_tree/index.html{% else %}trees/build_binary_tree/index.html{% endif %}"
 ---
+{% assign copy = simulation[locale] %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}">
 <head>
     {% include "_visul_head.liquid" %}
     <link rel="stylesheet" type="text/css" href="{{ '/assets/css/trees.css' | url }}"/>

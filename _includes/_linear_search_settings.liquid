@@ -1,12 +1,12 @@
 <div class="row col-12 mt-3">
-    <label for="search-target" class="col-8 col-form-label">Wyszukiwany element:</label>
+    <label for="search-target" class="col-8 col-form-label">{{ copy.labels.searchTarget }}</label>
     <div class="col-4">
         <input id="search-target" type="number" class="form-control" min="0" max="999" step="any" required/>
     </div>
 </div>
 <div class="col-12 mt-2">
     <button id="random-search-target-button" type="button" class="btn btn-outline-primary">
-        <i class="fa fa-random" aria-hidden="true"></i> Losuj element
+        <i class="fa fa-random" aria-hidden="true"></i> {{ copy.labels.randomSearchTarget }}
     </button>
 </div>
 <p id="search-result" class="mt-3" aria-live="polite"></p>

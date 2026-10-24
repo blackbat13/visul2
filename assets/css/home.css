@@ -69,6 +69,25 @@
     color: #29826a;
 }
 
+.home-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.home-language-switch {
+    padding: 7px 10px;
+    border: 1px solid var(--home-line);
+    border-radius: 2px;
+    font: 600 11px var(--home-mono);
+    transition: border-color 160ms ease, color 160ms ease;
+}
+
+.home-language-switch:hover {
+    border-color: var(--home-ink);
+    color: #29826a;
+}
+
 .home-header-note,
 .hero-kicker,
 .hero-footnote,
@@ -529,6 +548,7 @@
 
     .home-nav { gap: 18px; font-size: 12px; }
     .home-header-note { display: none; }
+    .home-header-actions { gap: 0; }
 
     .home-hero,
     .home-hero-inner { min-height: 0; }

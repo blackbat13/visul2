@@ -8,6 +8,7 @@ class Animation {
 
     constructor() {
         this.array = [];
+        this.translate = window.visul2Translate;
         this.$visulContainer = $("#visul-container");
         this.blockWidth = 50;
         this.minSize = 2;
@@ -103,18 +104,18 @@ class Animation {
     parseArrayText(text) {
         let tokens = text.trim().split(/[\s,;]+/).filter(function (t) { return t !== ""; });
         if (tokens.length < this.minSize || tokens.length > this.maxSize) {
-            return {error: "Podaj od " + this.minSize + " do " + this.maxSize + " liczb."};
+            return {error: this.translate("arraySize", {min: this.minSize, max: this.maxSize})};
         }
 
         let array = [];
         for (let token of tokens) {
             if (!/^\d+(\.\d+)?$/.test(token)) {
-                return {error: "Niepoprawna liczba: \"" + token + "\" (użyj kropki jako separatora dziesiętnego)."};
+                return {error: this.translate("invalidNumber", {value: token})};
             }
 
             let value = Math.round(parseFloat(token) * 100) / 100;
             if (value < this.minValue || value > this.maxValue) {
-                return {error: "Wartość " + token + " poza zakresem " + this.minValue + "–" + this.maxValue + "."};
+                return {error: this.translate("outOfRange", {value: token, min: this.minValue, max: this.maxValue})};
             }
 
             array.push(value);

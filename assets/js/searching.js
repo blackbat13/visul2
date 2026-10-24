@@ -31,7 +31,7 @@ class Searching extends Animation {
 
     preparePointers(bestLabel) {
         this.$visulContainer.find(".searching-pointer").remove();
-        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, "Sprawdzany", "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("current"), "searching-pointer-top"));
         this.$visulContainer.append(this.createPointer(this.pointerBestId, bestLabel, "searching-pointer-bottom"));
     }
 
@@ -80,7 +80,7 @@ class Searching extends Animation {
             }.bind(this)
         });
 
-        this.preparePointers("Aktualne min");
+        this.preparePointers(this.translate("currentMin"));
 
         let minVal = this.array[0];
         let minInd = 0;
@@ -116,7 +116,7 @@ class Searching extends Animation {
             }.bind(this)
         });
 
-        this.preparePointers("Aktualne max");
+        this.preparePointers(this.translate("currentMax"));
 
         let maxVal = this.array[0];
         let maxInd = 0;
@@ -152,11 +152,11 @@ class Searching extends Animation {
             }.bind(this)
         });
 
-        this.preparePointers("Aktualne min");
+        this.preparePointers(this.translate("currentMin"));
         let maxCurrentId = this.pointerCurrentId + "-max";
         let maxBestId = this.pointerBestId + "-max";
-        this.$visulContainer.append(this.createPointer(maxCurrentId, "Sprawdzany", "searching-pointer-top"));
-        this.$visulContainer.append(this.createPointer(maxBestId, "Aktualne max", "searching-pointer-bottom"));
+        this.$visulContainer.append(this.createPointer(maxCurrentId, this.translate("current"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(maxBestId, this.translate("currentMax"), "searching-pointer-bottom"));
         this.$visulContainer.find(".searching-pointer").css("opacity", 0);
         this.$visulContainer.find(".searching-pointer-bottom").css("bottom", "36px");
 
@@ -204,8 +204,8 @@ class Searching extends Animation {
             $label.css({left: start + pairs * bw / 2});
             this.$visulContainer.append($label);
         }.bind(this);
-        addGroupLabel("Kandydaci min", leftStart);
-        addGroupLabel("Kandydaci max", rightStart);
+        addGroupLabel(this.translate("minCandidates"), leftStart);
+        addGroupLabel(this.translate("maxCandidates"), rightStart);
 
         // Każda para jest rozdzielana: mniejszy element trafia do tablicy kandydatów na min, większy do kandydatów na max.
         for (let p = 0; p < pairs; p++) {
@@ -282,7 +282,7 @@ class Searching extends Animation {
     prepareLinearSearch() {
         let target = parseFloat(this.$searchTarget.val());
         if (!isFinite(target)) {
-            this.$searchResult.text("Wpisz poprawną wartość do wyszukania.");
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
             return;
         }
 
@@ -295,8 +295,8 @@ class Searching extends Animation {
         });
 
         this.$visulContainer.find(".searching-pointer").remove();
-        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, "Sprawdzany", "searching-pointer-top"));
-        this.$searchResult.text("Wyszukiwany element: " + target + ".");
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("current"), "searching-pointer-top"));
+        this.$searchResult.text(this.translate("searchTarget", {value: target}));
         this.positionPointer(this.pointerCurrentId, 0);
 
         let foundIndex = -1;
@@ -317,9 +317,9 @@ class Searching extends Animation {
             duration: 1,
             complete: function () {
                 if (foundIndex === -1) {
-                    this.$searchResult.text("Nie znaleziono elementu " + target + ".");
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
                 } else {
-                    this.$searchResult.text("Znaleziono element " + target + " na pozycji " + (foundIndex + 1) + ".");
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
                 }
             }.bind(this)
         });
@@ -331,7 +331,7 @@ class Searching extends Animation {
     prepareBinarySearch() {
         let target = parseFloat(this.$searchTarget.val());
         if (!isFinite(target)) {
-            this.$searchResult.text("Wpisz poprawną wartość do wyszukania.");
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
             return;
         }
 
@@ -344,10 +344,10 @@ class Searching extends Animation {
         });
 
         this.$visulContainer.find(".searching-pointer").remove();
-        this.$visulContainer.append(this.createPointer(this.pointerLeftId, "Lewo", "searching-pointer-top"));
-        this.$visulContainer.append(this.createPointer(this.pointerMiddleId, "Środek", "searching-pointer-top"));
-        this.$visulContainer.append(this.createPointer(this.pointerRightId, "Prawo", "searching-pointer-top"));
-        this.$searchResult.text("Wyszukiwany element: " + target + ".");
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("left"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerMiddleId, this.translate("middle"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("right"), "searching-pointer-top"));
+        this.$searchResult.text(this.translate("searchTarget", {value: target}));
 
         let left = 0;
         let right = this.array.length - 1;
@@ -387,9 +387,9 @@ class Searching extends Animation {
             duration: 1,
             complete: function () {
                 if (foundIndex === -1) {
-                    this.$searchResult.text("Nie znaleziono elementu " + target + ".");
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
                 } else {
-                    this.$searchResult.text("Znaleziono element " + target + " na pozycji " + (foundIndex + 1) + ".");
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
                 }
             }.bind(this)
         });

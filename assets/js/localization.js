@@ -1,0 +1,53 @@
+(function () {
+    const messages = {
+        pl: {
+            arraySize: "Podaj od {min} do {max} liczb.",
+            invalidNumber: "Niepoprawna liczba: \"{value}\" (użyj kropki jako separatora dziesiętnego).",
+            outOfRange: "Wartość {value} poza zakresem {min}–{max}.",
+            invalidSearchTarget: "Wpisz poprawną wartość do wyszukania.",
+            searchTarget: "Wyszukiwany element: {value}.",
+            notFound: "Nie znaleziono elementu {value}.",
+            found: "Znaleziono element {value} na pozycji {position}.",
+            current: "Sprawdzany",
+            currentMin: "Aktualne min",
+            currentMax: "Aktualne max",
+            left: "Lewo",
+            middle: "Środek",
+            right: "Prawo",
+            minCandidates: "Kandydaci min",
+            maxCandidates: "Kandydaci max"
+        },
+        en: {
+            arraySize: "Enter between {min} and {max} numbers.",
+            invalidNumber: "Invalid number: \"{value}\" (use a period as the decimal separator).",
+            outOfRange: "Value {value} is outside the range {min}–{max}.",
+            invalidSearchTarget: "Enter a valid value to search for.",
+            searchTarget: "Searching for: {value}.",
+            notFound: "Element {value} was not found.",
+            found: "Element {value} was found at position {position}.",
+            current: "Current",
+            currentMin: "Current min",
+            currentMax: "Current max",
+            left: "Left",
+            middle: "Middle",
+            right: "Right",
+            minCandidates: "Min candidates",
+            maxCandidates: "Max candidates"
+        }
+    };
+
+    window.visul2Translate = function (key, values) {
+        const locale = document.documentElement.lang;
+        const dictionary = messages[locale];
+        if (!dictionary || !Object.prototype.hasOwnProperty.call(dictionary, key)) {
+            throw new Error("Missing simulation translation: " + locale + "." + key);
+        }
+
+        return dictionary[key].replace(/\{(\w+)\}/g, function (match, name) {
+            if (!values || !Object.prototype.hasOwnProperty.call(values, name)) {
+                throw new Error("Missing value for simulation translation: " + key + "." + name);
+            }
+            return values[name];
+        });
+    };
+})();
