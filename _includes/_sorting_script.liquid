@@ -13,6 +13,11 @@
         sorting.{{ alg }}();
         sorting.bindControls();
 
+        sorting.bindCustomArray(function () {
+            sorting.showArray();
+            sorting.{{ alg }}();
+            sorting.bindControls();
+        });
         $prepRandomArrayButton.click(function () {
             sorting.prepareRandomArray($sizeInput.val());
             sorting.showArray();

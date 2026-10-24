@@ -8,6 +8,7 @@ class Searching extends Animation {
         this.pointerMiddleId = "searching-pointer-middle";
         this.$searchTarget = $("#search-target");
         this.$searchResult = $("#search-result");
+        this.barHeadroom = 160;
     }
 
     createPointer(id, label, directionClass) {
@@ -62,7 +63,11 @@ class Searching extends Animation {
     }
 
     randomizeSearchTarget() {
-        this.$searchTarget.val(Math.floor(Math.random() * 15) + 1);
+        if (Math.random() < 0.75) {
+            this.$searchTarget.val(_.sample(this.array));
+        } else {
+            this.$searchTarget.val(Math.floor(Math.random() * 15) + 1);
+        }
     }
 
     prepareFindMin() {
@@ -138,8 +143,8 @@ class Searching extends Animation {
     }
 
     prepareLinearSearch() {
-        let target = parseInt(this.$searchTarget.val(), 10);
-        if (!Number.isInteger(target)) {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
             this.$searchResult.text("Wpisz poprawną wartość do wyszukania.");
             return;
         }
@@ -186,8 +191,8 @@ class Searching extends Animation {
     }
 
     prepareBinarySearch() {
-        let target = parseInt(this.$searchTarget.val(), 10);
-        if (!Number.isInteger(target)) {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
             this.$searchResult.text("Wpisz poprawną wartość do wyszukania.");
             return;
         }

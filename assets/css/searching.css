@@ -65,11 +65,16 @@
 
 .sorting-number {
     position: absolute;
-    bottom: 0;
+    bottom: -22px;
     width: 100%;
     text-align: center;
     color: #14211f;
     font-family: "IBM Plex Mono", monospace;
     font-size: 13px;
     font-weight: 600;
+}
+
+.sorting-number-long {
+    font-size: 10px;
+    letter-spacing: -0.5px;
 }

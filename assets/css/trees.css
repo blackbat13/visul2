@@ -40,3 +40,8 @@
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
 }
+
+.sorting-number-long {
+    font-size: 10px;
+    letter-spacing: -0.5px;
+}

@@ -10,6 +10,15 @@ class Animation {
         this.array = [];
         this.$visulContainer = $("#visul-container");
         this.blockWidth = 50;
+        this.minSize = 2;
+        this.maxSize = 15;
+        this.minValue = 0;
+        this.maxValue = 999;
+        this.barBottom = 48;
+        this.barHeadroom = 30;
+        this.$customArrayInput = $("#custom-array-input");
+        this.$customArrayButton = $("#custom-array-button");
+        this.$customArrayError = $("#custom-array-error");
         this.arrayBlocks = [];
         this.timeLine = null;
         this.$timeRange = $("#time-range");
@@ -67,11 +76,79 @@ class Animation {
 
     loadOrPrepareArray() {
         let params = new URLSearchParams(decodeURIComponent(window.location.hash.substr(1)));
+        let loaded = null;
         if (params.has("array")) {
-            this.array = JSON.parse(params.get("array"));
+            try {
+                loaded = JSON.parse(params.get("array"));
+            } catch (e) {
+                loaded = null;
+            }
+        }
+
+        if (this.isValidArray(loaded)) {
+            this.array = loaded;
         } else {
             this.prepareRandomArray(10);
         }
+    }
+
+    isValidArray(array) {
+        return Array.isArray(array)
+            && array.length >= this.minSize && array.length <= this.maxSize
+            && array.every(function (v) {
+                return typeof v === "number" && isFinite(v) && v >= this.minValue && v <= this.maxValue;
+            }, this);
+    }
+
+    parseArrayText(text) {
+        let tokens = text.trim().split(/[\s,;]+/).filter(function (t) { return t !== ""; });
+        if (tokens.length < this.minSize || tokens.length > this.maxSize) {
+            return {error: "Podaj od " + this.minSize + " do " + this.maxSize + " liczb."};
+        }
+
+        let array = [];
+        for (let token of tokens) {
+            if (!/^\d+(\.\d+)?$/.test(token)) {
+                return {error: "Niepoprawna liczba: \"" + token + "\" (użyj kropki jako separatora dziesiętnego)."};
+            }
+
+            let value = Math.round(parseFloat(token) * 100) / 100;
+            if (value < this.minValue || value > this.maxValue) {
+                return {error: "Wartość " + token + " poza zakresem " + this.minValue + "–" + this.maxValue + "."};
+            }
+
+            array.push(value);
+        }
+
+        return {array: array};
+    }
+
+    bindCustomArray(onChange) {
+        let apply = function () {
+            let result = this.parseArrayText(this.$customArrayInput.val());
+            if (result.error) {
+                this.$customArrayError.text(result.error);
+                return;
+            }
+
+            this.$customArrayError.text("");
+            this.array = result.array;
+            onChange();
+        }.bind(this);
+
+        this.$customArrayButton.click(apply);
+        this.$customArrayInput.on("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                apply();
+            }
+        });
+    }
+
+    getBarHeight(value) {
+        let available = Math.max(60, this.$visulContainer.height() - this.barBottom - this.barHeadroom);
+        let maxValue = Math.max(1, ...this.array);
+        return Math.max(3, value / maxValue * available);
     }
 
     prepareRandomOrder(n) {
@@ -112,6 +189,9 @@ class Animation {
         let params = {array: JSON.stringify(this.array)};
         window.location.hash = $.param(params);
 
+        this.$customArrayInput.val(this.array.join(" "));
+        this.$customArrayError.text("");
+
         this.activateButton(this.$pauseButton);
         this.deactivateButton(this.$startButton);
     }
@@ -119,7 +199,7 @@ class Animation {
     prepareSortingBlock(number, left, orderId) {
         let $sortingBlock = $("<div></div>");
         $sortingBlock.addClass("sorting-block");
-        $sortingBlock.css("height", (number * 25).toString() + "px");
+        $sortingBlock.css("height", this.getBarHeight(number).toString() + "px");
         $sortingBlock.css("width", this.blockWidth.toString() + "px");
         $sortingBlock.css("left", left.toString() + "px");
         $sortingBlock.attr("id", "sorting-block-" + orderId.toString());
@@ -134,6 +214,9 @@ class Animation {
         let $sortingNumber = $("<span></span>")
         $sortingNumber.addClass("sorting-number");
         $sortingNumber.text(number.toString());
+        if (number.toString().length > 4) {
+            $sortingNumber.addClass("sorting-number-long");
+        }
         return $sortingNumber;
     }
 

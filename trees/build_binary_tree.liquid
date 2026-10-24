@@ -43,6 +43,12 @@ alg: prepareBuildBinaryTree
         trees.prepareBuildBinaryTree();
         trees.bindControls();
 
+        trees.bindCustomArray(function () {
+            trees.showArray();
+            trees.{{ alg }}();
+            trees.bindControls();
+        });
+
         $prepRandomArrayButton.click(function () {
             trees.prepareRandomArray($sizeInput.val());
             trees.showArray();

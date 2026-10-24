@@ -29,6 +29,9 @@
         prepareSimulation($searchTarget.length > 0);
         searching.bindControls();
 
+        searching.bindCustomArray(function () {
+            prepareSimulation($searchTarget.length > 0);
+        });
         $prepRandomArrayButton.click(function () {
             searching.prepareRandomArray($sizeInput.val());
             prepareSimulation($searchTarget.length > 0);

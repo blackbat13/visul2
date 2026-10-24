@@ -44,6 +44,10 @@ alg: prepareBuildBinarySearchTree
         trees.prepareBuildBinarySearchTree();
         trees.bindControls();
 
+        trees.bindCustomArray(function () {
+            trees.showArray();
+            trees.prepareBuildBinarySearchTree();
+        });
         $prepRandomArrayButton.click(function () {
             trees.prepareRandomArray($sizeInput.val());
             trees.showArray();
