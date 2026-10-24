@@ -46,7 +46,7 @@
 }
 
 .searching-pointer-bottom {
-    bottom: 4px;
+    bottom: 12px;
     flex-direction: column-reverse;
 }
 
@@ -57,7 +57,7 @@
 
 .sorting-block {
     position: absolute;
-    bottom: 48px;
+    bottom: 80px;
     border: 1px solid rgba(20, 33, 31, 0.42);
     border-radius: 2px;
     box-shadow: 0 3px 8px rgba(20, 33, 31, 0.12);

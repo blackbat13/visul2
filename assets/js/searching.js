@@ -9,6 +9,7 @@ class Searching extends Animation {
         this.$searchTarget = $("#search-target");
         this.$searchResult = $("#search-result");
         this.barHeadroom = 160;
+        this.barBottom = 80;
     }
 
     createPointer(id, label, directionClass) {
@@ -39,7 +40,7 @@ class Searching extends Animation {
     }
 
     getPointerTop(pointer, index, lane) {
-        return this.$visulContainer.height() - 48 - parseFloat(this.arrayBlocks[index].css("height")) - pointer.outerHeight() - 4 - lane * (pointer.outerHeight() + 4);
+        return this.$visulContainer.height() - this.barBottom - parseFloat(this.arrayBlocks[index].css("height")) - pointer.outerHeight() - 4 - lane * (pointer.outerHeight() + 4);
     }
 
     positionPointer(pointerId, index, lane = 0) {
@@ -83,8 +84,8 @@ class Searching extends Animation {
 
         let minVal = this.array[0];
         let minInd = 0;
-        this.animateMovePointer(this.pointerCurrentId, 0);
-        this.animateMovePointer(this.pointerBestId, 0);
+        this.positionPointer(this.pointerCurrentId, 0);
+        this.positionPointer(this.pointerBestId, 0);
         this.animateMark([0], [this.colors.second]);
         for (let j = 1; j < this.array.length; j++) {
             this.animateMovePointer(this.pointerCurrentId, j);
@@ -119,8 +120,8 @@ class Searching extends Animation {
 
         let maxVal = this.array[0];
         let maxInd = 0;
-        this.animateMovePointer(this.pointerCurrentId, 0);
-        this.animateMovePointer(this.pointerBestId, 0);
+        this.positionPointer(this.pointerCurrentId, 0);
+        this.positionPointer(this.pointerBestId, 0);
         this.animateMark([0], [this.colors.second]);
         for (let j = 1; j < this.array.length; j++) {
             this.animateMovePointer(this.pointerCurrentId, j);
@@ -160,6 +161,7 @@ class Searching extends Animation {
         this.$visulContainer.find(".searching-pointer").remove();
         this.$visulContainer.append(this.createPointer(this.pointerCurrentId, "Sprawdzany", "searching-pointer-top"));
         this.$searchResult.text("Wyszukiwany element: " + target + ".");
+        this.positionPointer(this.pointerCurrentId, 0);
 
         let foundIndex = -1;
         for (let i = 0; i < this.array.length; i++) {
