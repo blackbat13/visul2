@@ -19,11 +19,11 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.7.1",
     "mathjax": "^3.2.2",
-    "pseudocode": "^2.4.1",
+    "pseudocode": "^2.3.0",
     "underscore": "^1.13.8"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.2",
+    "@11ty/eleventy": "^3.1.7",
     "minify": "^7.2.2"
   }
 }
