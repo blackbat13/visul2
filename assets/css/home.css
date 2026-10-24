@@ -444,6 +444,18 @@
     font: 12px var(--home-mono);
 }
 
+.algorithm-list a .new-badge {
+    margin-right: auto;
+    padding: 1px 6px;
+    background: #d8f36a;
+    color: #14211f;
+    border-radius: 2px;
+    font: 700 10px var(--home-mono);
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
 .home-note {
     min-height: 90px;
     padding: 18px 52px;
