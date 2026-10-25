@@ -1,0 +1,20 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{ShellSort}
+    \begin{algorithmic}
+    \PROCEDURE{ShellSort}{$A, n$}
+        \STATE $gap \gets \left \lfloor{n / 2}\right \rfloor$
+        \WHILE{$gap > 0$}
+            \FOR{$i \gets gap$ \TO $n - 1$}
+                \STATE $j \gets i$
+                \WHILE{$j \geq gap$ \AND $A[j] < A[j - gap]$}
+                    \STATE \CALL{swap}{$A[j]$, $A[j - gap]$}
+                    \STATE $j \gets j - gap$
+                \ENDWHILE
+            \ENDFOR
+            \STATE $gap \gets \left \lfloor{gap / 2}\right \rfloor$
+        \ENDWHILE
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

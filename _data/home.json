@@ -40,7 +40,8 @@
       { "name": "Gnome sort", "href": "/sorting/gnome_sort/" },
       { "name": "Przez wstawianie", "href": "/sorting/insertion_sort/" },
       { "name": "Nieparzysto-parzyste", "href": "/sorting/odd_even_sort/" },
-      { "name": "Przez wybór", "href": "/sorting/selection_sort/" }
+      { "name": "Przez wybór", "href": "/sorting/selection_sort/" },
+      { "name": "Shella", "href": "/sorting/shell_sort/", "badge": true }
     ],
     "searching": [
       { "name": "Minimum", "href": "/searching/find_min/" },
@@ -95,7 +96,8 @@
       { "name": "Gnome sort", "href": "/sorting/gnome_sort/" },
       { "name": "Insertion sort", "href": "/sorting/insertion_sort/" },
       { "name": "Odd-even sort", "href": "/sorting/odd_even_sort/" },
-      { "name": "Selection sort", "href": "/sorting/selection_sort/" }
+      { "name": "Selection sort", "href": "/sorting/selection_sort/" },
+      { "name": "Shell sort", "href": "/sorting/shell_sort/", "badge": true}
     ],
     "searching": [
       { "name": "Find minimum", "href": "/searching/find_min/" },

@@ -28,6 +28,7 @@
       "insertion_sort": "Sortowanie przez wstawianie",
       "odd_even_sort": "Sortowanie nieparzysto-parzyste",
       "selection_sort": "Sortowanie przez wybieranie",
+      "shell_sort": "Sortowanie Shella",
       "find_min": "Wyszukiwanie minimum",
       "find_max": "Wyszukiwanie maksimum",
       "min_max_optimal": "Optymalne wyszukiwanie minimum i maksimum",
@@ -43,7 +44,8 @@
       { "id": "gnome_sort", "name": "Sortowanie gnoma" },
       { "id": "cocktail_shaker_sort", "name": "Sortowanie koktajlowe" },
       { "id": "comb_sort", "name": "Sortowanie grzebieniowe" },
-      { "id": "odd_even_sort", "name": "Sortowanie nieparzysto-parzyste" }
+      { "id": "odd_even_sort", "name": "Sortowanie nieparzysto-parzyste" },
+      { "id": "shell_sort", "name": "Sortowanie Shella" }
     ],
     "searching": [
       { "id": "find_min", "name": "Wyszukiwanie minimum" },
@@ -86,6 +88,7 @@
       "insertion_sort": "Insertion sort",
       "odd_even_sort": "Odd-even sort",
       "selection_sort": "Selection sort",
+      "shell_sort": "Shell sort",
       "find_min": "Find minimum",
       "find_max": "Find maximum",
       "min_max_optimal": "Optimal min and max search",
@@ -101,7 +104,8 @@
       { "id": "gnome_sort", "name": "Gnome sort" },
       { "id": "cocktail_shaker_sort", "name": "Cocktail shaker sort" },
       { "id": "comb_sort", "name": "Comb sort" },
-      { "id": "odd_even_sort", "name": "Odd-even sort" }
+      { "id": "odd_even_sort", "name": "Odd-even sort" },
+      { "id": "shell_sort", "name": "Shell sort" }
     ],
     "searching": [
       { "id": "find_min", "name": "Find minimum" },

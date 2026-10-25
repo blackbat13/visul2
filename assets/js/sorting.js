@@ -242,4 +242,40 @@ class Sorting extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    prepareShellSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const n = this.array.length;
+        for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            for (let i = gap; i < n; i++) {
+                let j = i;
+                this.animateMark([j], [this.colors.second]);
+                while (j >= gap && this.array[j] < this.array[j - gap]) {
+                    this.animateMark([j - gap], [this.colors.first]);
+                    this.animateSwap(j, j - gap);
+                    this.animateLeave([j]);
+                    j -= gap;
+                }
+
+                if (j >= gap) {
+                    this.animateMark([j - gap], [this.colors.first]);
+                    this.animateLeave([j - gap]);
+                }
+
+                this.animateLeave([j]);
+            }
+        }
+
+        this.animateMarkSortedAll();
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }
