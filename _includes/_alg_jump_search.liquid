@@ -1,0 +1,27 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{JumpSearch}
+    \begin{algorithmic}
+    \FUNCTION{JumpSearch}{A, n, target}
+        \STATE $step \gets \lfloor \sqrt{n} \rfloor$
+        \STATE $prev \gets 0$
+        \STATE $jump \gets \min(step - 1, n - 1)$
+        \WHILE{$A[jump] < target$}
+            \IF{$jump = n - 1$}
+                \RETURN $-1$
+            \ENDIF
+            \STATE $prev \gets jump + 1$
+            \STATE $jump \gets \min(prev + step - 1, n - 1)$
+        \ENDWHILE
+        \FOR{$i \gets prev$ \TO $jump$}
+            \IF{$A[i] = target$}
+                \RETURN $i$
+            \ELIF{$A[i] > target$}
+                \RETURN $-1$
+            \ENDIF
+        \ENDFOR
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

@@ -7,6 +7,18 @@
     min-height: 620px;
 }
 
+.jump-block-frame {
+    position: absolute;
+    top: 8px;
+    bottom: 50px;
+    box-sizing: border-box;
+    border: 2px dashed #14211f;
+    border-radius: 4px;
+    background: rgba(216, 243, 106, 0.22);
+    opacity: 0;
+    pointer-events: none;
+}
+
 .searching-pointer {
     position: absolute;
     left: 0;

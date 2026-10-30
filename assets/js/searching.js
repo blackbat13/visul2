@@ -397,4 +397,116 @@ class Searching extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    animateJumpBlock(lo, hi) {
+        this.timeLine.add({
+            targets: this.arrayBlocks.map(function (block) {
+                return block[0];
+            }),
+            opacity: function (el, i) {
+                return i >= lo && i <= hi ? 1 : 0.3;
+            },
+            easing: "easeInOutQuad"
+        });
+        this.timeLine.add({
+            targets: "#jump-block-frame",
+            left: this.firstLeft + lo * this.blockWidth,
+            width: (hi - lo + 1) * this.blockWidth,
+            opacity: 1,
+            easing: "easeInOutQuad"
+        }, "-=750");
+    }
+
+    prepareJumpSearch() {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
+            return;
+        }
+
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const n = this.array.length;
+        const step = Math.max(1, Math.floor(Math.sqrt(n)));
+
+        this.$visulContainer.find(".searching-pointer, #jump-block-frame").remove();
+        let $frame = $("<div></div>").attr("id", "jump-block-frame").addClass("jump-block-frame");
+        $frame.css({left: this.firstLeft + "px", width: this.blockWidth + "px", opacity: 0});
+        this.$visulContainer.prepend($frame);
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("blockStart"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("jump"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("current"), "searching-pointer-top"));
+        this.$visulContainer.find("#" + this.pointerCurrentId).css("opacity", 0);
+        this.$searchResult.text(this.translate("searchTarget", {value: target}) + " " + this.translate("jumpStep", {value: step}));
+
+        let prev = 0;
+        let jump = Math.min(step - 1, n - 1);
+        let foundIndex = -1;
+        let exhausted = false;
+        this.positionPointer(this.pointerLeftId, prev);
+        this.positionPointer(this.pointerRightId, jump, 1);
+        this.positionPointer(this.pointerCurrentId, prev, 2);
+
+        // Faza 1: skaczemy co step elementów, aż ostatni element bloku będzie >= szukanej wartości.
+        while (true) {
+            this.animateMovePointer(this.pointerLeftId, prev);
+            this.animateMovePointer(this.pointerRightId, jump, 1, "-=750");
+            this.animateJumpBlock(prev, jump);
+            this.animateMark([jump], [this.colors.first]);
+
+            if (this.array[jump] >= target) {
+                break;
+            }
+
+            this.animateLeave([jump]);
+            if (jump === n - 1) {
+                exhausted = true;
+                break;
+            }
+
+            prev = jump + 1;
+            jump = Math.min(prev + step - 1, n - 1);
+        }
+
+        // Faza 2: przeszukujemy liniowo znaleziony blok.
+        if (!exhausted) {
+            this.animateLeave([jump]);
+            this.timeLine.add({targets: "#" + this.pointerCurrentId, opacity: 1, duration: 1});
+            for (let i = prev; i <= jump; i++) {
+                this.animateMovePointer(this.pointerCurrentId, i, 2);
+                this.animateMark([i], [this.colors.first]);
+
+                if (this.array[i] === target) {
+                    foundIndex = i;
+                    this.animateMarkSorted(i);
+                    break;
+                }
+
+                this.animateLeave([i]);
+                if (this.array[i] > target) {
+                    break;
+                }
+            }
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                if (foundIndex === -1) {
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
+                } else {
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
+                }
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }
