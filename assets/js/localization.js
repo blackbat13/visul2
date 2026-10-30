@@ -15,7 +15,12 @@
             middle: "Środek",
             right: "Prawo",
             minCandidates: "Kandydaci min",
-            maxCandidates: "Kandydaci max"
+            maxCandidates: "Kandydaci max",
+            exportSlides: "Eksportuj slajdy PDF",
+            exportSlidesInProgress: "Generowanie PDF…",
+            slidesUnavailable: "Nie można wyeksportować slajdów, ponieważ symulacja nie zawiera kroków.",
+            slidesExportFailed: "Nie udało się przygotować slajdów do eksportu.",
+            slideNumber: "Krok {current} z {total}"
         },
         en: {
             arraySize: "Enter between {min} and {max} numbers.",
@@ -32,7 +37,12 @@
             middle: "Middle",
             right: "Right",
             minCandidates: "Min candidates",
-            maxCandidates: "Max candidates"
+            maxCandidates: "Max candidates",
+            exportSlides: "Export PDF slides",
+            exportSlidesInProgress: "Generating PDF…",
+            slidesUnavailable: "Slides cannot be exported because this simulation has no steps.",
+            slidesExportFailed: "The slides could not be prepared for export.",
+            slideNumber: "Step {current} of {total}"
         }
     };
 

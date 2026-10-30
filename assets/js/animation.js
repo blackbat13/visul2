@@ -26,6 +26,7 @@ class Animation {
         this.$startButton = $("#start-button");
         this.$restartButton = $("#restart-button");
         this.$pauseButton = $("#pause-button");
+        this.$exportSlidesButton = $("#export-slides-button");
     }
 
     bindControls() {
@@ -51,8 +52,166 @@ class Animation {
             this.timeLine.seek(this.timeLine.duration * (this.$timeRange.val() / 100));
         }.bind(this));
 
+        this.$exportSlidesButton.off("click").on("click", this.exportSlides.bind(this));
         this.$timeRange.val(0);
         this.activateButton(this.$pauseButton);
+    }
+
+    async exportSlides() {
+        if (!this.timeLine || !this.timeLine.children.length || !this.timeLine.duration) {
+            window.alert(this.translate("slidesUnavailable"));
+            return;
+        }
+
+        const wasPlaying = !this.timeLine.paused;
+        const currentTime = this.timeLine.currentTime;
+        const childEndTimes = this.timeLine.children
+            .map(function (child) {
+                return child.timelineOffset + child.duration;
+            })
+            .filter(function (time) {
+                return isFinite(time) && time > 0;
+            })
+            .sort(function (a, b) {
+                return a - b;
+            });
+        const checkpoints = [];
+        for (const endTime of childEndTimes) {
+            const previous = checkpoints[checkpoints.length - 1];
+            if (previous !== undefined && endTime - previous < 50) {
+                checkpoints[checkpoints.length - 1] = endTime;
+            } else {
+                checkpoints.push(endTime);
+            }
+        }
+        if (!checkpoints.length || this.timeLine.duration - checkpoints[checkpoints.length - 1] >= 50) {
+            checkpoints.push(this.timeLine.duration);
+        } else {
+            checkpoints[checkpoints.length - 1] = this.timeLine.duration;
+        }
+
+        const html2canvas = window.html2canvas;
+        const jsPDF = window.jspdf && window.jspdf.jsPDF;
+        if (!html2canvas || !jsPDF) {
+            const error = new Error("PDF export libraries did not load.");
+            console.error("Failed to export simulation slides as PDF.", error);
+            window.alert(this.translate("slidesExportFailed"));
+            return;
+        }
+
+        const sourceWidth = Math.max(this.$visulContainer[0].scrollWidth, this.$visulContainer[0].clientWidth);
+        const sourceHeight = Math.max(this.$visulContainer[0].scrollHeight, this.$visulContainer[0].clientHeight);
+        const slideWidth = 1047;
+        const slideHeight = 590;
+        const scale = Math.min(slideWidth / sourceWidth, slideHeight / sourceHeight);
+        const slideWidthPx = 1122;
+        const slideHeightPx = 794;
+        const slideTimes = [0].concat(checkpoints);
+        const pdf = new jsPDF({orientation: "landscape", unit: "mm", format: "a4"});
+        const stage = document.createElement("div");
+        let pdfUrl = null;
+        let downloadLink = null;
+        stage.setAttribute("aria-hidden", "true");
+        stage.style.cssText = "position:fixed;left:0;top:0;z-index:-1;width:" + slideWidthPx + "px;";
+
+        try {
+            this.timeLine.pause();
+            this.$exportSlidesButton.prop("disabled", true).text(this.translate("exportSlidesInProgress"));
+            document.body.appendChild(stage);
+
+            if (document.fonts && document.fonts.ready) {
+                await document.fonts.ready;
+            }
+
+            for (let i = 0; i < slideTimes.length; i++) {
+                this.timeLine.seek(slideTimes[i]);
+                const slide = document.createElement("section");
+                slide.style.cssText = "box-sizing:border-box;width:" + slideWidthPx + "px;height:" + slideHeightPx +
+                    "px;padding:38px;position:relative;background:#fff;color:#14211f;font-family:'Space Grotesk',sans-serif;";
+
+                const heading = document.createElement("h1");
+                heading.textContent = document.title;
+                heading.style.cssText = "height:36px;margin:0 0 16px;font-size:29px;font-weight:600;line-height:36px;";
+
+                const frame = document.createElement("div");
+                frame.style.cssText = "position:relative;width:" + slideWidth + "px;height:" + slideHeight +
+                    "px;overflow:hidden;background-color:#edf2ec;background-image:linear-gradient(rgba(20,33,31,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,31,.045) 1px,transparent 1px);background-size:36px 36px;";
+
+                const visual = this.$visulContainer[0].cloneNode(true);
+                visual.removeAttribute("id");
+                visual.style.width = sourceWidth + "px";
+                visual.style.height = sourceHeight + "px";
+                visual.style.minHeight = "0";
+                visual.style.position = "relative";
+                visual.style.overflow = "visible";
+                visual.style.transform = "scale(" + scale + ")";
+                visual.style.transformOrigin = "top left";
+                frame.appendChild(visual);
+
+                const footer = document.createElement("footer");
+                footer.textContent = this.translate("slideNumber", {
+                    current: i + 1,
+                    total: slideTimes.length
+                });
+                footer.style.cssText = "position:absolute;right:38px;bottom:16px;color:#66716c;font:13px 'IBM Plex Mono',monospace;";
+
+                slide.append(heading, frame, footer);
+                stage.appendChild(slide);
+
+                const canvas = await html2canvas(slide, {
+                    backgroundColor: "#ffffff",
+                    scale: 1.5,
+                    width: slideWidthPx,
+                    height: slideHeightPx,
+                    windowWidth: slideWidthPx,
+                    windowHeight: slideHeightPx,
+                    scrollX: 0,
+                    scrollY: 0,
+                    useCORS: true
+                });
+                if (i > 0) {
+                    pdf.addPage();
+                }
+                pdf.addImage(canvas.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, 297, 210);
+                canvas.width = 0;
+                canvas.height = 0;
+                slide.remove();
+            }
+
+            const filename = document.title.trim().replace(/[\\/:*?"<>|]+/g, "-") + ".pdf";
+            const pdfObjectUrl = URL.createObjectURL(pdf.output("blob"));
+            pdfUrl = pdfObjectUrl;
+            downloadLink = document.createElement("a");
+            downloadLink.href = pdfObjectUrl;
+            downloadLink.download = filename;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            downloadLink.remove();
+            window.setTimeout(function () {
+                URL.revokeObjectURL(pdfObjectUrl);
+            }, 1000);
+            pdfUrl = null;
+        } catch (error) {
+            console.error("Failed to export simulation slides as PDF.", error);
+            window.alert(this.translate("slidesExportFailed"));
+        } finally {
+            if (downloadLink) {
+                downloadLink.remove();
+            }
+            if (pdfUrl) {
+                URL.revokeObjectURL(pdfUrl);
+            }
+            stage.remove();
+            this.timeLine.seek(currentTime);
+            if (wasPlaying) {
+                this.timeLine.play();
+            }
+            this.$timeRange.val(this.timeLine.progress);
+            this.$exportSlidesButton.prop("disabled", false).html(
+                '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> ' + this.translate("exportSlides")
+            );
+        }
     }
 
     activateButton($button) {

@@ -18,7 +18,9 @@
       "play": "Odtwórz symulację",
       "pause": "Wstrzymaj symulację",
       "restart": "Uruchom ponownie symulację",
-      "timeline": "Oś czasu symulacji"
+      "timeline": "Oś czasu symulacji",
+      "exportSlides": "Eksportuj slajdy PDF",
+      "exportSlidesInProgress": "Generowanie PDF…"
     },
     "algorithms": {
       "bubble_sort": "Sortowanie bąbelkowe",
@@ -78,7 +80,9 @@
       "play": "Play simulation",
       "pause": "Pause simulation",
       "restart": "Restart simulation",
-      "timeline": "Simulation timeline"
+      "timeline": "Simulation timeline",
+      "exportSlides": "Export PDF slides",
+      "exportSlidesInProgress": "Generating PDF…"
     },
     "algorithms": {
       "bubble_sort": "Bubble sort",
