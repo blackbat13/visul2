@@ -344,6 +344,7 @@ class Searching extends Animation {
         });
 
         this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
         this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("left"), "searching-pointer-top"));
         this.$visulContainer.append(this.createPointer(this.pointerMiddleId, this.translate("middle"), "searching-pointer-top"));
         this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("right"), "searching-pointer-top"));
@@ -362,6 +363,7 @@ class Searching extends Animation {
             this.animateMovePointer(this.pointerLeftId, left);
             this.animateMovePointer(this.pointerRightId, right, 2, "-=750");
             this.animateMovePointer(this.pointerMiddleId, middle, 1, "-=750");
+            this.animateJumpBlock(left, right, true);
             this.animateMark([middle], [this.colors.first]);
 
             if (this.array[middle] === target) {
@@ -379,8 +381,10 @@ class Searching extends Animation {
         }
 
         if (foundIndex == -1) {
-            this.animateMovePointer(this.pointerLeftId, left);
-            this.animateMovePointer(this.pointerRightId, right, 2, "-=750");
+            const lastIndex = this.array.length - 1;
+            this.animateMovePointer(this.pointerLeftId, Math.min(left, lastIndex));
+            this.animateMovePointer(this.pointerRightId, Math.max(right, 0), 2, "-=750");
+            this.animateJumpBlock(left, right, true);
         }
 
         this.timeLine.add({
@@ -398,23 +402,33 @@ class Searching extends Animation {
         this.timeLine.pause();
     }
 
-    animateJumpBlock(lo, hi) {
+    animateJumpBlock(lo, hi, parallel = false) {
+        let empty = lo > hi;
         this.timeLine.add({
             targets: this.arrayBlocks.map(function (block) {
                 return block[0];
             }),
             opacity: function (el, i) {
-                return i >= lo && i <= hi ? 1 : 0.3;
+                return !empty && i >= lo && i <= hi ? 1 : 0.3;
             },
             easing: "easeInOutQuad"
-        });
+        }, parallel ? "-=750" : undefined);
         this.timeLine.add({
             targets: "#jump-block-frame",
-            left: this.firstLeft + lo * this.blockWidth,
-            width: (hi - lo + 1) * this.blockWidth,
-            opacity: 1,
+            ...(empty ? {} : {
+                left: this.firstLeft + lo * this.blockWidth,
+                width: (hi - lo + 1) * this.blockWidth
+            }),
+            opacity: empty ? 0 : 1,
             easing: "easeInOutQuad"
         }, "-=750");
+    }
+
+    createRangeFrame() {
+        this.$visulContainer.find("#jump-block-frame").remove();
+        let $frame = $("<div></div>").attr("id", "jump-block-frame").addClass("jump-block-frame");
+        $frame.css({left: this.firstLeft + "px", width: this.array.length * this.blockWidth + "px", opacity: 0});
+        this.$visulContainer.prepend($frame);
     }
 
     prepareJumpSearch() {
@@ -435,10 +449,8 @@ class Searching extends Animation {
         const n = this.array.length;
         const step = Math.max(1, Math.floor(Math.sqrt(n)));
 
-        this.$visulContainer.find(".searching-pointer, #jump-block-frame").remove();
-        let $frame = $("<div></div>").attr("id", "jump-block-frame").addClass("jump-block-frame");
-        $frame.css({left: this.firstLeft + "px", width: this.blockWidth + "px", opacity: 0});
-        this.$visulContainer.prepend($frame);
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
         this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("blockStart"), "searching-pointer-top"));
         this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("jump"), "searching-pointer-top"));
         this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("current"), "searching-pointer-top"));
