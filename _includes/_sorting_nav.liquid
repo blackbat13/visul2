@@ -9,9 +9,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% for item in copy.sorting %}
+                {% if item.variants %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if item.id == family %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ item.name }}</a>
+                    <ul class="dropdown-menu">
+                        {% for variant in item.variants %}
+                        <li><a class="dropdown-item {% if variant.id == name %}active{% endif %}" href="../{{ variant.id }}/">{{ variant.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link {% if item.id == name %}active{% endif %}" href="../{{ item.id }}/">{{ item.name }}</a>
                 </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

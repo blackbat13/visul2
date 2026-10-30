@@ -31,6 +31,11 @@
       "odd_even_sort": "Sortowanie nieparzysto-parzyste",
       "selection_sort": "Sortowanie przez wybieranie",
       "shell_sort": "Sortowanie Shella",
+      "quick_sort_first": "Quicksort — pivot: pierwszy element",
+      "quick_sort_last": "Quicksort — pivot: ostatni element",
+      "quick_sort_middle": "Quicksort — pivot: środkowy element",
+      "quick_sort_random": "Quicksort — pivot: losowy element",
+      "quick_sort_median3": "Quicksort — pivot: mediana z trzech",
       "find_min": "Wyszukiwanie minimum",
       "find_max": "Wyszukiwanie maksimum",
       "min_max_optimal": "Optymalne wyszukiwanie minimum i maksimum",
@@ -47,7 +52,18 @@
       { "id": "cocktail_shaker_sort", "name": "Sortowanie koktajlowe" },
       { "id": "comb_sort", "name": "Sortowanie grzebieniowe" },
       { "id": "odd_even_sort", "name": "Sortowanie nieparzysto-parzyste" },
-      { "id": "shell_sort", "name": "Sortowanie Shella" }
+      { "id": "shell_sort", "name": "Sortowanie Shella" },
+      {
+        "id": "quick_sort",
+        "name": "Quicksort",
+        "variants": [
+          { "id": "quick_sort_first", "name": "Pivot: pierwszy element" },
+          { "id": "quick_sort_last", "name": "Pivot: ostatni element" },
+          { "id": "quick_sort_middle", "name": "Pivot: środkowy element" },
+          { "id": "quick_sort_random", "name": "Pivot: losowy element" },
+          { "id": "quick_sort_median3", "name": "Pivot: mediana z trzech" }
+        ]
+      }
     ],
     "searching": [
       { "id": "find_min", "name": "Wyszukiwanie minimum" },
@@ -93,6 +109,11 @@
       "odd_even_sort": "Odd-even sort",
       "selection_sort": "Selection sort",
       "shell_sort": "Shell sort",
+      "quick_sort_first": "Quicksort — pivot: first element",
+      "quick_sort_last": "Quicksort — pivot: last element",
+      "quick_sort_middle": "Quicksort — pivot: middle element",
+      "quick_sort_random": "Quicksort — pivot: random element",
+      "quick_sort_median3": "Quicksort — pivot: median of three",
       "find_min": "Find minimum",
       "find_max": "Find maximum",
       "min_max_optimal": "Optimal min and max search",
@@ -109,7 +130,18 @@
       { "id": "cocktail_shaker_sort", "name": "Cocktail shaker sort" },
       { "id": "comb_sort", "name": "Comb sort" },
       { "id": "odd_even_sort", "name": "Odd-even sort" },
-      { "id": "shell_sort", "name": "Shell sort" }
+      { "id": "shell_sort", "name": "Shell sort" },
+      {
+        "id": "quick_sort",
+        "name": "Quicksort",
+        "variants": [
+          { "id": "quick_sort_first", "name": "Pivot: first element" },
+          { "id": "quick_sort_last", "name": "Pivot: last element" },
+          { "id": "quick_sort_middle", "name": "Pivot: middle element" },
+          { "id": "quick_sort_random", "name": "Pivot: random element" },
+          { "id": "quick_sort_median3", "name": "Pivot: median of three" }
+        ]
+      }
     ],
     "searching": [
       { "id": "find_min", "name": "Find minimum" },

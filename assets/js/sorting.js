@@ -278,4 +278,221 @@ class Sorting extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    chooseQuickSortPivot(values, lo, hi, pivotType) {
+        const mid = Math.floor((lo + hi) / 2);
+        switch (pivotType) {
+            case "first":
+                return {index: lo, candidates: [lo]};
+            case "middle":
+                return {index: mid, candidates: [mid]};
+            case "random": {
+                const index = lo + Math.floor(Math.random() * (hi - lo + 1));
+                return {index: index, candidates: [index]};
+            }
+            case "median3": {
+                const candidates = Array.from(new Set([lo, mid, hi]));
+                const ordered = candidates.slice().sort((a, b) => values[a] - values[b]);
+                return {index: ordered[Math.floor(ordered.length / 2)], candidates: candidates};
+            }
+            default:
+                return {index: hi, candidates: [hi]};
+        }
+    }
+
+    // Runs quicksort (Lomuto partition) on a copy of the array and records what has to be animated.
+    planQuickSort(pivotType) {
+        const values = this.array.slice();
+        const events = [];
+        let maxDepth = 0;
+        let nextId = 0;
+
+        const swap = function (i, j) {
+            if (i !== j) {
+                events.push({type: "swap", i: i, j: j});
+                [values[i], values[j]] = [values[j], values[i]];
+            }
+        };
+
+        const sort = function (lo, hi, depth) {
+            if (lo > hi) {
+                return;
+            }
+
+            const id = nextId++;
+            maxDepth = Math.max(maxDepth, depth);
+            events.push({type: "enter", id: id, lo: lo, hi: hi, depth: depth});
+
+            if (lo === hi) {
+                events.push({type: "place", index: lo});
+                events.push({type: "exit", id: id});
+                return;
+            }
+
+            const choice = this.chooseQuickSortPivot(values, lo, hi, pivotType);
+            events.push({type: "pivot", index: choice.index, candidates: choice.candidates});
+            swap(choice.index, hi);
+
+            const pivotValue = values[hi];
+            let store = lo;
+            for (let j = lo; j < hi; j++) {
+                events.push({type: "scan", index: j});
+                if (values[j] < pivotValue) {
+                    swap(store, j);
+                    events.push({type: "leave", positions: store === j ? [j] : [store, j]});
+                    store++;
+                } else {
+                    events.push({type: "leave", positions: [j]});
+                }
+            }
+
+            swap(store, hi);
+            events.push({type: "place", index: store});
+
+            sort(lo, store - 1, depth + 1);
+            sort(store + 1, hi, depth + 1);
+            events.push({type: "exit", id: id});
+        }.bind(this);
+
+        sort(0, values.length - 1, 0);
+        return {events: events, maxDepth: maxDepth};
+    }
+
+    animateQuickSortFocus(lo, hi) {
+        this.timeLine.add({
+            targets: this.arrayBlocks.map(function (block) {
+                return block[0];
+            }),
+            opacity: function (el, i) {
+                return i >= lo && i <= hi ? 1 : 0.3;
+            },
+            easing: 'easeInOutQuad'
+        });
+        this.timeLine.add({
+            targets: "#quick-range-frame",
+            left: this.firstLeft + lo * this.blockWidth,
+            width: (hi - lo + 1) * this.blockWidth,
+            opacity: 1,
+            easing: 'easeInOutQuad'
+        }, '-=750');
+    }
+
+    animateQuickSortPivotTag(index, opacity, timelineOffset) {
+        this.timeLine.add({
+            targets: this.arrayBlocks[index].find(".quick-pivot-tag")[0],
+            opacity: opacity,
+            easing: 'easeInOutQuad'
+        }, timelineOffset);
+    }
+
+    prepareQuickSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const rowHeight = 22;
+        const rowsBottom = 8;
+        const plan = this.planQuickSort(this.pivotType || "last");
+        const rowsHeight = (plan.maxDepth + 1) * rowHeight;
+
+        // Space under the bars is reserved for one row per recursion depth.
+        this.barBottom = rowsBottom + rowsHeight + 30;
+        const minHeight = "max(40vh, " + (this.barBottom + 340) + "px)";
+        this.$visulContainer.css("min-height", minHeight);
+        this.$visulContainer.closest(".container-row").css("min-height", minHeight);
+
+        for (let i = 0; i < this.arrayBlocks.length; i++) {
+            const $tag = $("<span></span>").addClass("quick-pivot-tag").text(this.translate("pivot"));
+            this.arrayBlocks[i].css({bottom: this.barBottom + "px", height: this.getBarHeight(this.array[i]) + "px"});
+            this.arrayBlocks[i].append($tag);
+        }
+
+        const $frame = $("<div></div>").attr("id", "quick-range-frame").addClass("quick-range-frame");
+        $frame.css({
+            left: this.firstLeft + "px",
+            width: this.array.length * this.blockWidth + "px",
+            bottom: (rowsBottom + rowsHeight + 4) + "px"
+        });
+        this.$visulContainer.prepend($frame);
+
+        for (const event of plan.events) {
+            switch (event.type) {
+                case "enter": {
+                    const $range = $("<div></div>").attr("id", "quick-range-" + event.id).addClass("quick-range");
+                    $range.text("[" + event.lo + ", " + event.hi + "]");
+                    $range.css({
+                        left: this.firstLeft + event.lo * this.blockWidth + "px",
+                        width: (event.hi - event.lo + 1) * this.blockWidth + "px",
+                        bottom: rowsBottom + (plan.maxDepth - event.depth) * rowHeight + "px",
+                        height: rowHeight - 4 + "px"
+                    });
+                    this.$visulContainer.append($range);
+
+                    this.animateQuickSortFocus(event.lo, event.hi);
+                    this.timeLine.add({
+                        targets: "#quick-range-" + event.id,
+                        opacity: 1,
+                        easing: 'easeInOutQuad'
+                    }, '-=750');
+                    break;
+                }
+                case "pivot": {
+                    const others = event.candidates.filter(function (index) {
+                        return index !== event.index;
+                    });
+                    if (others.length) {
+                        this.animateMark(event.candidates, event.candidates.map(() => this.colors.first));
+                        this.animateMark([event.index], [this.colors.second]);
+                    } else {
+                        this.animateMark([event.index], [this.colors.second]);
+                    }
+                    this.animateQuickSortPivotTag(event.index, 1, '-=750');
+                    if (others.length) {
+                        this.animateLeave(others);
+                    }
+                    break;
+                }
+                case "swap":
+                    this.animateSwap(event.i, event.j);
+                    break;
+                case "scan":
+                    this.animateMark([event.index], [this.colors.first]);
+                    break;
+                case "leave":
+                    this.animateLeave(event.positions);
+                    break;
+                case "place":
+                    this.animateMarkSorted(event.index);
+                    this.animateQuickSortPivotTag(event.index, 0, '-=750');
+                    break;
+                case "exit":
+                    this.timeLine.add({
+                        targets: "#quick-range-" + event.id,
+                        opacity: 0.35,
+                        easing: 'easeInOutQuad'
+                    });
+                    break;
+            }
+        }
+
+        this.timeLine.add({
+            targets: this.arrayBlocks.map(function (block) {
+                return block[0];
+            }),
+            opacity: 1,
+            easing: 'easeInOutQuad'
+        });
+        this.timeLine.add({
+            targets: "#quick-range-frame",
+            opacity: 0,
+            easing: 'easeInOutQuad'
+        }, '-=750');
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }

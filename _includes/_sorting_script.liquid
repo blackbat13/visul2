@@ -1,6 +1,7 @@
 <script>
     $(document).ready(function () {
         let sorting = new Sorting();
+        sorting.pivotType = "{{ pivot }}";
         let $prepRandomArrayButton = $("#prep-random-array-button");
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");

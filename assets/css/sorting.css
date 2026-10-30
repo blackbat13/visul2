@@ -21,6 +21,46 @@
     font-weight: 600;
 }
 
+.quick-pivot-tag {
+    position: absolute;
+    top: -22px;
+    width: 100%;
+    opacity: 0;
+    text-align: center;
+    color: #c4462f;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.quick-range-frame {
+    position: absolute;
+    top: 8px;
+    box-sizing: border-box;
+    border: 2px dashed #14211f;
+    border-radius: 4px;
+    background: rgba(216, 243, 106, 0.22);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quick-range {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #14211f;
+    border-top: none;
+    opacity: 0;
+    text-align: center;
+    color: #14211f;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .sorting-number-long {
     font-size: 10px;
     letter-spacing: -0.5px;

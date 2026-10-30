@@ -1,0 +1,43 @@
+---
+title: Quicksort (median of three pivot)
+quick_sort_median3: active
+alg: prepareQuickSort
+pivot: median3
+family: quick_sort
+name: quick_sort_median3
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/sorting/quick_sort_median3/index.html{% else %}sorting/quick_sort_median3/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/sorting.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_sorting_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include "_sorting_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_quick_sort.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_sorting_script.liquid" %}
+</body>
+</html>

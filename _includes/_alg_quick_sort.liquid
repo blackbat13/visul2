@@ -1,0 +1,35 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{QuickSort}
+    \begin{algorithmic}
+    \PROCEDURE{QuickSort}{$A, lo, hi$}
+        \IF{$lo < hi$}
+            {%- case pivot %}
+            {%- when "first" %}
+            \STATE $p \gets lo$
+            {%- when "middle" %}
+            \STATE $p \gets \left \lfloor{(lo + hi) / 2}\right \rfloor$
+            {%- when "random" %}
+            \STATE $p \gets$ \CALL{random}{$lo, hi$}
+            {%- when "median3" %}
+            \STATE $p \gets$ \CALL{medianIndex}{$A, lo, \left \lfloor{(lo + hi) / 2}\right \rfloor, hi$}
+            {%- else %}
+            \STATE $p \gets hi$
+            {%- endcase %}
+            \STATE \CALL{swap}{$A[p]$, $A[hi]$}
+            \STATE $pivot \gets A[hi]$
+            \STATE $i \gets lo$
+            \FOR{$j \gets lo$ \TO $hi - 1$}
+                \IF{$A[j] < pivot$}
+                    \STATE \CALL{swap}{$A[i]$, $A[j]$}
+                    \STATE $i \gets i + 1$
+                \ENDIF
+            \ENDFOR
+            \STATE \CALL{swap}{$A[i]$, $A[hi]$}
+            \STATE \CALL{QuickSort}{$A, lo, i - 1$}
+            \STATE \CALL{QuickSort}{$A, i + 1, hi$}
+        \ENDIF
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

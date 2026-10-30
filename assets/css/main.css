@@ -102,6 +102,32 @@ body:not(.home-page) .navbar-nav .nav-link.active::after {
     content: "";
 }
 
+body:not(.home-page) .navbar-nav .dropdown-toggle::after {
+    vertical-align: 0.15em;
+}
+
+body:not(.home-page) .navbar-nav .dropdown-menu {
+    margin-top: 0;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 2px;
+    background: var(--visul-ink);
+}
+
+body:not(.home-page) .navbar-nav .dropdown-item {
+    padding: 8px 12px;
+    color: #c4d0ca;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+body:not(.home-page) .navbar-nav .dropdown-item:hover,
+body:not(.home-page) .navbar-nav .dropdown-item:focus,
+body:not(.home-page) .navbar-nav .dropdown-item.active {
+    background: transparent;
+    color: var(--visul-lime);
+}
+
 .visul-container {
     position: absolute;
 }
