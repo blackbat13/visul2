@@ -27,7 +27,7 @@
     "sortingTitle": "Sortowanie",
     "sortingCount": "10 wizualizacji",
     "searchingTitle": "Wyszukiwanie",
-    "searchingCount": "9 wizualizacji",
+    "searchingCount": "10 wizualizacji",
     "treesTitle": "Drzewa",
     "treesCount": "2 wizualizacje",
     "newBadge": "nowość",
@@ -54,7 +54,8 @@
       { "name": "Skokowe", "href": "/searching/jump_search/", "badge": true },
       { "name": "Wykładnicze", "href": "/searching/exponential_search/", "badge": true },
       { "name": "Fibonacciego", "href": "/searching/fibonacci_search/", "badge": true },
-      { "name": "Trójkowe", "href": "/searching/ternary_search/", "badge": true }
+      { "name": "Trójkowe", "href": "/searching/ternary_search/", "badge": true },
+      { "name": "Najdłuższa rosnąca podtablica", "href": "/searching/longest_increasing_subarray/", "badge": true }
     ],
     "trees": [
       { "name": "Drzewo binarne", "href": "/trees/build_binary_tree/" },
@@ -89,7 +90,7 @@
     "sortingTitle": "Sorting",
     "sortingCount": "10 visualizations",
     "searchingTitle": "Searching",
-    "searchingCount": "9 visualizations",
+    "searchingCount": "10 visualizations",
     "treesTitle": "Trees",
     "treesCount": "2 visualizations",
     "newBadge": "NEW",
@@ -116,7 +117,8 @@
       { "name": "Jump search", "href": "/searching/jump_search/", "badge": true },
       { "name": "Exponential search", "href": "/searching/exponential_search/", "badge": true },
       { "name": "Fibonacci search", "href": "/searching/fibonacci_search/", "badge": true },
-      { "name": "Ternary search", "href": "/searching/ternary_search/", "badge": true }
+      { "name": "Ternary search", "href": "/searching/ternary_search/", "badge": true },
+      { "name": "Longest increasing subarray", "href": "/searching/longest_increasing_subarray/", "badge": true }
     ],
     "trees": [
       { "name": "Binary tree", "href": "/trees/build_binary_tree/" },

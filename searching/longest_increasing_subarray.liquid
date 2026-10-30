@@ -1,0 +1,41 @@
+---
+title: Najdłuższa rosnąca podtablica
+longest_increasing_subarray: active
+alg: prepareLongestIncreasingSubarray
+name: longest_increasing_subarray
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/searching/longest_increasing_subarray/index.html{% else %}searching/longest_increasing_subarray/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/searching.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_searching_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            {% include "_sorting_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_longest_increasing_subarray.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_searching_script.liquid" %}
+</body>
+</html>

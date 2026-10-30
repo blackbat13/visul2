@@ -840,4 +840,80 @@ class Searching extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    prepareLongestIncreasingSubarray() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const n = this.array.length;
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
+        this.$visulContainer.find("#jump-block-frame").css({width: this.blockWidth + "px", opacity: 1});
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("runStart"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("current"), "searching-pointer-top"));
+        this.positionPointer(this.pointerLeftId, 0, 1);
+        this.positionPointer(this.pointerCurrentId, 0);
+
+        const frameTo = function (lo, hi) {
+            this.timeLine.add({
+                targets: "#jump-block-frame",
+                left: this.firstLeft + lo * this.blockWidth,
+                width: (hi - lo + 1) * this.blockWidth,
+                easing: "easeInOutQuad"
+            }, "-=750");
+        }.bind(this);
+        const range = function (lo, hi) {
+            return Array.from({length: hi - lo + 1}, (_, k) => lo + k);
+        };
+
+        // Najdłuższy dotąd znaleziony ciąg jest zaznaczony kolorem; ramka obejmuje bieżący ciąg.
+        let start = 0;
+        let bestStart = 0;
+        let bestLen = 1;
+        this.animateMark([0], [this.colors.second]);
+
+        for (let i = 1; i < n; i++) {
+            this.animateMovePointer(this.pointerCurrentId, i);
+            this.animateMark([i], [this.colors.first]);
+
+            if (this.array[i] > this.array[i - 1]) {
+                frameTo(start, i);
+                const len = i - start + 1;
+                if (len > bestLen) {
+                    if (bestStart === start) {
+                        this.animateMark([i], [this.colors.second]);
+                    } else {
+                        this.animateLeave(range(bestStart, bestStart + bestLen - 1));
+                        const run = range(start, i);
+                        this.animateMark(run, run.map(() => this.colors.second));
+                        bestStart = start;
+                    }
+                    bestLen = len;
+                } else {
+                    this.animateLeave([i]);
+                }
+            } else {
+                this.animateLeave([i]);
+                start = i;
+                this.animateMovePointer(this.pointerLeftId, i, 1, "-=750");
+                frameTo(start, i);
+            }
+        }
+
+        const best = range(bestStart, bestStart + bestLen - 1);
+        best.forEach(function (index) {
+            this.animateMarkSorted(index);
+        }.bind(this));
+        frameTo(bestStart, bestStart + bestLen - 1);
+        this.animateMovePointer(this.pointerLeftId, bestStart, 1, "-=750");
+        this.animateMovePointer(this.pointerCurrentId, bestStart + bestLen - 1, 0, "-=750");
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }

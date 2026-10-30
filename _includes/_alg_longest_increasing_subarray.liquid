@@ -1,0 +1,22 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{LongestIncreasingSubarray}
+    \begin{algorithmic}
+    \FUNCTION{LongestIncreasingSubarray}{A, n}
+        \STATE $start \gets 0$
+        \STATE $bestStart \gets 0$
+        \STATE $bestLen \gets 1$
+        \FOR{$i \gets 1$ \TO $n - 1$}
+            \IF{$A[i] \le A[i - 1]$}
+                \STATE $start \gets i$
+            \ENDIF
+            \IF{$i - start + 1 > bestLen$}
+                \STATE $bestStart \gets start$
+                \STATE $bestLen \gets i - start + 1$
+            \ENDIF
+        \ENDFOR
+        \RETURN $(bestStart, bestLen)$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
