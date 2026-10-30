@@ -18,9 +18,10 @@ class Trees extends Animation {
     }
 
     prepareBuildBinaryTree() {
+        let animationDuration = 750;
         this.timeLine = anime.timeline({
             easing: 'easeOutExpo',
-            duration: 750,
+            duration: animationDuration,
             update: function (anim) {
                 this.$timeRange.val(this.timeLine.progress);
             }.bind(this)
@@ -33,15 +34,19 @@ class Trees extends Animation {
         let containerHeight = this.$visulContainer.height();
         let maxLevelHeight = (containerHeight - this.blockWidth) / treeHeight;
         let minLeft = Math.floor((containerWidth - maxLevelWidth) / 2);
-        let treeArray = [];
+        let positions = [];
 
         for (let i = 0; i < this.array.length; i++) {
-            treeArray.push(this.array[i]);
-            let currentLevel = Math.floor(Math.log2(treeArray.length)) + 1;
-            let levelIndex = treeArray.length - Math.pow(2, currentLevel - 1);
+            let currentLevel = Math.floor(Math.log2(i + 1)) + 1;
+            let levelIndex = i + 1 - Math.pow(2, currentLevel - 1);
             let left = (maxLevelWidth / Math.pow(2, currentLevel)) + (levelIndex * (maxLevelWidth / Math.pow(2, currentLevel - 1))) + minLeft - (this.blockWidth / 2);
-            let top = currentLevel * (maxLevelHeight);
+            let top = currentLevel * maxLevelHeight;
             let parentIndex = Math.floor((i - 1) / 2);
+            positions.push({left: left, top: top});
+
+            if (parentIndex >= 0) {
+                this.addEdge(i, positions[i], positions[parentIndex]);
+            }
 
             this.timeLine.add({
                 targets: '#' + this.arrayBlocks[i].attr("id"),
@@ -50,13 +55,15 @@ class Trees extends Animation {
                 top: top.toString() + "px",
                 borderRadius: ['0%', '50%'],
                 easing: 'linear',
-                complete: function (anim) {
-                    if (parentIndex >= 0) {
-                        this.addEdge(this.arrayBlocks[i], this.arrayBlocks[parentIndex], i);
-                    }
-                }.bind(this)
-            });
+            }, i * animationDuration);
 
+            if (parentIndex >= 0) {
+                this.timeLine.add({
+                    targets: '#edge-' + i.toString(),
+                    opacity: [0, 1],
+                    easing: 'linear'
+                }, i * animationDuration);
+            }
         }
 
         this.timeLine.restart();
@@ -64,9 +71,10 @@ class Trees extends Animation {
     }
 
     prepareBuildBinarySearchTree() {
+        let animationDuration = 750;
         this.timeLine = anime.timeline({
             easing: 'easeOutExpo',
-            duration: 750,
+            duration: animationDuration,
             update: function (anim) {
                 this.$timeRange.val(this.timeLine.progress);
             }.bind(this)
@@ -120,10 +128,23 @@ class Trees extends Animation {
             this.arrayBlocks[i].css({left: this.firstLeft + i * this.blockWidth + "px", top: stagingTop + "px", borderRadius: "0%"});
         }
 
+        let positions = nodes.map(function (node) {
+            return {
+                left: ((node.inorderIndex + 1) * nodeSpacing) - this.blockWidth / 2 + (visualWidth - treeWidth) / 2,
+                top: treeTop + node.depth * levelGap
+            };
+        }.bind(this));
+
+        for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].parent !== null) {
+                this.addEdge(i, positions[i], positions[nodes[i].parent.index]);
+            }
+        }
+
         for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
-            let left = ((node.inorderIndex + 1) * nodeSpacing) - this.blockWidth / 2 + (visualWidth - treeWidth) / 2;
-            let top = treeTop + node.depth * levelGap;
+            let left = positions[i].left;
+            let top = positions[i].top;
 
             this.timeLine.add({
                 targets: "#" + this.arrayBlocks[i].attr("id"),
@@ -131,24 +152,27 @@ class Trees extends Animation {
                 top: top + "px",
                 backgroundColor: [this.colors.first, this.colors.normal],
                 borderRadius: ["0%", "50%"],
-                easing: "easeInOutQuad",
-                complete: function () {
-                    if (node.parent !== null) {
-                        this.addEdge(this.arrayBlocks[node.index], this.arrayBlocks[node.parent.index], node.index);
-                    }
-                }.bind(this)
-            });
+                easing: "easeInOutQuad"
+            }, i * animationDuration);
+
+            if (node.parent !== null) {
+                this.timeLine.add({
+                    targets: "#edge-" + node.index.toString(),
+                    opacity: [0, 1],
+                    easing: "linear"
+                }, i * animationDuration);
+            }
         }
 
         this.timeLine.restart();
         this.timeLine.pause();
     }
 
-    addEdge(node1, node2, id) {
-        let childLeft = parseFloat(node1.css("left"));
-        let parentLeft = parseFloat(node2.css("left"));
-        let childTop = parseFloat(node1.css("top"));
-        let parentTop = parseFloat(node2.css("top"));
+    addEdge(id, childPosition, parentPosition) {
+        let childLeft = childPosition.left;
+        let parentLeft = parentPosition.left;
+        let childTop = childPosition.top;
+        let parentTop = parentPosition.top;
         let parentCenter = parentLeft + this.blockWidth / 2;
         let childCenter = childLeft + this.blockWidth / 2;
         let left = Math.min(parentCenter, childCenter);
@@ -173,6 +197,7 @@ class Trees extends Animation {
         $edge.css("width", width.toString() + "px");
         $edge.css("height", height.toString() + "px");
         $edge.attr("id", "edge-" + id.toString());
+        $edge.css("opacity", "0");
         this.$visulContainer.append($edge);
     }
 }
