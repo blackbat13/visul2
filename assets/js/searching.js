@@ -635,4 +635,110 @@ class Searching extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    prepareFibonacciSearch() {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
+            return;
+        }
+
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const n = this.array.length;
+        const lastIndex = n - 1;
+
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("left"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerMiddleId, this.translate("current"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("right"), "searching-pointer-top"));
+        this.$searchResult.text(this.translate("searchTarget", {value: target}));
+
+        // Zakres przeszukiwany to indeksy offset + 1 ... offset + fibM (ucięte do końca tablicy).
+        let fibM2 = 0;
+        let fibM1 = 1;
+        let fibM = 1;
+        while (fibM < n) {
+            fibM2 = fibM1;
+            fibM1 = fibM;
+            fibM = fibM1 + fibM2;
+        }
+        let offset = -1;
+        let foundIndex = -1;
+
+        this.positionPointer(this.pointerLeftId, 0);
+        this.positionPointer(this.pointerMiddleId, 0, 1);
+        this.positionPointer(this.pointerRightId, lastIndex, 2);
+        this.animateJumpBlock(0, lastIndex);
+
+        while (fibM > 1) {
+            const lo = offset + 1;
+            const hi = Math.min(offset + fibM, lastIndex);
+            const i = Math.min(offset + fibM2, lastIndex);
+            this.animateMovePointer(this.pointerLeftId, Math.min(lo, lastIndex));
+            this.animateMovePointer(this.pointerRightId, hi, 2, "-=750");
+            this.animateMovePointer(this.pointerMiddleId, i, 1, "-=750");
+            this.animateJumpBlock(lo, hi, true);
+            this.animateMark([i], [this.colors.first]);
+
+            if (this.array[i] < target) {
+                this.animateLeave([i]);
+                fibM = fibM1;
+                fibM1 = fibM2;
+                fibM2 = fibM - fibM1;
+                offset = i;
+            } else if (this.array[i] > target) {
+                this.animateLeave([i]);
+                fibM = fibM2;
+                fibM1 = fibM1 - fibM2;
+                fibM2 = fibM - fibM1;
+            } else {
+                foundIndex = i;
+                this.animateMarkSorted(i);
+                break;
+            }
+        }
+
+        // Pozostał co najwyżej jeden kandydat: element po offset.
+        if (foundIndex === -1) {
+            const last = offset + 1;
+            if (last <= lastIndex) {
+                this.animateMovePointer(this.pointerLeftId, last);
+                this.animateMovePointer(this.pointerRightId, last, 2, "-=750");
+                this.animateMovePointer(this.pointerMiddleId, last, 1, "-=750");
+                this.animateJumpBlock(last, last, true);
+                this.animateMark([last], [this.colors.first]);
+                if (this.array[last] === target) {
+                    foundIndex = last;
+                    this.animateMarkSorted(last);
+                } else {
+                    this.animateLeave([last]);
+                    this.animateJumpBlock(1, 0);
+                }
+            } else {
+                this.animateJumpBlock(1, 0);
+            }
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                if (foundIndex === -1) {
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
+                } else {
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
+                }
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }

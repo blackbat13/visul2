@@ -27,7 +27,7 @@
     "sortingTitle": "Sortowanie",
     "sortingCount": "10 wizualizacji",
     "searchingTitle": "Wyszukiwanie",
-    "searchingCount": "7 wizualizacji",
+    "searchingCount": "8 wizualizacji",
     "treesTitle": "Drzewa",
     "treesCount": "2 wizualizacje",
     "newBadge": "nowość",
@@ -52,7 +52,8 @@
       { "name": "Liniowe", "href": "/searching/linear_search/" },
       { "name": "Binarne", "href": "/searching/binary_search/" },
       { "name": "Skokowe", "href": "/searching/jump_search/", "badge": true },
-      { "name": "Wykładnicze", "href": "/searching/exponential_search/", "badge": true }
+      { "name": "Wykładnicze", "href": "/searching/exponential_search/", "badge": true },
+      { "name": "Fibonacciego", "href": "/searching/fibonacci_search/", "badge": true }
     ],
     "trees": [
       { "name": "Drzewo binarne", "href": "/trees/build_binary_tree/" },
@@ -87,7 +88,7 @@
     "sortingTitle": "Sorting",
     "sortingCount": "10 visualizations",
     "searchingTitle": "Searching",
-    "searchingCount": "7 visualizations",
+    "searchingCount": "8 visualizations",
     "treesTitle": "Trees",
     "treesCount": "2 visualizations",
     "newBadge": "NEW",
@@ -112,7 +113,8 @@
       { "name": "Linear search", "href": "/searching/linear_search/" },
       { "name": "Binary search", "href": "/searching/binary_search/" },
       { "name": "Jump search", "href": "/searching/jump_search/", "badge": true },
-      { "name": "Exponential search", "href": "/searching/exponential_search/", "badge": true }
+      { "name": "Exponential search", "href": "/searching/exponential_search/", "badge": true },
+      { "name": "Fibonacci search", "href": "/searching/fibonacci_search/", "badge": true }
     ],
     "trees": [
       { "name": "Binary tree", "href": "/trees/build_binary_tree/" },

@@ -44,6 +44,7 @@
       "binary_search": "Wyszukiwanie binarne",
       "jump_search": "Wyszukiwanie skokowe",
       "exponential_search": "Wyszukiwanie wykładnicze",
+      "fibonacci_search": "Wyszukiwanie Fibonacciego",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST"
     },
@@ -76,7 +77,8 @@
       { "id": "linear_search", "name": "Wyszukiwanie liniowe" },
       { "id": "binary_search", "name": "Wyszukiwanie binarne" },
       { "id": "jump_search", "name": "Wyszukiwanie skokowe" },
-      { "id": "exponential_search", "name": "Wyszukiwanie wykładnicze" }
+      { "id": "exponential_search", "name": "Wyszukiwanie wykładnicze" },
+      { "id": "fibonacci_search", "name": "Wyszukiwanie Fibonacciego" }
     ],
     "trees": [
       { "id": "build_binary_tree", "name": "Budowanie drzewa binarnego" },
@@ -128,6 +130,7 @@
       "binary_search": "Binary search",
       "jump_search": "Jump search",
       "exponential_search": "Exponential search",
+      "fibonacci_search": "Fibonacci search",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)"
     },
@@ -160,7 +163,8 @@
       { "id": "linear_search", "name": "Linear search" },
       { "id": "binary_search", "name": "Binary search" },
       { "id": "jump_search", "name": "Jump search" },
-      { "id": "exponential_search", "name": "Exponential search" }
+      { "id": "exponential_search", "name": "Exponential search" },
+      { "id": "fibonacci_search", "name": "Fibonacci search" }
     ],
     "trees": [
       { "id": "build_binary_tree", "name": "Build binary tree" },

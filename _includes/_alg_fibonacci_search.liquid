@@ -1,0 +1,35 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{FibonacciSearch}
+    \begin{algorithmic}
+    \FUNCTION{FibonacciSearch}{A, n, target}
+        \STATE $fib2 \gets 0$, $fib1 \gets 1$, $fib \gets 1$
+        \WHILE{$fib < n$}
+            \STATE $fib2 \gets fib1$
+            \STATE $fib1 \gets fib$
+            \STATE $fib \gets fib1 + fib2$
+        \ENDWHILE
+        \STATE $offset \gets -1$
+        \WHILE{$fib > 1$}
+            \STATE $i \gets \min(offset + fib2, n - 1)$
+            \IF{$A[i] < target$}
+                \STATE $fib \gets fib1$
+                \STATE $fib1 \gets fib2$
+                \STATE $fib2 \gets fib - fib1$
+                \STATE $offset \gets i$
+            \ELIF{$A[i] > target$}
+                \STATE $fib \gets fib2$
+                \STATE $fib1 \gets fib1 - fib2$
+                \STATE $fib2 \gets fib - fib1$
+            \ELSE
+                \RETURN $i$
+            \ENDIF
+        \ENDWHILE
+        \IF{$offset + 1 < n$ \AND $A[offset + 1] = target$}
+            \RETURN $offset + 1$
+        \ENDIF
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
