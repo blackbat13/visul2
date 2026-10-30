@@ -521,4 +521,118 @@ class Searching extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    prepareExponentialSearch() {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
+            return;
+        }
+
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const n = this.array.length;
+        const lastIndex = n - 1;
+
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("left"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerMiddleId, this.translate("middle"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("bound"), "searching-pointer-top"));
+        this.$visulContainer.find("#" + this.pointerLeftId).css("opacity", 0);
+        this.$visulContainer.find("#" + this.pointerMiddleId).css("opacity", 0);
+        this.$searchResult.text(this.translate("searchTarget", {value: target}));
+
+        let foundIndex = -1;
+        this.positionPointer(this.pointerLeftId, 0);
+        this.positionPointer(this.pointerMiddleId, 0, 1);
+        this.positionPointer(this.pointerRightId, 0, 2);
+
+        // Najpierw sprawdzamy pierwszy element.
+        this.animateJumpBlock(0, 0);
+        this.animateMark([0], [this.colors.first]);
+        if (this.array[0] === target) {
+            foundIndex = 0;
+            this.animateMarkSorted(0);
+        } else {
+            this.animateLeave([0]);
+
+            // Faza 1: podwajamy granicę, aż element na granicy będzie >= szukanej wartości.
+            let prev = 0;
+            let bound = 1;
+            while (true) {
+                const shown = Math.min(bound, lastIndex);
+                this.animateMovePointer(this.pointerRightId, shown, 2);
+                this.animateJumpBlock(0, shown, true);
+                if (bound >= n) {
+                    break;
+                }
+                this.animateMark([bound], [this.colors.first]);
+                if (this.array[bound] >= target) {
+                    this.animateLeave([bound]);
+                    break;
+                }
+                this.animateLeave([bound]);
+                prev = bound;
+                bound = 2 * bound + 1;
+            }
+
+            // Faza 2: wyszukiwanie binarne w ostatnim przedziale.
+            let left = prev + 1;
+            let right = Math.min(bound, lastIndex);
+            this.animateMovePointer(this.pointerRightId, right, 2);
+            this.animateMovePointer(this.pointerLeftId, Math.min(left, lastIndex), 0, "-=750");
+            this.animateMovePointer(this.pointerMiddleId, Math.min(Math.floor((left + right) / 2), lastIndex), 1, "-=750");
+            this.timeLine.add({targets: ["#" + this.pointerLeftId, "#" + this.pointerMiddleId], opacity: 1, duration: 1});
+            this.animateJumpBlock(left, right, true);
+
+            while (left <= right) {
+                let middle = Math.floor((left + right) / 2);
+                this.animateMovePointer(this.pointerLeftId, left);
+                this.animateMovePointer(this.pointerRightId, right, 2, "-=750");
+                this.animateMovePointer(this.pointerMiddleId, middle, 1, "-=750");
+                this.animateJumpBlock(left, right, true);
+                this.animateMark([middle], [this.colors.first]);
+
+                if (this.array[middle] === target) {
+                    foundIndex = middle;
+                    this.animateMarkSorted(middle);
+                    break;
+                }
+
+                this.animateLeave([middle]);
+                if (this.array[middle] < target) {
+                    left = middle + 1;
+                } else {
+                    right = middle - 1;
+                }
+            }
+
+            if (foundIndex == -1) {
+                this.animateMovePointer(this.pointerLeftId, Math.min(left, lastIndex));
+                this.animateMovePointer(this.pointerRightId, Math.max(right, 0), 2, "-=750");
+                this.animateJumpBlock(left, right, true);
+            }
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                if (foundIndex === -1) {
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
+                } else {
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
+                }
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }

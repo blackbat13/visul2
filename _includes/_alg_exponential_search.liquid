@@ -1,0 +1,32 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{ExponentialSearch}
+    \begin{algorithmic}
+    \FUNCTION{BinarySearch}{A, left, right, target}
+        \WHILE{$left \leq right$}
+            \STATE $middle \gets \lfloor \frac{left + right}{2} \rfloor$
+            \IF{$A[middle] = target$}
+                \RETURN $middle$
+            \ELIF{$A[middle] < target$}
+                \STATE $left \gets middle + 1$
+            \ELSE
+                \STATE $right \gets middle - 1$
+            \ENDIF
+        \ENDWHILE
+        \RETURN $-1$
+    \ENDFUNCTION
+    \FUNCTION{ExponentialSearch}{A, n, target}
+        \IF{$A[0] = target$}
+            \RETURN $0$
+        \ENDIF
+        \STATE $prev \gets 0$
+        \STATE $bound \gets 1$
+        \WHILE{$bound < n$ \AND $A[bound] < target$}
+            \STATE $prev \gets bound$
+            \STATE $bound \gets 2 \cdot bound + 1$
+        \ENDWHILE
+        \RETURN \CALL{BinarySearch}{A, $prev + 1$, $\min(bound, n - 1)$, target}
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

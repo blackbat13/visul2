@@ -27,7 +27,7 @@
     "sortingTitle": "Sortowanie",
     "sortingCount": "10 wizualizacji",
     "searchingTitle": "Wyszukiwanie",
-    "searchingCount": "6 wizualizacji",
+    "searchingCount": "7 wizualizacji",
     "treesTitle": "Drzewa",
     "treesCount": "2 wizualizacje",
     "newBadge": "nowość",
@@ -51,7 +51,8 @@
       { "name": "Optymalne min i maks", "href": "/searching/min_max_optimal/", "badge": true },
       { "name": "Liniowe", "href": "/searching/linear_search/" },
       { "name": "Binarne", "href": "/searching/binary_search/" },
-      { "name": "Skokowe", "href": "/searching/jump_search/", "badge": true }
+      { "name": "Skokowe", "href": "/searching/jump_search/", "badge": true },
+      { "name": "Wykładnicze", "href": "/searching/exponential_search/", "badge": true }
     ],
     "trees": [
       { "name": "Drzewo binarne", "href": "/trees/build_binary_tree/" },
@@ -86,7 +87,7 @@
     "sortingTitle": "Sorting",
     "sortingCount": "10 visualizations",
     "searchingTitle": "Searching",
-    "searchingCount": "6 visualizations",
+    "searchingCount": "7 visualizations",
     "treesTitle": "Trees",
     "treesCount": "2 visualizations",
     "newBadge": "NEW",
@@ -110,7 +111,8 @@
       { "name": "Optimal min and max", "href": "/searching/min_max_optimal/", "badge": true },
       { "name": "Linear search", "href": "/searching/linear_search/" },
       { "name": "Binary search", "href": "/searching/binary_search/" },
-      { "name": "Jump search", "href": "/searching/jump_search/", "badge": true }
+      { "name": "Jump search", "href": "/searching/jump_search/", "badge": true },
+      { "name": "Exponential search", "href": "/searching/exponential_search/", "badge": true }
     ],
     "trees": [
       { "name": "Binary tree", "href": "/trees/build_binary_tree/" },

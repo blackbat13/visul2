@@ -43,6 +43,7 @@
       "linear_search": "Wyszukiwanie liniowe",
       "binary_search": "Wyszukiwanie binarne",
       "jump_search": "Wyszukiwanie skokowe",
+      "exponential_search": "Wyszukiwanie wykładnicze",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST"
     },
@@ -74,7 +75,8 @@
       { "id": "min_max_optimal", "name": "Optymalne wyszukiwanie minimum i maksimum" },
       { "id": "linear_search", "name": "Wyszukiwanie liniowe" },
       { "id": "binary_search", "name": "Wyszukiwanie binarne" },
-      { "id": "jump_search", "name": "Wyszukiwanie skokowe" }
+      { "id": "jump_search", "name": "Wyszukiwanie skokowe" },
+      { "id": "exponential_search", "name": "Wyszukiwanie wykładnicze" }
     ],
     "trees": [
       { "id": "build_binary_tree", "name": "Budowanie drzewa binarnego" },
@@ -125,6 +127,7 @@
       "linear_search": "Linear search",
       "binary_search": "Binary search",
       "jump_search": "Jump search",
+      "exponential_search": "Exponential search",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)"
     },
@@ -156,7 +159,8 @@
       { "id": "min_max_optimal", "name": "Optimal min and max search" },
       { "id": "linear_search", "name": "Linear search" },
       { "id": "binary_search", "name": "Binary search" },
-      { "id": "jump_search", "name": "Jump search" }
+      { "id": "jump_search", "name": "Jump search" },
+      { "id": "exponential_search", "name": "Exponential search" }
     ],
     "trees": [
       { "id": "build_binary_tree", "name": "Build binary tree" },

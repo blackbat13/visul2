@@ -8,7 +8,7 @@
         let $searchTarget = $("#search-target");
 
         function prepareSimulation(randomizeTarget) {
-            if ("{{ alg }}" === "prepareBinarySearch" || "{{ alg }}" === "prepareJumpSearch") {
+            if ("{{ alg }}" === "prepareBinarySearch" || "{{ alg }}" === "prepareJumpSearch" || "{{ alg }}" === "prepareExponentialSearch") {
                 searching.array.sort(function (a, b) { return a - b; });
             }
 
