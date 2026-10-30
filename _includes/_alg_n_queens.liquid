@@ -1,0 +1,22 @@
+<pre id="pseudocode" style="display: none;">
+    \begin{algorithm}
+    \caption{SolveNQueens}
+    \begin{algorithmic}
+    \FUNCTION{SolveNQueens}{row}
+        \IF{$row = n$}
+            \RETURN true
+        \ENDIF
+        \FOR{$col \gets 0$ \TO $n - 1$}
+            \IF{IsSafe(row, col)}
+                \STATE $queen[row] \gets col$
+                \IF{SolveNQueens(row + 1)}
+                    \RETURN true
+                \ENDIF
+                \STATE $queen[row] \gets empty$
+            \ENDIF
+        \ENDFOR
+        \RETURN false
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

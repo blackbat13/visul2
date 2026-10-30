@@ -41,7 +41,7 @@
                     {{ copy.heroCta }}
                     <span aria-hidden="true">&#8595;</span>
                 </a>
-                <p class="hero-footnote"><span>01</span> {{ copy.sortingStep }} &nbsp; <span>02</span> {{ copy.searchingStep }} &nbsp; <span>03</span> {{ copy.treesStep }}</p>
+                <p class="hero-footnote"><span>01</span> {{ copy.sortingStep }} &nbsp; <span>02</span> {{ copy.searchingStep }} &nbsp; <span>03</span> {{ copy.treesStep }} &nbsp; <span>04</span> {{ copy.backtrackingStep }}</p>
             </div>
 
             <figure class="algorithm-scene" aria-label="{{ copy.sceneChartLabel }}">
@@ -124,6 +124,22 @@
                 <ul class="algorithm-list">
                     {% for item in copy.trees %}
                     <li><a href="{% if locale == 'en' %}{{ item.href | prepend: '/en' | url }}{% else %}{{ item.href | url }}{% endif %}">{{ item.name }} <span>&#8599;</span></a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="backtracking-title">
+                <div class="group-heading">
+                    <span class="group-index">04</span>
+                    <div>
+                        <h3 id="backtracking-title">{{ copy.backtrackingTitle }}</h3>
+                        <p>{{ copy.backtrackingCount }}</p>
+                    </div>
+                    <span class="group-symbol backtracking-symbol" aria-hidden="true">&#8634;</span>
+                </div>
+                <ul class="algorithm-list">
+                    {% for item in copy.backtracking %}
+                    <li><a href="{% if locale == 'en' %}{{ item.href | prepend: '/en' | url }}{% else %}{{ item.href | url }}{% endif %}">{{ item.name }}{% if item.badge %} <em class="new-badge">{{ copy.newBadge }}</em>{% endif %} <span>&#8599;</span></a></li>
                     {% endfor %}
                 </ul>
             </section>

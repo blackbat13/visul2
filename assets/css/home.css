@@ -388,7 +388,7 @@
 
 .directory-groups {
     display: grid;
-    grid-template-columns: 1fr 1fr 0.86fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px;
 }
 
@@ -432,6 +432,7 @@
 .sorting-symbol { color: #29826a; }
 .searching-symbol { color: var(--home-coral); }
 .trees-symbol { color: var(--home-blue); }
+.backtracking-symbol { color: #a45ca8; }
 
 .algorithm-list {
     margin: 0;
@@ -579,9 +580,6 @@
     .directory-heading h2 { font-size: 32px; }
     .directory-intro { max-width: 390px; }
     .directory-groups { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 34px 22px; }
-    .directory-group:first-child { grid-column: 1 / -1; }
-    .directory-group:first-child .algorithm-list { columns: 2; column-gap: 24px; }
-    .directory-group:first-child .algorithm-list li { break-inside: avoid; }
     .home-note { padding: 18px 22px; }
 }
 
@@ -595,8 +593,6 @@
     .scene-heading { font-size: 8px; }
     .scene-caption { font-size: 9px; }
     .directory-groups { grid-template-columns: minmax(0, 1fr); }
-    .directory-group:first-child { grid-column: auto; }
-    .directory-group:first-child .algorithm-list { columns: 1; }
     .home-note { align-items: flex-start; gap: 10px; }
     .home-note p { max-width: 210px; font-size: 11px; }
     .note-meta { padding-top: 8px; font-size: 8px; }

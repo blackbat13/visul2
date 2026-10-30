@@ -1,0 +1,14 @@
+<script>
+    $(document).ready(function () {
+        let backtracking = new Backtracking();
+        let $queenSize = $("#queen-size");
+
+        renderPseudocode();
+        backtracking.prepareNQueens(parseInt($queenSize.val(), 10));
+        backtracking.bindControls();
+
+        $queenSize.on("change", function () {
+            backtracking.prepareNQueens(parseInt($queenSize.val(), 10));
+        });
+    });
+</script>

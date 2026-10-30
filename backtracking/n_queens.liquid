@@ -1,0 +1,52 @@
+---
+title: Problem n królowych
+n_queens: active
+name: n_queens
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/backtracking/n_queens/index.html{% else %}backtracking/n_queens/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/backtracking.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_backtracking_nav.liquid" %}
+
+    <div class="row container-row queen-container-row">
+        <div class="col-12 visul-container" id="visul-container"></div>
+    </div>
+
+    <div class="row controls-row ps-2">
+        <div class="col-lg-3 col-md-4 queen-settings">
+            <h1>{{ copy.algorithms[name] }}</h1>
+            <label for="queen-size">{{ copy.backtrackingSettings.sizeLabel }}</label>
+            <select id="queen-size" class="form-select" aria-describedby="queen-size-help">
+                <option value="4" selected>4 × 4</option>
+                <option value="5">5 × 5</option>
+                <option value="6">6 × 6</option>
+                <option value="7">7 × 7</option>
+                <option value="8">8 × 8</option>
+            </select>
+            <p id="queen-size-help" class="queen-size-help">{{ copy.backtrackingSettings.sizeHelp }}</p>
+        </div>
+        <div class="col-lg-5 col-md-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+            <p id="queen-step-status" class="queen-step-status" aria-live="polite"></p>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            {% include "_alg_n_queens.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_backtracking_script.liquid" %}
+</body>
+</html>
