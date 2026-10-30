@@ -103,7 +103,6 @@ class Animation {
         const sourceHeight = Math.max(this.$visulContainer[0].scrollHeight, this.$visulContainer[0].clientHeight);
         const slideWidth = 1047;
         const slideHeight = 590;
-        const scale = Math.min(slideWidth / sourceWidth, slideHeight / sourceHeight);
         const slideWidthPx = 1122;
         const slideHeightPx = 794;
         const slideTimes = [0].concat(checkpoints);
@@ -136,6 +135,8 @@ class Animation {
                 const frame = document.createElement("div");
                 frame.style.cssText = "position:relative;width:" + slideWidth + "px;height:" + slideHeight +
                     "px;overflow:hidden;background-color:#edf2ec;background-image:linear-gradient(rgba(20,33,31,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,31,.045) 1px,transparent 1px);background-size:36px 36px;";
+                slide.append(heading, frame);
+                stage.appendChild(slide);
 
                 const visual = this.$visulContainer[0].cloneNode(true);
                 visual.removeAttribute("id");
@@ -144,9 +145,48 @@ class Animation {
                 visual.style.minHeight = "0";
                 visual.style.position = "relative";
                 visual.style.overflow = "visible";
+                visual.style.transform = "none";
+                frame.appendChild(visual);
+
+                const visualBounds = visual.getBoundingClientRect();
+                const contentBounds = Array.from(visual.querySelectorAll("*"))
+                    .map(function (element) {
+                        const bounds = element.getBoundingClientRect();
+                        return {
+                            left: bounds.left - visualBounds.left,
+                            top: bounds.top - visualBounds.top,
+                            right: bounds.right - visualBounds.left,
+                            bottom: bounds.bottom - visualBounds.top
+                        };
+                    })
+                    .filter(function (bounds) {
+                        return bounds.right > bounds.left || bounds.bottom > bounds.top;
+                    })
+                    .reduce(function (result, bounds) {
+                        return {
+                            left: Math.min(result.left, bounds.left),
+                            top: Math.min(result.top, bounds.top),
+                            right: Math.max(result.right, bounds.right),
+                            bottom: Math.max(result.bottom, bounds.bottom)
+                        };
+                    }, {
+                        left: Infinity,
+                        top: Infinity,
+                        right: -Infinity,
+                        bottom: -Infinity
+                    });
+                const contentWidth = contentBounds.right - contentBounds.left;
+                const contentHeight = contentBounds.bottom - contentBounds.top;
+                if (!isFinite(contentWidth) || !isFinite(contentHeight) || contentWidth <= 0 || contentHeight <= 0) {
+                    throw new Error("The simulation visualization has no measurable content.");
+                }
+
+                const scale = Math.min(slideWidth / contentWidth, slideHeight / contentHeight);
+                visual.style.position = "absolute";
+                visual.style.left = ((slideWidth - contentWidth * scale) / 2 - contentBounds.left * scale) + "px";
+                visual.style.top = ((slideHeight - contentHeight * scale) / 2 - contentBounds.top * scale) + "px";
                 visual.style.transform = "scale(" + scale + ")";
                 visual.style.transformOrigin = "top left";
-                frame.appendChild(visual);
 
                 const footer = document.createElement("footer");
                 footer.textContent = this.translate("slideNumber", {
@@ -155,8 +195,7 @@ class Animation {
                 });
                 footer.style.cssText = "position:absolute;right:38px;bottom:16px;color:#66716c;font:13px 'IBM Plex Mono',monospace;";
 
-                slide.append(heading, frame, footer);
-                stage.appendChild(slide);
+                slide.appendChild(footer);
 
                 const canvas = await html2canvas(slide, {
                     backgroundColor: "#ffffff",
