@@ -1,0 +1,20 @@
+<pre id="pseudocode" style="display: none;">
+    \begin{algorithm}
+    \caption{KnightsTour}
+    \begin{algorithmic}
+    \FUNCTION{KnightsTour}{square, visited}
+        \IF{all squares are visited}
+            \RETURN true
+        \ENDIF
+        \FOR{each legal unvisited knight move $next$}
+            \STATE $visited[next] \gets true$
+            \IF{KnightsTour(next, visited)}
+                \RETURN true
+            \ENDIF
+            \STATE $visited[next] \gets false$
+        \ENDFOR
+        \RETURN false
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

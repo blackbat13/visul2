@@ -24,7 +24,8 @@
     },
     "backtrackingSettings": {
       "sizeLabel": "Liczba królowych:",
-      "sizeHelp": "Wybierz rozmiar szachownicy (od 4 do 8)."
+      "sizeHelp": "Wybierz rozmiar szachownicy (od 4 do 8).",
+      "knightTourHelp": "Skoczek odwiedza każde pole dokładnie raz. Przy ślepym zaułku algorytm cofa ruch i próbuje innej drogi."
     },
     "algorithms": {
       "bubble_sort": "Sortowanie bąbelkowe",
@@ -54,7 +55,8 @@
       "longest_increasing_subarray": "Najdłuższa rosnąca podtablica",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
-      "n_queens": "Problem n królowych — przeszukiwanie z powrotami"
+      "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
+      "knights_tour": "Problem skoczka szachowego — przeszukiwanie z powrotami"
     },
     "sorting": [
       { "id": "bubble_sort", "name": "Sortowanie bąbelkowe" },
@@ -102,7 +104,8 @@
       { "id": "build_binary_search_tree", "name": "Budowanie drzewa BST" }
     ],
     "backtracking": [
-      { "id": "n_queens", "name": "Problem n królowych" }
+      { "id": "n_queens", "name": "Problem n królowych" },
+      { "id": "knights_tour", "name": "Problem skoczka szachowego" }
     ]
   },
   "en": {
@@ -130,7 +133,8 @@
     },
     "backtrackingSettings": {
       "sizeLabel": "Number of queens:",
-      "sizeHelp": "Choose a board size (from 4 to 8)."
+      "sizeHelp": "Choose a board size (from 4 to 8).",
+      "knightTourHelp": "The knight must visit every square exactly once. At a dead end, the algorithm backtracks and tries another route."
     },
     "algorithms": {
       "bubble_sort": "Bubble sort",
@@ -160,7 +164,8 @@
       "longest_increasing_subarray": "Longest increasing subarray",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
-      "n_queens": "N-Queens — backtracking"
+      "n_queens": "N-Queens — backtracking",
+      "knights_tour": "Knight's tour — backtracking"
     },
     "sorting": [
       { "id": "bubble_sort", "name": "Bubble sort" },
@@ -208,7 +213,8 @@
       { "id": "build_binary_search_tree", "name": "Build binary search tree (BST)" }
     ],
     "backtracking": [
-      { "id": "n_queens", "name": "N-Queens problem" }
+      { "id": "n_queens", "name": "N-Queens problem" },
+      { "id": "knights_tour", "name": "Knight's tour problem" }
     ]
   }
 }

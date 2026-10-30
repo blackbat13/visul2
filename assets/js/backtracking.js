@@ -16,27 +16,43 @@ class Backtracking extends Animation {
         this.createBoard(size);
         this.currentEventIndex = -1;
 
-        const eventDuration = 400;
+        this.prepareEventTimeline(this.events, size, 400, this.showStep.bind(this));
+    }
+
+    prepareKnightsTour() {
+        if (this.timeLine) {
+            this.timeLine.pause();
+        }
+
+        const size = 5;
+        this.queensCount = size;
+        this.events = this.createKnightsTourEvents(size);
+        this.createBoard(size, "knight");
+        this.currentEventIndex = -1;
+        this.prepareEventTimeline(this.events, size, 180, this.showKnightStep.bind(this));
+    }
+
+    prepareEventTimeline(events, size, eventDuration, showEvent) {
         this.timeLine = anime.timeline({
             easing: "linear",
             update: function () {
                 this.$timeRange.val(this.timeLine.progress);
                 const eventIndex = Math.min(
-                    this.events.length - 1,
-                    Math.floor(this.timeLine.progress / 100 * this.events.length)
+                    events.length - 1,
+                    Math.floor(this.timeLine.progress / 100 * events.length)
                 );
                 if (eventIndex !== this.currentEventIndex) {
                     this.currentEventIndex = eventIndex;
-                    this.showStep(this.events[eventIndex]);
+                    showEvent(events[eventIndex]);
                 }
             }.bind(this),
             complete: function () {
-                this.currentEventIndex = this.events.length - 1;
-                this.showStep(this.events[this.currentEventIndex]);
+                this.currentEventIndex = events.length - 1;
+                showEvent(events[this.currentEventIndex]);
             }.bind(this)
         });
 
-        this.events.forEach(function (event, index) {
+        events.forEach(function (event, index) {
             const square = this.boardSquares[event.row * size + event.col];
             this.timeLine.add({
                 targets: square,
@@ -49,7 +65,7 @@ class Backtracking extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
         this.currentEventIndex = 0;
-        this.showStep(this.events[0]);
+        showEvent(events[0]);
     }
 
     createSearchEvents(size) {
@@ -122,11 +138,76 @@ class Backtracking extends Animation {
         return events;
     }
 
-    createBoard(size) {
+    createKnightsTourEvents(size) {
+        const moves = [[2, -1], [2, 1], [1, 2], [-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2]];
+        const path = [{row: 0, col: 0}];
+        const visited = new Set(["0,0"]);
+        const events = [{type: "start", row: 0, col: 0, path: path.slice()}];
+
+        const search = function () {
+            if (path.length === size * size) {
+                const lastSquare = path[path.length - 1];
+                events.push({
+                    type: "solution",
+                    row: lastSquare.row,
+                    col: lastSquare.col,
+                    path: path.slice()
+                });
+                return true;
+            }
+
+            const current = path[path.length - 1];
+            for (const [rowOffset, colOffset] of moves) {
+                const next = {row: current.row + rowOffset, col: current.col + colOffset};
+                const key = next.row + "," + next.col;
+                if (next.row < 0 || next.col < 0 || next.row >= size || next.col >= size || visited.has(key)) {
+                    continue;
+                }
+
+                events.push({
+                    type: "check",
+                    row: next.row,
+                    col: next.col,
+                    path: path.slice()
+                });
+                path.push(next);
+                visited.add(key);
+                events.push({
+                    type: "move",
+                    row: next.row,
+                    col: next.col,
+                    path: path.slice()
+                });
+
+                if (search()) {
+                    return true;
+                }
+
+                path.pop();
+                visited.delete(key);
+                events.push({
+                    type: "backtrack",
+                    row: next.row,
+                    col: next.col,
+                    path: path.slice()
+                });
+            }
+
+            return false;
+        };
+
+        if (!search()) {
+            events.push({type: "noSolution", row: 0, col: 0, path: path.slice()});
+        }
+
+        return events;
+    }
+
+    createBoard(size, piece = "queen") {
         const board = document.createElement("div");
-        board.className = "queen-board";
+        board.className = "chess-board";
         board.setAttribute("role", "grid");
-        board.setAttribute("aria-label", this.translate("queenBoard", {size: size}));
+        board.setAttribute("aria-label", this.translate(piece === "knight" ? "knightBoard" : "queenBoard", {size: size}));
         board.style.setProperty("--board-size", size);
 
         this.boardSquares = [];
@@ -134,20 +215,24 @@ class Backtracking extends Animation {
             for (let col = 0; col < size; col++) {
                 const square = document.createElement("div");
                 const name = this.getSquareName(row, col, size);
-                square.className = "queen-square " + ((row + col) % 2 === 0 ? "is-light" : "is-dark");
+                square.className = "chess-square " + ((row + col) % 2 === 0 ? "is-light" : "is-dark");
                 square.setAttribute("role", "gridcell");
-                square.setAttribute("aria-label", this.translate("queenSquare", {square: name}));
+                square.setAttribute("aria-label", this.translate(piece === "knight" ? "knightSquare" : "queenSquare", {square: name}));
                 this.boardSquares.push(square);
                 board.appendChild(square);
             }
         }
 
         const panel = document.createElement("section");
-        panel.className = "queen-step-panel";
-        panel.innerHTML = '<h2>' + this.translate("queenRow", {row: 1, size: size}) + '</h2><p></p>';
+        panel.className = "chess-step-panel";
+        const heading = piece === "knight"
+            ? this.translate("knightMove", {move: 1, total: size * size})
+            : this.translate("queenRow", {row: 1, size: size});
+        panel.innerHTML = "<h2></h2><p></p>";
+        panel.querySelector("h2").textContent = heading;
 
         this.$visulContainer
-            .addClass("visul-container queen-visualization")
+            .addClass("visul-container chess-visualization")
             .empty()
             .append(board, panel);
         this.$stepHeading = $(panel).find("h2");
@@ -188,6 +273,39 @@ class Backtracking extends Animation {
         this.$stepDescription.text(this.getEventDescription(event));
     }
 
+    showKnightStep(event) {
+        const knight = "♞";
+        this.boardSquares.forEach(function (square) {
+            $(square).removeClass("has-queen has-knight is-current is-rejected is-solution").text("");
+        });
+
+        event.path.forEach(function (position, index) {
+            const square = this.boardSquares[position.row * this.queensCount + position.col];
+            $(square).addClass("has-knight").text(index === event.path.length - 1 ? knight : String(index + 1));
+        }.bind(this));
+
+        if (event.type !== "start" && event.type !== "noSolution") {
+            const currentSquare = this.boardSquares[event.row * this.queensCount + event.col];
+            $(currentSquare).addClass("is-current");
+
+            if (event.type === "backtrack") {
+                $(currentSquare).addClass("is-rejected");
+            } else if (event.type === "solution") {
+                this.boardSquares.forEach(function (square) {
+                    if ($(square).hasClass("has-knight")) {
+                        $(square).addClass("is-solution");
+                    }
+                });
+            }
+        }
+
+        this.$stepHeading.text(this.translate("knightMove", {
+            move: Math.min(event.path.length, this.queensCount * this.queensCount),
+            total: this.queensCount * this.queensCount
+        }));
+        this.$stepDescription.text(this.getKnightEventDescription(event));
+    }
+
     getEventDescription(event) {
         if (event.type === "start") {
             return this.translate("queenStart");
@@ -211,5 +329,26 @@ class Backtracking extends Animation {
 
     getSquareName(row, col, size) {
         return String.fromCharCode(97 + col) + (size - row);
+    }
+
+    getKnightEventDescription(event) {
+        if (event.type === "start") {
+            return this.translate("knightStart", {square: this.getSquareName(event.row, event.col, this.queensCount)});
+        }
+        if (event.type === "solution") {
+            return this.translate("knightSolution", {total: this.queensCount * this.queensCount});
+        }
+        if (event.type === "noSolution") {
+            return this.translate("knightNoSolution");
+        }
+
+        const square = this.getSquareName(event.row, event.col, this.queensCount);
+        if (event.type === "check") {
+            return this.translate("knightCheck", {square: square});
+        }
+        if (event.type === "move") {
+            return this.translate("knightMoveTo", {square: square});
+        }
+        return this.translate("knightBacktrack", {square: square});
     }
 }

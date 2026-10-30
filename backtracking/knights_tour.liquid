@@ -1,0 +1,44 @@
+---
+title: Problem skoczka szachowego
+knights_tour: active
+name: knights_tour
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/backtracking/knights_tour/index.html{% else %}backtracking/knights_tour/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/backtracking.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_backtracking_nav.liquid" %}
+
+    <div class="row container-row chess-container-row">
+        <div class="col-12 visul-container" id="visul-container"></div>
+    </div>
+
+    <div class="row controls-row ps-2">
+        <div class="col-lg-3 col-md-4 knight-settings">
+            <h1>{{ copy.algorithms[name] }}</h1>
+            <p class="queen-size-help">{{ copy.backtrackingSettings.knightTourHelp }}</p>
+        </div>
+        <div class="col-lg-5 col-md-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+            <p class="queen-step-status" aria-live="polite"></p>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            {% include "_alg_knights_tour.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_backtracking_script.liquid" %}
+</body>
+</html>

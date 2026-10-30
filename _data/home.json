@@ -32,7 +32,7 @@
     "treesTitle": "Drzewa",
     "treesCount": "2 wizualizacje",
     "backtrackingTitle": "Przeszukiwanie z powrotami",
-    "backtrackingCount": "1 wizualizacja",
+    "backtrackingCount": "2 wizualizacje",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -65,7 +65,8 @@
       { "name": "Drzewo BST", "href": "/trees/build_binary_search_tree/" }
     ],
     "backtracking": [
-      { "name": "Problem n królowych", "href": "/backtracking/n_queens/", "badge": true }
+      { "name": "Problem n królowych", "href": "/backtracking/n_queens/", "badge": true },
+      { "name": "Problem skoczka szachowego", "href": "/backtracking/knights_tour/", "badge": true }
     ]
   },
   "en": {
@@ -101,7 +102,7 @@
     "treesTitle": "Trees",
     "treesCount": "2 visualizations",
     "backtrackingTitle": "Backtracking",
-    "backtrackingCount": "1 visualization",
+    "backtrackingCount": "2 visualizations",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -134,7 +135,8 @@
       { "name": "Binary search tree", "href": "/trees/build_binary_search_tree/" }
     ],
     "backtracking": [
-      { "name": "N-Queens problem", "href": "/backtracking/n_queens/", "badge": true }
+      { "name": "N-Queens problem", "href": "/backtracking/n_queens/", "badge": true },
+      { "name": "Knight's tour problem", "href": "/backtracking/knights_tour/", "badge": true }
     ]
   }
 }
