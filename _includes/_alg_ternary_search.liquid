@@ -1,0 +1,29 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{TernarySearch}
+    \begin{algorithmic}
+    \FUNCTION{TernarySearch}{A, n, target}
+        \STATE $left \gets 0$
+        \STATE $right \gets n - 1$
+        \WHILE{$left \le right$}
+            \STATE $third \gets \lfloor \frac{right - left}{3} \rfloor$
+            \STATE $m_1 \gets left + third$
+            \STATE $m_2 \gets right - third$
+            \IF{$A[m_1] = target$}
+                \RETURN $m_1$
+            \ELIF{$A[m_2] = target$}
+                \RETURN $m_2$
+            \ELIF{$target < A[m_1]$}
+                \STATE $right \gets m_1 - 1$
+            \ELIF{$target > A[m_2]$}
+                \STATE $left \gets m_2 + 1$
+            \ELSE
+                \STATE $left \gets m_1 + 1$
+                \STATE $right \gets m_2 - 1$
+            \ENDIF
+        \ENDWHILE
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

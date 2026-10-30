@@ -743,4 +743,101 @@ class Searching extends Animation {
         this.timeLine.restart();
         this.timeLine.pause();
     }
+
+    prepareTernarySearch() {
+        let target = parseFloat(this.$searchTarget.val());
+        if (!isFinite(target)) {
+            this.$searchResult.text(this.translate("invalidSearchTarget"));
+            return;
+        }
+
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        this.$visulContainer.find(".searching-pointer").remove();
+        this.createRangeFrame();
+        this.$visulContainer.append(this.createPointer(this.pointerLeftId, this.translate("left"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerMiddleId, this.translate("mid1"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerCurrentId, this.translate("mid2"), "searching-pointer-top"));
+        this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("right"), "searching-pointer-top"));
+        this.$searchResult.text(this.translate("searchTarget", {value: target}));
+
+        const lastIndex = this.array.length - 1;
+        let left = 0;
+        let right = lastIndex;
+        let foundIndex = -1;
+        const third = function (lo, hi) {
+            return Math.floor((hi - lo) / 3);
+        };
+        this.positionPointer(this.pointerLeftId, left);
+        this.positionPointer(this.pointerMiddleId, left + third(left, right), 1);
+        this.positionPointer(this.pointerCurrentId, right - third(left, right), 2);
+        this.positionPointer(this.pointerRightId, right, 3);
+
+        while (left <= right) {
+            const m1 = left + third(left, right);
+            const m2 = right - third(left, right);
+            this.animateMovePointer(this.pointerLeftId, left);
+            this.animateMovePointer(this.pointerMiddleId, m1, 1, "-=750");
+            this.animateMovePointer(this.pointerCurrentId, m2, 2, "-=750");
+            this.animateMovePointer(this.pointerRightId, right, 3, "-=750");
+            this.animateJumpBlock(left, right, true);
+
+            this.animateMark([m1], [this.colors.first]);
+            if (this.array[m1] === target) {
+                foundIndex = m1;
+                this.animateMarkSorted(m1);
+                break;
+            }
+            this.animateLeave([m1]);
+
+            if (m2 !== m1) {
+                this.animateMark([m2], [this.colors.first]);
+                if (this.array[m2] === target) {
+                    foundIndex = m2;
+                    this.animateMarkSorted(m2);
+                    break;
+                }
+                this.animateLeave([m2]);
+            }
+
+            if (target < this.array[m1]) {
+                right = m1 - 1;
+            } else if (target > this.array[m2]) {
+                left = m2 + 1;
+            } else {
+                left = m1 + 1;
+                right = m2 - 1;
+            }
+        }
+
+        if (foundIndex === -1) {
+            const l = Math.min(left, lastIndex);
+            const r = Math.max(right, 0);
+            this.animateMovePointer(this.pointerLeftId, l);
+            this.animateMovePointer(this.pointerMiddleId, l, 1, "-=750");
+            this.animateMovePointer(this.pointerCurrentId, r, 2, "-=750");
+            this.animateMovePointer(this.pointerRightId, r, 3, "-=750");
+            this.animateJumpBlock(left, right, true);
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                if (foundIndex === -1) {
+                    this.$searchResult.text(this.translate("notFound", {value: target}));
+                } else {
+                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
+                }
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
 }
