@@ -41,7 +41,8 @@
       "find_max": "Wyszukiwanie maksimum",
       "min_max_optimal": "Optymalne wyszukiwanie minimum i maksimum",
       "linear_search": "Wyszukiwanie liniowe",
-      "binary_search": "Wyszukiwanie binarne",
+      "binary_search_lower": "Wyszukiwanie binarne — dolna granica",
+      "binary_search_upper": "Wyszukiwanie binarne — górna granica",
       "jump_search": "Wyszukiwanie skokowe",
       "exponential_search": "Wyszukiwanie wykładnicze",
       "fibonacci_search": "Wyszukiwanie Fibonacciego",
@@ -75,7 +76,14 @@
       { "id": "find_max", "name": "Wyszukiwanie maksimum" },
       { "id": "min_max_optimal", "name": "Optymalne wyszukiwanie minimum i maksimum" },
       { "id": "linear_search", "name": "Wyszukiwanie liniowe" },
-      { "id": "binary_search", "name": "Wyszukiwanie binarne" },
+      {
+        "id": "binary_search",
+        "name": "Wyszukiwanie binarne",
+        "variants": [
+          { "id": "binary_search_lower", "name": "Dolna granica (lower bound)" },
+          { "id": "binary_search_upper", "name": "Górna granica (upper bound)" }
+        ]
+      },
       { "id": "jump_search", "name": "Wyszukiwanie skokowe" },
       { "id": "exponential_search", "name": "Wyszukiwanie wykładnicze" },
       { "id": "fibonacci_search", "name": "Wyszukiwanie Fibonacciego" }
@@ -127,7 +135,8 @@
       "find_max": "Find maximum",
       "min_max_optimal": "Optimal min and max search",
       "linear_search": "Linear search",
-      "binary_search": "Binary search",
+      "binary_search_lower": "Binary search — lower bound",
+      "binary_search_upper": "Binary search — upper bound",
       "jump_search": "Jump search",
       "exponential_search": "Exponential search",
       "fibonacci_search": "Fibonacci search",
@@ -161,7 +170,14 @@
       { "id": "find_max", "name": "Find maximum" },
       { "id": "min_max_optimal", "name": "Optimal min and max search" },
       { "id": "linear_search", "name": "Linear search" },
-      { "id": "binary_search", "name": "Binary search" },
+      {
+        "id": "binary_search",
+        "name": "Binary search",
+        "variants": [
+          { "id": "binary_search_lower", "name": "Lower bound" },
+          { "id": "binary_search_upper", "name": "Upper bound" }
+        ]
+      },
       { "id": "jump_search", "name": "Jump search" },
       { "id": "exponential_search", "name": "Exponential search" },
       { "id": "fibonacci_search", "name": "Fibonacci search" }

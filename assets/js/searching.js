@@ -350,9 +350,12 @@ class Searching extends Animation {
         this.$visulContainer.append(this.createPointer(this.pointerRightId, this.translate("right"), "searching-pointer-top"));
         this.$searchResult.text(this.translate("searchTarget", {value: target}));
 
+        // Dolna granica: pierwszy element >= target; górna granica: pierwszy element > target.
+        const upper = this.boundType === "upper";
         let left = 0;
         let right = this.array.length - 1;
-        let foundIndex = -1;
+        let result = this.array.length;
+        let candidate = -1;
         let initialMiddle = Math.floor((left + right) / 2);
         this.positionPointer(this.pointerLeftId, left);
         this.positionPointer(this.pointerRightId, right, 2);
@@ -366,35 +369,34 @@ class Searching extends Animation {
             this.animateJumpBlock(left, right, true);
             this.animateMark([middle], [this.colors.first]);
 
-            if (this.array[middle] === target) {
-                foundIndex = middle;
-                this.animateMarkSorted(middle);
-                break;
-            }
-
-            this.animateLeave([middle]);
-            if (this.array[middle] < target) {
+            const goesRight = upper ? this.array[middle] <= target : this.array[middle] < target;
+            if (goesRight) {
+                this.animateLeave([middle]);
                 left = middle + 1;
             } else {
+                if (candidate !== -1) {
+                    this.animateLeave([candidate]);
+                }
+                this.animateMark([middle], [this.colors.second]);
+                candidate = middle;
+                result = middle;
                 right = middle - 1;
             }
         }
 
-        if (foundIndex == -1) {
-            const lastIndex = this.array.length - 1;
-            this.animateMovePointer(this.pointerLeftId, Math.min(left, lastIndex));
-            this.animateMovePointer(this.pointerRightId, Math.max(right, 0), 2, "-=750");
-            this.animateJumpBlock(left, right, true);
+        const lastIndex = this.array.length - 1;
+        this.animateMovePointer(this.pointerLeftId, Math.min(left, lastIndex));
+        this.animateMovePointer(this.pointerRightId, Math.max(right, 0), 2, "-=750");
+        this.animateJumpBlock(left, right, true, candidate);
+        if (candidate !== -1) {
+            this.animateMarkSorted(candidate);
         }
 
         this.timeLine.add({
             duration: 1,
             complete: function () {
-                if (foundIndex === -1) {
-                    this.$searchResult.text(this.translate("notFound", {value: target}));
-                } else {
-                    this.$searchResult.text(this.translate("found", {value: target, position: foundIndex + 1}));
-                }
+                const key = (upper ? "upperBound" : "lowerBound") + (result === this.array.length ? "End" : "");
+                this.$searchResult.text(this.translate(key, {value: target, position: result + 1}));
             }.bind(this)
         });
 
@@ -402,14 +404,14 @@ class Searching extends Animation {
         this.timeLine.pause();
     }
 
-    animateJumpBlock(lo, hi, parallel = false) {
+    animateJumpBlock(lo, hi, parallel = false, keepIndex = -1) {
         let empty = lo > hi;
         this.timeLine.add({
             targets: this.arrayBlocks.map(function (block) {
                 return block[0];
             }),
             opacity: function (el, i) {
-                return !empty && i >= lo && i <= hi ? 1 : 0.3;
+                return i === keepIndex || (!empty && i >= lo && i <= hi) ? 1 : 0.3;
             },
             easing: "easeInOutQuad"
         }, parallel ? "-=750" : undefined);

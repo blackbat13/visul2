@@ -1,21 +1,33 @@
 <pre id="pseudocode" style="display : none;">
     \begin{algorithm}
-    \caption{BinarySearch}
+    {%- if bound == "upper" %}
+    \caption{UpperBound}
+    {%- else %}
+    \caption{LowerBound}
+    {%- endif %}
     \begin{algorithmic}
-    \FUNCTION{BinarySearch}{A, n, target}
+    {%- if bound == "upper" %}
+    \FUNCTION{UpperBound}{A, n, target}
+    {%- else %}
+    \FUNCTION{LowerBound}{A, n, target}
+    {%- endif %}
         \STATE $left \gets 0$
         \STATE $right \gets n - 1$
+        \STATE $result \gets n$
         \WHILE{$left \le right$}
             \STATE $middle \gets \lfloor \frac{left + right}{2} \rfloor$
-            \IF{$A[middle] = target$}
-                \RETURN $middle$
-            \ELIF{$A[middle] < target$}
+            {%- if bound == "upper" %}
+            \IF{$A[middle] \le target$}
+            {%- else %}
+            \IF{$A[middle] < target$}
+            {%- endif %}
                 \STATE $left \gets middle + 1$
             \ELSE
+                \STATE $result \gets middle$
                 \STATE $right \gets middle - 1$
             \ENDIF
         \ENDWHILE
-        \RETURN $-1$
+        \RETURN $result$
     \ENDFUNCTION
     \end{algorithmic}
     \end{algorithm}

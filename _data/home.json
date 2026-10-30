@@ -50,7 +50,7 @@
       { "name": "Maksimum", "href": "/searching/find_max/" },
       { "name": "Optymalne min i maks", "href": "/searching/min_max_optimal/", "badge": true },
       { "name": "Liniowe", "href": "/searching/linear_search/" },
-      { "name": "Binarne", "href": "/searching/binary_search/" },
+      { "name": "Binarne", "href": "/searching/binary_search_lower/" },
       { "name": "Skokowe", "href": "/searching/jump_search/", "badge": true },
       { "name": "Wykładnicze", "href": "/searching/exponential_search/", "badge": true },
       { "name": "Fibonacciego", "href": "/searching/fibonacci_search/", "badge": true }
@@ -111,7 +111,7 @@
       { "name": "Find maximum", "href": "/searching/find_max/" },
       { "name": "Optimal min and max", "href": "/searching/min_max_optimal/", "badge": true },
       { "name": "Linear search", "href": "/searching/linear_search/" },
-      { "name": "Binary search", "href": "/searching/binary_search/" },
+      { "name": "Binary search", "href": "/searching/binary_search_lower/" },
       { "name": "Jump search", "href": "/searching/jump_search/", "badge": true },
       { "name": "Exponential search", "href": "/searching/exponential_search/", "badge": true },
       { "name": "Fibonacci search", "href": "/searching/fibonacci_search/", "badge": true }

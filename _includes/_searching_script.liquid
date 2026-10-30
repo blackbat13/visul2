@@ -1,6 +1,7 @@
 <script>
     $(document).ready(function () {
         let searching = new Searching();
+        searching.boundType = "{{ bound }}";
         let $prepRandomArrayButton = $("#prep-random-array-button");
         let $prepRandomOrderButton = $("#prep-random-order-button");
         let $prepReverseOrderButton = $("#prep-reverse-order-button");
