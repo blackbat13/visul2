@@ -385,6 +385,163 @@ class Sorting extends Animation {
         }, timelineOffset);
     }
 
+    prepareMergeSort() {
+        this.timeLine = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 750,
+            update: function (anim) {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const bw = this.blockWidth;
+        const n = this.array.length;
+        const barMax = 140;
+        const rowHeight = 22;
+        const rowsBottom = 8;
+        const levels = function (len) {
+            return len <= 1 ? 0 : 1 + levels(Math.ceil(len / 2));
+        };
+        const rows = levels(n);
+        const maxDepth = rows - 1;
+
+        // Od dołu: rzędy zakresów rekurencji, tablica pomocnicza, tablica główna.
+        const auxBottom = rowsBottom + rows * rowHeight + 36;
+        const mainBottom = auxBottom + barMax + 44;
+        const minHeight = "max(40vh, " + (mainBottom + barMax + 50) + "px)";
+        this.$visulContainer.css("min-height", minHeight);
+        this.$visulContainer.closest(".container-row").css("min-height", minHeight);
+
+        const maxValue = Math.max(1, ...this.array);
+        for (let i = 0; i < n; i++) {
+            this.arrayBlocks[i].css({
+                bottom: mainBottom + "px",
+                height: Math.max(3, this.array[i] / maxValue * barMax) + "px"
+            });
+        }
+
+        const $frame = $("<div></div>").attr("id", "quick-range-frame").addClass("quick-range-frame");
+        $frame.css({
+            left: this.firstLeft + "px",
+            width: n * bw + "px",
+            top: "auto",
+            bottom: (mainBottom - 28) + "px",
+            height: (barMax + 28 + 30) + "px"
+        });
+        this.$visulContainer.prepend($frame);
+
+        let nextId = 0;
+        const sort = function (lo, hi, depth) {
+            if (lo >= hi) {
+                return;
+            }
+
+            const id = nextId++;
+            const mid = Math.floor((lo + hi) / 2);
+            const $range = $("<div></div>").attr("id", "quick-range-" + id).addClass("quick-range");
+            $range.text("[" + lo + ", " + hi + "]");
+            $range.css({
+                left: this.firstLeft + lo * bw + "px",
+                width: (hi - lo + 1) * bw + "px",
+                bottom: rowsBottom + (maxDepth - depth) * rowHeight + "px",
+                height: rowHeight - 4 + "px"
+            });
+            this.$visulContainer.append($range);
+
+            this.animateQuickSortFocus(lo, hi);
+            this.timeLine.add({
+                targets: "#quick-range-" + id,
+                opacity: 1,
+                easing: 'easeInOutQuad'
+            }, '-=750');
+
+            sort(lo, mid, depth + 1);
+            sort(mid + 1, hi, depth + 1);
+
+            if (hi - lo > 1) {
+                this.animateQuickSortFocus(lo, hi);
+            }
+
+            // Scalanie: elementy zakresu trafiają do tablicy pomocniczej, a następnie wracają w posortowanej kolejności.
+            const snapshot = this.arrayBlocks.slice(lo, hi + 1);
+            this.timeLine.add({
+                targets: snapshot.map(function (block) {
+                    return block[0];
+                }),
+                bottom: auxBottom + "px",
+                easing: 'easeInOutQuad'
+            });
+
+            const merged = [];
+            const mergedValues = [];
+            let i = lo;
+            let j = mid + 1;
+            for (let k = lo; k <= hi; k++) {
+                const bothAvailable = i <= mid && j <= hi;
+                const takeLeft = j > hi || (i <= mid && this.array[i] <= this.array[j]);
+                const from = takeLeft ? i : j;
+                const block = this.arrayBlocks[from];
+
+                if (bothAvailable) {
+                    this.animateMark([i, j], [this.colors.first, this.colors.second]);
+                }
+
+                this.timeLine.add({
+                    targets: block[0],
+                    left: this.firstLeft + k * bw,
+                    bottom: mainBottom + "px",
+                    backgroundColor: block.attr("s-color"),
+                    easing: 'easeInOutQuad'
+                });
+                if (bothAvailable) {
+                    this.timeLine.add({
+                        targets: this.arrayBlocks[takeLeft ? j : i][0],
+                        backgroundColor: this.arrayBlocks[takeLeft ? j : i].attr("s-color"),
+                        easing: 'easeInOutQuad'
+                    }, '-=750');
+                }
+
+                merged.push(block);
+                mergedValues.push(this.array[from]);
+                if (takeLeft) {
+                    i++;
+                } else {
+                    j++;
+                }
+            }
+
+            for (let k = 0; k < merged.length; k++) {
+                this.arrayBlocks[lo + k] = merged[k];
+                this.array[lo + k] = mergedValues[k];
+            }
+
+            this.timeLine.add({
+                targets: "#quick-range-" + id,
+                opacity: 0.35,
+                easing: 'easeInOutQuad'
+            });
+        }.bind(this);
+
+        sort(0, n - 1, 0);
+
+        this.timeLine.add({
+            targets: this.arrayBlocks.map(function (block) {
+                return block[0];
+            }),
+            opacity: 1,
+            easing: 'easeInOutQuad'
+        });
+        this.timeLine.add({
+            targets: "#quick-range-frame",
+            opacity: 0,
+            easing: 'easeInOutQuad'
+        }, '-=750');
+        this.animateMarkSortedAll();
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
     prepareQuickSort() {
         this.timeLine = anime.timeline({
             easing: 'easeOutExpo',

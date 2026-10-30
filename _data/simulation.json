@@ -31,6 +31,7 @@
       "odd_even_sort": "Sortowanie nieparzysto-parzyste",
       "selection_sort": "Sortowanie przez wybieranie",
       "shell_sort": "Sortowanie Shella",
+      "merge_sort": "Sortowanie przez scalanie",
       "quick_sort_first": "Quicksort — pivot: pierwszy element",
       "quick_sort_last": "Quicksort — pivot: ostatni element",
       "quick_sort_middle": "Quicksort — pivot: środkowy element",
@@ -53,6 +54,7 @@
       { "id": "comb_sort", "name": "Sortowanie grzebieniowe" },
       { "id": "odd_even_sort", "name": "Sortowanie nieparzysto-parzyste" },
       { "id": "shell_sort", "name": "Sortowanie Shella" },
+      { "id": "merge_sort", "name": "Sortowanie przez scalanie" },
       {
         "id": "quick_sort",
         "name": "Quicksort",
@@ -109,6 +111,7 @@
       "odd_even_sort": "Odd-even sort",
       "selection_sort": "Selection sort",
       "shell_sort": "Shell sort",
+      "merge_sort": "Merge sort",
       "quick_sort_first": "Quicksort — pivot: first element",
       "quick_sort_last": "Quicksort — pivot: last element",
       "quick_sort_middle": "Quicksort — pivot: middle element",
@@ -131,6 +134,7 @@
       { "id": "comb_sort", "name": "Comb sort" },
       { "id": "odd_even_sort", "name": "Odd-even sort" },
       { "id": "shell_sort", "name": "Shell sort" },
+      { "id": "merge_sort", "name": "Merge sort" },
       {
         "id": "quick_sort",
         "name": "Quicksort",

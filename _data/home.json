@@ -25,7 +25,7 @@
     "directoryTitleSecond": "rozłożyć na kroki.",
     "directoryIntro": "Każda wizualizacja pokazuje przebieg algorytmu na żywej strukturze danych.",
     "sortingTitle": "Sortowanie",
-    "sortingCount": "9 wizualizacji",
+    "sortingCount": "10 wizualizacji",
     "searchingTitle": "Wyszukiwanie",
     "searchingCount": "5 wizualizacji",
     "treesTitle": "Drzewa",
@@ -42,6 +42,7 @@
       { "name": "Nieparzysto-parzyste", "href": "/sorting/odd_even_sort/" },
       { "name": "Przez wybór", "href": "/sorting/selection_sort/" },
       { "name": "Shella", "href": "/sorting/shell_sort/", "badge": true },
+      { "name": "Przez scalanie", "href": "/sorting/merge_sort/", "badge": true },
       { "name": "Quicksort", "href": "/sorting/quick_sort_last/", "badge": true }
     ],
     "searching": [
@@ -82,7 +83,7 @@
     "directoryTitleSecond": "break down step by step.",
     "directoryIntro": "Each visualization shows an algorithm in action on a live data structure.",
     "sortingTitle": "Sorting",
-    "sortingCount": "9 visualizations",
+    "sortingCount": "10 visualizations",
     "searchingTitle": "Searching",
     "searchingCount": "5 visualizations",
     "treesTitle": "Trees",
@@ -99,6 +100,7 @@
       { "name": "Odd-even sort", "href": "/sorting/odd_even_sort/" },
       { "name": "Selection sort", "href": "/sorting/selection_sort/" },
       { "name": "Shell sort", "href": "/sorting/shell_sort/", "badge": true},
+      { "name": "Merge sort", "href": "/sorting/merge_sort/", "badge": true },
       { "name": "Quicksort", "href": "/sorting/quick_sort_last/", "badge": true }
     ],
     "searching": [

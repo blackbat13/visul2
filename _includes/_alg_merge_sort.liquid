@@ -1,0 +1,28 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{MergeSort}
+    \begin{algorithmic}
+    \PROCEDURE{MergeSort}{$A, lo, hi$}
+        \IF{$lo < hi$}
+            \STATE $mid \gets \left \lfloor{(lo + hi) / 2}\right \rfloor$
+            \STATE \CALL{MergeSort}{$A, lo, mid$}
+            \STATE \CALL{MergeSort}{$A, mid + 1, hi$}
+            \STATE \CALL{Merge}{$A, lo, mid, hi$}
+        \ENDIF
+    \ENDPROCEDURE
+    \PROCEDURE{Merge}{$A, lo, mid, hi$}
+        \STATE $B \gets A[lo \ldots hi]$
+        \STATE $i \gets lo$, $j \gets mid + 1$
+        \FOR{$k \gets lo$ \TO $hi$}
+            \IF{$j > hi$ \OR ($i \leq mid$ \AND $B[i - lo] \leq B[j - lo]$)}
+                \STATE $A[k] \gets B[i - lo]$
+                \STATE $i \gets i + 1$
+            \ELSE
+                \STATE $A[k] \gets B[j - lo]$
+                \STATE $j \gets j + 1$
+            \ENDIF
+        \ENDFOR
+    \ENDPROCEDURE
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
