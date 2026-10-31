@@ -35,7 +35,7 @@
     "backtrackingTitle": "Przeszukiwanie z powrotami",
     "backtrackingCount": "2 wizualizacje",
     "textAlgorithmsTitle": "Algorytmy tekstowe",
-    "textAlgorithmsCount": "3 wizualizacje",
+    "textAlgorithmsCount": "4 wizualizacje",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -74,7 +74,8 @@
     "textAlgorithms": [
       { "name": "Naiwne wyszukiwanie wzorca", "href": "/text_algorithms/naive_string_search/", "badge": true },
       { "name": "Maksymalny prefikso-sufiks (LPS)", "href": "/text_algorithms/longest_prefix_suffix/", "badge": true },
-      { "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true }
+      { "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
+      { "name": "Wyszukiwanie Boyera-Moore'a", "href": "/text_algorithms/boyer_moore/", "badge": true }
     ]
   },
   "en": {
@@ -113,7 +114,7 @@
     "backtrackingTitle": "Backtracking",
     "backtrackingCount": "2 visualizations",
     "textAlgorithmsTitle": "Text algorithms",
-    "textAlgorithmsCount": "3 visualizations",
+    "textAlgorithmsCount": "4 visualizations",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -152,7 +153,8 @@
     "textAlgorithms": [
       { "name": "Naive string search", "href": "/text_algorithms/naive_string_search/", "badge": true },
       { "name": "Longest proper prefix-suffix (LPS)", "href": "/text_algorithms/longest_prefix_suffix/", "badge": true },
-      { "name": "Knuth-Morris-Pratt search (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true }
+      { "name": "Knuth-Morris-Pratt search (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
+      { "name": "Boyer-Moore search", "href": "/text_algorithms/boyer_moore/", "badge": true }
     ]
   }
 }

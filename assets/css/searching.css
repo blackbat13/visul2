@@ -7,6 +7,11 @@
     min-height: 620px;
 }
 
+.boyer-moore-page .container-row,
+.boyer-moore-page .visul-container {
+    min-height: 510px;
+}
+
 .jump-block-frame {
     position: absolute;
     top: 8px;

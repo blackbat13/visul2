@@ -1,0 +1,26 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{BoyerMoore}
+    \begin{algorithmic}
+    \FUNCTION{BoyerMoore}{T, P, n, m}
+        \STATE $last \gets$ last occurrence table for $P$
+        \STATE $goodSuffix \gets$ strong good-suffix shift table for $P$
+        \STATE $s \gets 0$
+        \WHILE{$s \leq n - m$}
+            \STATE $j \gets m - 1$
+            \WHILE{$j \geq 0$ \AND $P[j] = T[s + j]$}
+                \STATE $j \gets j - 1$
+            \ENDWHILE
+            \IF{$j < 0$}
+                \RETURN $s$
+            \ELSE
+                \STATE $bad \gets \max(1, j - last[T[s + j]])$
+                \STATE $good \gets goodSuffix[j + 1]$
+                \STATE $s \gets s + \max(bad, good)$
+            \ENDIF
+        \ENDWHILE
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

@@ -132,6 +132,257 @@ class TextSearching extends Animation {
         this.timeLine.pause();
     }
 
+    prepareBoyerMoore(text, pattern) {
+        const textCharacters = Array.from(text || "");
+        const patternCharacters = Array.from(pattern || "");
+        if (!textCharacters.length || !patternCharacters.length) {
+            this.showInputError(this.translate("invalidTextSearchInput"));
+            return;
+        }
+        if (patternCharacters.length > textCharacters.length) {
+            this.showInputError(this.translate("patternLongerThanText"));
+            return;
+        }
+
+        const stageWidth = this.$visulContainer.parent().width();
+        const textWidth = textCharacters.length * this.cellWidth;
+        const containerWidth = Math.max(stageWidth, textWidth + 48);
+        const textLeft = Math.floor((containerWidth - textWidth) / 2);
+        const patternTop = 248;
+        const badCharacterTop = 326;
+        const goodSuffixTop = 410;
+        const lastOccurrence = new Map();
+        const patternCells = [];
+        const badCharacterCells = [];
+        const goodSuffixCells = [];
+        patternCharacters.forEach(function (character, index) {
+            lastOccurrence.set(character, index);
+        });
+        const goodSuffixShifts = this.buildBoyerMooreGoodSuffixShifts(patternCharacters);
+
+        this.$visulContainer.empty().css("width", containerWidth + "px");
+        this.$searchResult.text(this.translate("boyerMooreInProgress", {pattern: pattern}));
+        this.$timeRange.val(0);
+
+        this.addRowLabel(this.translate("textLabel"), textLeft, 112);
+        this.addTextCharacters(textCharacters, textLeft);
+
+        const $patternRow = $("<div></div>")
+            .attr("id", "boyer-moore-pattern-row")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("patternLabel"))
+            .css({left: textLeft + "px", top: patternTop + "px"});
+        patternCharacters.forEach(function (character, index) {
+            const $cell = this.createCharacterCell(character, "boyer-moore-pattern", index);
+            patternCells.push($cell[0]);
+            $patternRow.append($cell);
+        }.bind(this));
+        this.$visulContainer.append($patternRow);
+
+        this.addRowLabel(this.translate("badCharacterTableLabel"), textLeft, 300);
+        const $badCharacterRow = $("<div></div>")
+            .attr("id", "boyer-moore-bad-character-table")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("badCharacterTableLabel"))
+            .css({left: textLeft + "px", top: badCharacterTop + "px"});
+        patternCharacters.forEach(function (_, index) {
+            const $cell = this.createCharacterCell("–", "boyer-moore-bad-character", index);
+            badCharacterCells.push($cell[0]);
+            $badCharacterRow.append($cell);
+        }.bind(this));
+        this.$visulContainer.append($badCharacterRow);
+
+        this.addRowLabel(this.translate("goodSuffixTableLabel"), textLeft, 384);
+        const $goodSuffixRow = $("<div></div>")
+            .attr("id", "boyer-moore-good-suffix-table")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("goodSuffixTableLabel"))
+            .css({left: textLeft + "px", top: goodSuffixTop + "px"});
+        patternCharacters.forEach(function (_, index) {
+            const $cell = this.createCharacterCell("–", "boyer-moore-good-suffix", index);
+            goodSuffixCells.push($cell[0]);
+            $goodSuffixRow.append($cell);
+            const $index = $("<span></span>")
+                .addClass("text-search-index")
+                .text(index.toString())
+                .css({left: textLeft + index * this.cellWidth + "px", top: (goodSuffixTop + 46) + "px"});
+            this.$visulContainer.append($index);
+        }.bind(this));
+        this.$visulContainer.append($goodSuffixRow);
+
+        this.timeLine = anime.timeline({
+            easing: "easeInOutQuad",
+            duration: 500,
+            update: function () {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        patternCharacters.forEach(function (character, index) {
+            this.timeLine.add({
+                targets: badCharacterCells[index],
+                backgroundColor: this.colors.sorted
+            });
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    badCharacterCells[index].textContent = lastOccurrence.get(character).toString();
+                }
+            });
+            this.timeLine.add({
+                targets: goodSuffixCells[index],
+                backgroundColor: this.colors.sorted
+            });
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    goodSuffixCells[index].textContent = goodSuffixShifts[index + 1].toString();
+                }
+            });
+        }.bind(this));
+
+        let shift = 0;
+        let foundIndex = -1;
+        let previousPair = null;
+        while (shift <= textCharacters.length - patternCharacters.length) {
+            let patternIndex = patternCharacters.length - 1;
+            while (patternIndex >= 0 && patternCharacters[patternIndex] === textCharacters[shift + patternIndex]) {
+                const comparedPatternIndex = patternIndex;
+                const comparedTextIndex = shift + comparedPatternIndex;
+                const pair = [
+                    this.$visulContainer.find("#text-search-text-" + comparedTextIndex)[0],
+                    patternCells[comparedPatternIndex]
+                ];
+                if (previousPair) {
+                    this.timeLine.add({
+                        targets: previousPair,
+                        backgroundColor: "#ffffff",
+                        duration: 1
+                    });
+                }
+                this.timeLine.add({targets: pair, backgroundColor: this.colors.first});
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        this.$searchResult.text(this.translate("boyerMooreCompare", {
+                            textPosition: comparedTextIndex + 1,
+                            patternPosition: comparedPatternIndex + 1
+                        }));
+                    }.bind(this)
+                });
+                previousPair = pair;
+                patternIndex--;
+            }
+
+            if (patternIndex < 0) {
+                foundIndex = shift;
+                const matchedCells = textCharacters.slice(shift, shift + patternCharacters.length)
+                    .map(function (_, index) {
+                        return this.$visulContainer.find("#text-search-text-" + (shift + index))[0];
+                    }.bind(this));
+                this.timeLine.add({
+                    targets: matchedCells.concat(patternCells),
+                    backgroundColor: this.colors.sorted
+                });
+                break;
+            }
+
+            const comparedPatternIndex = patternIndex;
+            const comparedTextIndex = shift + patternIndex;
+            const mismatchPair = [
+                this.$visulContainer.find("#text-search-text-" + comparedTextIndex)[0],
+                patternCells[comparedPatternIndex]
+            ];
+            if (previousPair) {
+                this.timeLine.add({
+                    targets: previousPair,
+                    backgroundColor: "#ffffff",
+                    duration: 1
+                });
+            }
+            this.timeLine.add({targets: mismatchPair, backgroundColor: this.colors.second});
+            const badCharacterShift = Math.max(
+                1,
+                comparedPatternIndex - (lastOccurrence.get(textCharacters[comparedTextIndex]) ?? -1)
+            );
+            const goodSuffixShift = goodSuffixShifts[comparedPatternIndex + 1];
+            const nextShift = Math.max(badCharacterShift, goodSuffixShift);
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    this.$searchResult.text(this.translate("boyerMooreMismatch", {
+                        textPosition: comparedTextIndex + 1,
+                        patternPosition: comparedPatternIndex + 1,
+                        badCharacterShift: badCharacterShift,
+                        goodSuffixShift: goodSuffixShift,
+                        shift: nextShift
+                    }));
+                }.bind(this)
+            });
+            previousPair = mismatchPair;
+            shift += nextShift;
+            if (shift <= textCharacters.length - patternCharacters.length) {
+                this.timeLine.add({
+                    targets: "#boyer-moore-pattern-row",
+                    left: textLeft + shift * this.cellWidth
+                });
+            }
+        }
+
+        if (foundIndex === -1 && previousPair) {
+            this.timeLine.add({
+                targets: previousPair,
+                backgroundColor: "#ffffff",
+                duration: 1
+            });
+        }
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                const resultKey = foundIndex === -1 ? "textPatternNotFound" : "textPatternFound";
+                const values = foundIndex === -1
+                    ? {pattern: pattern}
+                    : {pattern: pattern, position: foundIndex + 1};
+                this.$searchResult.text(this.translate(resultKey, values));
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    buildBoyerMooreGoodSuffixShifts(pattern) {
+        const length = pattern.length;
+        const shifts = new Array(length + 1).fill(0);
+        const borders = new Array(length + 1).fill(0);
+        let i = length;
+        let j = length + 1;
+        borders[i] = j;
+
+        while (i > 0) {
+            while (j <= length && pattern[i - 1] !== pattern[j - 1]) {
+                if (shifts[j] === 0) {
+                    shifts[j] = j - i;
+                }
+                j = borders[j];
+            }
+            i--;
+            j--;
+            borders[i] = j;
+        }
+
+        j = borders[0];
+        for (i = 0; i <= length; i++) {
+            if (shifts[i] === 0) {
+                shifts[i] = j;
+            }
+            if (i === j) {
+                j = borders[j];
+            }
+        }
+        return shifts;
+    }
+
     prepareKnuthMorrisPratt(text, pattern) {
         const textCharacters = Array.from(text || "");
         const patternCharacters = Array.from(pattern || "");
