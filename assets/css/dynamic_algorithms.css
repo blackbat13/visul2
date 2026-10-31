@@ -3,7 +3,7 @@
     min-height: 690px;
 }
 
-.lcs-table {
+.dp-table {
     position: absolute;
     top: 72px;
     left: 50%;
@@ -14,15 +14,15 @@
     text-align: center;
 }
 
-.lcs-table-caption {
+.dp-table-caption {
     padding-bottom: 12px;
     color: #66716c;
     font: 600 12px "IBM Plex Mono", monospace;
     text-align: center;
 }
 
-.lcs-table th,
-.lcs-table td {
+.dp-table th,
+.dp-table td {
     box-sizing: border-box;
     width: 38px;
     min-width: 38px;
@@ -30,13 +30,13 @@
     padding: 0;
 }
 
-.lcs-table th {
+.dp-table th {
     color: #344640;
     font-size: 13px;
     font-weight: 600;
 }
 
-.lcs-table .lcs-corner {
+.dp-table .lcs-corner {
     min-width: 84px;
     padding: 0 8px;
     color: #66716c;
@@ -44,22 +44,22 @@
     white-space: nowrap;
 }
 
-.lcs-table .lcs-row-header {
+.dp-table .lcs-row-header {
     width: 38px;
     min-width: 38px;
     border-right: 2px solid #29826a;
 }
 
-.lcs-table .lcs-column-header {
+.dp-table .lcs-column-header {
     border-bottom: 2px solid #29826a;
 }
 
-.lcs-table .lcs-empty-header {
+.dp-table .lcs-empty-header {
     color: #66716c;
     font-size: 11px;
 }
 
-.lcs-table td {
+.dp-table td {
     border: 1px solid rgba(20, 33, 31, 0.42);
     border-radius: 2px;
     background: #fff;
@@ -69,18 +69,18 @@
 }
 
 @media (max-width: 576px) {
-    .lcs-table {
+    .dp-table {
         border-spacing: 2px;
     }
 
-    .lcs-table th,
-    .lcs-table td {
+    .dp-table th,
+    .dp-table td {
         width: 32px;
         min-width: 32px;
         height: 32px;
     }
 
-    .lcs-table .lcs-corner {
+    .dp-table .lcs-corner {
         min-width: 68px;
         padding: 0 4px;
         font-size: 9px;

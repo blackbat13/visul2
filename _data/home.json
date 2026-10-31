@@ -38,7 +38,7 @@
     "textAlgorithmsTitle": "Algorytmy tekstowe",
     "textAlgorithmsCount": "5 wizualizacji",
     "dynamicAlgorithmsTitle": "Algorytmy dynamiczne",
-    "dynamicAlgorithmsCount": "1 wizualizacja",
+    "dynamicAlgorithmsCount": "2 wizualizacje",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -82,7 +82,8 @@
       { "name": "Wyszukiwanie Rabina-Karpa", "href": "/text_algorithms/rabin_karp/", "badge": true }
     ],
     "dynamicAlgorithms": [
-      { "name": "Najdłuższy wspólny podciąg (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true }
+      { "name": "Najdłuższy wspólny podciąg (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
+      { "name": "Odległość Levenshteina", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true }
     ]
   },
   "en": {
@@ -124,7 +125,7 @@
     "textAlgorithmsTitle": "Text algorithms",
     "textAlgorithmsCount": "5 visualizations",
     "dynamicAlgorithmsTitle": "Dynamic programming",
-    "dynamicAlgorithmsCount": "1 visualization",
+    "dynamicAlgorithmsCount": "2 visualizations",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -168,7 +169,8 @@
       { "name": "Rabin-Karp search", "href": "/text_algorithms/rabin_karp/", "badge": true }
     ],
     "dynamicAlgorithms": [
-      { "name": "Longest common subsequence (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true }
+      { "name": "Longest common subsequence (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
+      { "name": "Levenshtein edit distance", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true }
     ]
   }
 }

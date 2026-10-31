@@ -66,7 +66,7 @@
       "boyer_moore": "Wyszukiwanie Boyera-Moore'a",
       "rabin_karp": "Wyszukiwanie Rabina-Karpa",
       "longest_common_subsequence": "Najdłuższy wspólny podciąg (LCS)",
-      "longest_common_subsequence": "Najdłuższy wspólny podciąg (LCS)",
+      "levenshtein_distance": "Odległość Levenshteina",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -129,10 +129,8 @@
       { "id": "rabin_karp", "name": "Wyszukiwanie Rabina-Karpa" }
     ],
     "dynamicAlgorithms": [
-      { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" }
-    ],
-    "dynamicAlgorithms": [
-      { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" }
+      { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" },
+      { "id": "levenshtein_distance", "name": "Odległość Levenshteina" }
     ]
   },
   "en": {
@@ -202,7 +200,7 @@
       "boyer_moore": "Boyer-Moore search",
       "rabin_karp": "Rabin-Karp search",
       "longest_common_subsequence": "Longest common subsequence (LCS)",
-      "longest_common_subsequence": "Longest common subsequence (LCS)",
+      "levenshtein_distance": "Levenshtein edit distance",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -265,10 +263,8 @@
       { "id": "rabin_karp", "name": "Rabin-Karp search" }
     ],
     "dynamicAlgorithms": [
-      { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" }
-    ],
-    "dynamicAlgorithms": [
-      { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" }
+      { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" },
+      { "id": "levenshtein_distance", "name": "Levenshtein edit distance" }
     ]
   }
 }

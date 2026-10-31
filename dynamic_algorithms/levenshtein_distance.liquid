@@ -1,0 +1,42 @@
+---
+title: Odległość Levenshteina
+levenshtein_distance: active
+alg: prepareLevenshteinDistance
+name: levenshtein_distance
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/dynamic_algorithms/levenshtein_distance/index.html{% else %}dynamic_algorithms/levenshtein_distance/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/dynamic_algorithms.css' | url }}"/>
+</head>
+<body class="dynamic-programming-page">
+<div class="container-fluid">
+    {% include "_dynamic_algorithms_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1>{{ copy.algorithms.levenshtein_distance }}</h1>
+            {% include "_edit_distance_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_levenshtein_distance.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_edit_distance_script.liquid" %}
+</body>
+</html>

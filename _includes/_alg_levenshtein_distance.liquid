@@ -1,0 +1,18 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{LevenshteinDistance}
+    \begin{algorithmic}
+    \FUNCTION{LevenshteinDistance}{A, B, m, n}
+        \STATE $dp[0][j] \gets j$ for $0 \leq j \leq n$
+        \STATE $dp[i][0] \gets i$ for $0 \leq i \leq m$
+        \FOR{$i \gets 1$ \TO $m$}
+            \FOR{$j \gets 1$ \TO $n$}
+                \STATE $cost \gets 0$ if $A[i - 1] = B[j - 1]$, otherwise $1$
+                \STATE $dp[i][j] \gets \min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)$
+            \ENDFOR
+        \ENDFOR
+        \RETURN $dp[m][n]$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
