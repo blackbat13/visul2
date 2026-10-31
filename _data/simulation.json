@@ -60,6 +60,7 @@
       "longest_prefix_suffix": "Maksymalny prefikso-sufiks (LPS)",
       "knuth_morris_pratt": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)",
       "boyer_moore": "Wyszukiwanie Boyera-Moore'a",
+      "rabin_karp": "Wyszukiwanie Rabina-Karpa",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -118,7 +119,8 @@
       { "id": "naive_string_search", "name": "Naiwne wyszukiwanie wzorca" },
       { "id": "longest_prefix_suffix", "name": "Maksymalny prefikso-sufiks (LPS)" },
       { "id": "knuth_morris_pratt", "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)" },
-      { "id": "boyer_moore", "name": "Wyszukiwanie Boyera-Moore'a" }
+      { "id": "boyer_moore", "name": "Wyszukiwanie Boyera-Moore'a" },
+      { "id": "rabin_karp", "name": "Wyszukiwanie Rabina-Karpa" }
     ]
   },
   "en": {
@@ -182,6 +184,7 @@
       "longest_prefix_suffix": "Longest proper prefix-suffix (LPS)",
       "knuth_morris_pratt": "Knuth-Morris-Pratt search (KMP)",
       "boyer_moore": "Boyer-Moore search",
+      "rabin_karp": "Rabin-Karp search",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -240,7 +243,8 @@
       { "id": "naive_string_search", "name": "Naive string search" },
       { "id": "longest_prefix_suffix", "name": "Longest proper prefix-suffix (LPS)" },
       { "id": "knuth_morris_pratt", "name": "Knuth-Morris-Pratt search (KMP)" },
-      { "id": "boyer_moore", "name": "Boyer-Moore search" }
+      { "id": "boyer_moore", "name": "Boyer-Moore search" },
+      { "id": "rabin_karp", "name": "Rabin-Karp search" }
     ]
   }
 }

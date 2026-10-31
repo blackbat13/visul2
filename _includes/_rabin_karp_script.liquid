@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function () {
+        let searching = new TextSearching();
+        let $textInput = $("#text-input");
+        let $patternInput = $("#pattern-input");
+
+        function prepareSimulation() {
+            searching.prepareRabinKarp($textInput.val(), $patternInput.val());
+        }
+
+        renderPseudocode();
+        prepareSimulation();
+        searching.bindControls();
+
+        $("#apply-text-search-button").click(prepareSimulation);
+        $textInput.add($patternInput).on("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                prepareSimulation();
+            }
+        });
+    });
+</script>

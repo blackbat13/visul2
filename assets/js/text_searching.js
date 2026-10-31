@@ -132,6 +132,265 @@ class TextSearching extends Animation {
         this.timeLine.pause();
     }
 
+    prepareRabinKarp(text, pattern) {
+        const textCharacters = Array.from(text || "");
+        const patternCharacters = Array.from(pattern || "");
+        if (!textCharacters.length || !patternCharacters.length) {
+            this.showInputError(this.translate("invalidTextSearchInput"));
+            return;
+        }
+        if (patternCharacters.length > textCharacters.length) {
+            this.showInputError(this.translate("patternLongerThanText"));
+            return;
+        }
+
+        const base = 256;
+        const modulus = 101;
+        const windowCount = textCharacters.length - patternCharacters.length + 1;
+        let highestPower = 1;
+        for (let index = 1; index < patternCharacters.length; index++) {
+            highestPower = (highestPower * base) % modulus;
+        }
+
+        const characterValue = function (character) {
+            return character.codePointAt(0);
+        };
+        let patternHash = 0;
+        let windowHash = 0;
+        for (let index = 0; index < patternCharacters.length; index++) {
+            patternHash = (base * patternHash + characterValue(patternCharacters[index])) % modulus;
+            windowHash = (base * windowHash + characterValue(textCharacters[index])) % modulus;
+        }
+        const windowHashes = [windowHash];
+        for (let shift = 1; shift < windowCount; shift++) {
+            const outgoingValue = characterValue(textCharacters[shift - 1]);
+            const incomingValue = characterValue(textCharacters[shift + patternCharacters.length - 1]);
+            windowHash = (
+                base * (windowHash - outgoingValue * highestPower) + incomingValue
+            ) % modulus;
+            windowHash = (windowHash + modulus) % modulus;
+            windowHashes.push(windowHash);
+        }
+
+        const stageWidth = this.$visulContainer.parent().width();
+        const textWidth = textCharacters.length * this.cellWidth;
+        const containerWidth = Math.max(stageWidth, textWidth + 48);
+        const textLeft = Math.floor((containerWidth - textWidth) / 2);
+        const patternCells = [];
+        const textHashCells = [];
+
+        this.$visulContainer.empty().css("width", containerWidth + "px");
+        this.$searchResult.text(this.translate("rabinKarpInProgress", {pattern: pattern}));
+        this.$timeRange.val(0);
+
+        this.addRowLabel(this.translate("textLabel"), textLeft, 112);
+        this.addTextCharacters(textCharacters, textLeft);
+
+        const $patternRow = $("<div></div>")
+            .attr("id", "rabin-karp-pattern-row")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("patternLabel"))
+            .css({left: textLeft + "px", top: "248px"});
+        patternCharacters.forEach(function (character, index) {
+            const $cell = this.createCharacterCell(character, "rabin-karp-pattern", index);
+            patternCells.push($cell[0]);
+            $patternRow.append($cell);
+        }.bind(this));
+        this.$visulContainer.append($patternRow);
+
+        this.addRowLabel(this.translate("patternHashLabel"), textLeft, 300);
+        const $patternHashCell = this.createCharacterCell("–", "rabin-karp-pattern-hash", 0)
+            .css({left: textLeft + "px", top: "326px"});
+        const $patternHashValue = $("<span></span>")
+            .text(patternHash.toString())
+            .css("opacity", 0);
+        $patternHashCell.empty().append($patternHashValue);
+        this.$visulContainer.append($patternHashCell);
+
+        this.addRowLabel(this.translate("windowHashesLabel"), textLeft, 384);
+        windowHashes.forEach(function (_, index) {
+            const left = textLeft + index * this.cellWidth;
+            const $cell = this.createCharacterCell("–", "rabin-karp-window-hash", index)
+                .css({left: left + "px", top: "410px", fontSize: "12px"});
+            textHashCells.push($cell[0]);
+            const $hashValue = $("<span></span>")
+                .text(windowHashes[index].toString())
+                .css("opacity", 0);
+            $cell.empty().append($hashValue);
+            this.$visulContainer.append($cell);
+            const $index = $("<span></span>")
+                .addClass("text-search-index")
+                .text(index.toString())
+                .css({left: left + "px", top: "456px"});
+            this.$visulContainer.append($index);
+        }.bind(this));
+
+        this.timeLine = anime.timeline({
+            easing: "easeInOutQuad",
+            duration: 500,
+            update: function () {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        this.timeLine.add({
+            targets: $patternHashCell[0],
+            backgroundColor: this.colors.sorted,
+            duration: 1
+        });
+        this.timeLine.add({
+            targets: $patternHashValue[0],
+            opacity: 1,
+            duration: 300
+        });
+        windowHashes.forEach(function (_, index) {
+            this.timeLine.add({
+                targets: textHashCells[index],
+                backgroundColor: this.colors.sorted
+            });
+            this.timeLine.add({
+                targets: textHashCells[index].firstElementChild,
+                opacity: 1,
+                duration: 300
+            });
+        }.bind(this));
+
+        let foundIndex = -1;
+        let previousPair = null;
+        let previousHashPair = null;
+        for (let shift = 0; shift < windowCount; shift++) {
+            const currentShift = shift;
+            const currentWindowHash = windowHashes[currentShift];
+            const hashMatches = currentWindowHash === patternHash;
+            const hashPair = [textHashCells[currentShift], $patternHashCell[0]];
+
+            if (previousPair) {
+                this.timeLine.add({
+                    targets: previousPair,
+                    backgroundColor: "#ffffff",
+                    duration: 1
+                });
+            }
+            if (previousHashPair) {
+                this.timeLine.add({
+                    targets: previousHashPair,
+                    backgroundColor: this.colors.sorted,
+                    duration: 1
+                });
+            }
+            this.timeLine.add({
+                targets: "#rabin-karp-pattern-row",
+                left: textLeft + currentShift * this.cellWidth
+            });
+            this.timeLine.add({
+                targets: hashPair,
+                backgroundColor: hashMatches ? this.colors.first : this.colors.second
+            });
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    this.$searchResult.text(this.translate(
+                        hashMatches ? "rabinKarpHashMatch" : "rabinKarpHashMismatch",
+                        {
+                            position: currentShift + 1,
+                            patternHash: patternHash,
+                            windowHash: currentWindowHash
+                        }
+                    ));
+                }.bind(this)
+            });
+            previousHashPair = hashPair;
+            previousPair = null;
+
+            if (!hashMatches) {
+                continue;
+            }
+
+            let verified = true;
+            for (let index = 0; index < patternCharacters.length; index++) {
+                const textCell = this.$visulContainer.find("#text-search-text-" + (currentShift + index))[0];
+                const patternCell = patternCells[index];
+                const pair = [textCell, patternCell];
+                const isEqual = textCharacters[currentShift + index] === patternCharacters[index];
+                if (previousPair) {
+                    this.timeLine.add({
+                        targets: previousPair,
+                        backgroundColor: "#ffffff",
+                        duration: 1
+                    });
+                }
+                this.timeLine.add({
+                    targets: pair,
+                    backgroundColor: isEqual ? this.colors.first : this.colors.second
+                });
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        this.$searchResult.text(this.translate("rabinKarpCharacterCompare", {
+                            textPosition: currentShift + index + 1,
+                            patternPosition: index + 1
+                        }));
+                    }.bind(this)
+                });
+                previousPair = pair;
+                if (!isEqual) {
+                    verified = false;
+                    break;
+                }
+            }
+
+            if (verified) {
+                foundIndex = currentShift;
+                const matchedTextCells = textCharacters.slice(currentShift, currentShift + patternCharacters.length)
+                    .map(function (_, index) {
+                        return this.$visulContainer.find("#text-search-text-" + (currentShift + index))[0];
+                    }.bind(this));
+                this.timeLine.add({
+                    targets: matchedTextCells.concat(patternCells),
+                    backgroundColor: this.colors.sorted
+                });
+                break;
+            }
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    this.$searchResult.text(this.translate("rabinKarpCollision", {
+                        position: currentShift + 1,
+                        hash: currentWindowHash
+                    }));
+                }.bind(this)
+            });
+        }
+
+        if (foundIndex === -1 && previousPair) {
+            this.timeLine.add({
+                targets: previousPair,
+                backgroundColor: "#ffffff",
+                duration: 1
+            });
+        }
+        if (previousHashPair) {
+            this.timeLine.add({
+                targets: previousHashPair,
+                backgroundColor: this.colors.sorted,
+                duration: 1
+            });
+        }
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                const resultKey = foundIndex === -1 ? "textPatternNotFound" : "textPatternFound";
+                const values = foundIndex === -1
+                    ? {pattern: pattern}
+                    : {pattern: pattern, position: foundIndex + 1};
+                this.$searchResult.text(this.translate(resultKey, values));
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
     prepareBoyerMoore(text, pattern) {
         const textCharacters = Array.from(text || "");
         const patternCharacters = Array.from(pattern || "");

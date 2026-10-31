@@ -35,7 +35,7 @@
     "backtrackingTitle": "Przeszukiwanie z powrotami",
     "backtrackingCount": "2 wizualizacje",
     "textAlgorithmsTitle": "Algorytmy tekstowe",
-    "textAlgorithmsCount": "4 wizualizacje",
+    "textAlgorithmsCount": "5 wizualizacji",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -75,7 +75,8 @@
       { "name": "Naiwne wyszukiwanie wzorca", "href": "/text_algorithms/naive_string_search/", "badge": true },
       { "name": "Maksymalny prefikso-sufiks (LPS)", "href": "/text_algorithms/longest_prefix_suffix/", "badge": true },
       { "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
-      { "name": "Wyszukiwanie Boyera-Moore'a", "href": "/text_algorithms/boyer_moore/", "badge": true }
+      { "name": "Wyszukiwanie Boyera-Moore'a", "href": "/text_algorithms/boyer_moore/", "badge": true },
+      { "name": "Wyszukiwanie Rabina-Karpa", "href": "/text_algorithms/rabin_karp/", "badge": true }
     ]
   },
   "en": {
@@ -114,7 +115,7 @@
     "backtrackingTitle": "Backtracking",
     "backtrackingCount": "2 visualizations",
     "textAlgorithmsTitle": "Text algorithms",
-    "textAlgorithmsCount": "4 visualizations",
+    "textAlgorithmsCount": "5 visualizations",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -154,7 +155,8 @@
       { "name": "Naive string search", "href": "/text_algorithms/naive_string_search/", "badge": true },
       { "name": "Longest proper prefix-suffix (LPS)", "href": "/text_algorithms/longest_prefix_suffix/", "badge": true },
       { "name": "Knuth-Morris-Pratt search (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
-      { "name": "Boyer-Moore search", "href": "/text_algorithms/boyer_moore/", "badge": true }
+      { "name": "Boyer-Moore search", "href": "/text_algorithms/boyer_moore/", "badge": true },
+      { "name": "Rabin-Karp search", "href": "/text_algorithms/rabin_karp/", "badge": true }
     ]
   }
 }

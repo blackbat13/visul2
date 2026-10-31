@@ -1,0 +1,25 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{RabinKarp}
+    \begin{algorithmic}
+    \FUNCTION{RabinKarp}{T, P, n, m}
+        \STATE $q \gets 101$
+        \STATE $d \gets 256$
+        \STATE $h \gets d^{m - 1} \bmod q$
+        \STATE Compute hash of $P$ and first length-$m$ window of $T$
+        \FOR{$s \gets 0$ \TO $n - m$}
+            \IF{$hash(P) = hash(T[s \ldots s + m - 1])$}
+                \IF{$P = T[s \ldots s + m - 1]$}
+                    \RETURN $s$
+                \ENDIF
+            \ENDIF
+            \IF{$s < n - m$}
+                \STATE Remove leading character and append next character to update window hash
+                \STATE $hash \gets (d(hash - T[s]h) + T[s + m]) \bmod q$
+            \ENDIF
+        \ENDFOR
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
