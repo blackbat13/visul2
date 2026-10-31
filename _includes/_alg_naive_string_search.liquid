@@ -1,0 +1,19 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{NaiveStringSearch}
+    \begin{algorithmic}
+    \FUNCTION{NaiveStringSearch}{T, P, n, m}
+        \FOR{$i \gets 0$ \TO $n - m$}
+            \STATE $j \gets 0$
+            \WHILE{$j < m$ \AND $T[i + j] = P[j]$}
+                \STATE $j \gets j + 1$
+            \ENDWHILE
+            \IF{$j = m$}
+                \RETURN $i$
+            \ENDIF
+        \ENDFOR
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

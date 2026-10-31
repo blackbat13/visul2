@@ -15,6 +15,9 @@
       "useArray": "Użyj tablicy",
       "searchTarget": "Wyszukiwany element:",
       "randomSearchTarget": "Losuj element",
+      "text": "Przeszukiwany tekst:",
+      "pattern": "Wzorzec:",
+      "applyTextSearch": "Zastosuj tekst i wzorzec",
       "play": "Odtwórz symulację",
       "pause": "Wstrzymaj symulację",
       "restart": "Uruchom ponownie symulację",
@@ -53,6 +56,7 @@
       "fibonacci_search": "Wyszukiwanie Fibonacciego",
       "ternary_search": "Wyszukiwanie trójkowe",
       "longest_increasing_subarray": "Najdłuższa rosnąca podtablica",
+      "naive_string_search": "Naiwne wyszukiwanie wzorca w tekście",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -106,6 +110,9 @@
     "backtracking": [
       { "id": "n_queens", "name": "Problem n królowych" },
       { "id": "knights_tour", "name": "Problem skoczka szachowego" }
+    ],
+    "textAlgorithms": [
+      { "id": "naive_string_search", "name": "Naiwne wyszukiwanie wzorca" }
     ]
   },
   "en": {
@@ -124,6 +131,9 @@
       "useArray": "Use array",
       "searchTarget": "Search for:",
       "randomSearchTarget": "Randomize target",
+      "text": "Text to search:",
+      "pattern": "Pattern:",
+      "applyTextSearch": "Apply text and pattern",
       "play": "Play simulation",
       "pause": "Pause simulation",
       "restart": "Restart simulation",
@@ -162,6 +172,7 @@
       "fibonacci_search": "Fibonacci search",
       "ternary_search": "Ternary search",
       "longest_increasing_subarray": "Longest increasing subarray",
+      "naive_string_search": "Naive string search",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -215,6 +226,9 @@
     "backtracking": [
       { "id": "n_queens", "name": "N-Queens problem" },
       { "id": "knights_tour", "name": "Knight's tour problem" }
+    ],
+    "textAlgorithms": [
+      { "id": "naive_string_search", "name": "Naive string search" }
     ]
   }
 }

@@ -1,0 +1,171 @@
+class TextSearching extends Animation {
+    constructor() {
+        super();
+        this.$textInput = $("#text-input");
+        this.$patternInput = $("#pattern-input");
+        this.$searchResult = $("#search-result");
+        this.cellWidth = 46;
+        this.cellSize = 42;
+    }
+
+    prepareNaiveStringSearch(text, pattern) {
+        const textCharacters = Array.from(text || "");
+        const patternCharacters = Array.from(pattern || "");
+        if (!textCharacters.length || !patternCharacters.length) {
+            this.showInputError(this.translate("invalidTextSearchInput"));
+            return;
+        }
+        if (patternCharacters.length > textCharacters.length) {
+            this.showInputError(this.translate("patternLongerThanText"));
+            return;
+        }
+
+        const stageWidth = this.$visulContainer.parent().width();
+        const textWidth = textCharacters.length * this.cellWidth;
+        const containerWidth = Math.max(stageWidth, textWidth + 48);
+        const textLeft = Math.floor((containerWidth - textWidth) / 2);
+        const patternLeft = textLeft;
+        const patternTop = 248;
+        const normalColor = "#ffffff";
+
+        this.$visulContainer.empty().css("width", containerWidth + "px");
+        this.$searchResult.text(this.translate("textSearchRunning", {pattern: pattern}));
+        this.$timeRange.val(0);
+
+        this.addRowLabel(this.translate("textLabel"), textLeft, 112);
+        this.addRowLabel(this.translate("patternLabel"), textLeft, 216);
+        this.addTextCharacters(textCharacters, textLeft);
+
+        const $patternRow = $("<div></div>")
+            .attr("id", "naive-pattern-row")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("patternLabel"))
+            .css({left: patternLeft + "px", top: patternTop + "px"});
+        const patternCells = [];
+        patternCharacters.forEach(function (character, index) {
+            const $cell = this.createCharacterCell(character, "pattern", index);
+            patternCells.push($cell[0]);
+            $patternRow.append($cell);
+        }.bind(this));
+        this.$visulContainer.append($patternRow);
+
+        this.timeLine = anime.timeline({
+            easing: "easeInOutQuad",
+            duration: 500,
+            update: function () {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        let foundIndex = -1;
+        let previousPair = null;
+        for (let shift = 0; shift <= textCharacters.length - patternCharacters.length; shift++) {
+            if (shift > 0) {
+                this.timeLine.add({
+                    targets: "#naive-pattern-row",
+                    left: patternLeft + shift * this.cellWidth
+                });
+            }
+
+            let matched = true;
+            for (let j = 0; j < patternCharacters.length; j++) {
+                const textCell = this.$visulContainer.find("#text-search-text-" + (shift + j))[0];
+                const patternCell = patternCells[j];
+                const isEqual = textCharacters[shift + j] === patternCharacters[j];
+                const pair = [textCell, patternCell];
+
+                if (previousPair) {
+                    this.timeLine.add({
+                        targets: previousPair,
+                        backgroundColor: normalColor
+                    });
+                }
+                this.timeLine.add({
+                    targets: pair,
+                    backgroundColor: isEqual ? this.colors.first : this.colors.second
+                }, "-=500");
+
+                previousPair = pair;
+                if (!isEqual) {
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                foundIndex = shift;
+                if (previousPair) {
+                    this.timeLine.add({
+                        targets: previousPair,
+                        backgroundColor: normalColor
+                    });
+                }
+                const matchedTextCells = textCharacters.slice(shift, shift + patternCharacters.length)
+                    .map(function (_, index) {
+                        return this.$visulContainer.find("#text-search-text-" + (shift + index))[0];
+                    }.bind(this));
+                this.timeLine.add({
+                    targets: matchedTextCells.concat(patternCells),
+                    backgroundColor: this.colors.sorted
+                }, "-=500");
+                break;
+            }
+        }
+
+        if (foundIndex === -1 && previousPair) {
+            this.timeLine.add({
+                targets: previousPair,
+                backgroundColor: normalColor
+            });
+        }
+
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                const resultKey = foundIndex === -1 ? "textPatternNotFound" : "textPatternFound";
+                const values = foundIndex === -1 ? {pattern: pattern} : {pattern: pattern, position: foundIndex + 1};
+                this.$searchResult.text(this.translate(resultKey, values));
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    showInputError(message) {
+        if (this.timeLine) {
+            this.timeLine.pause();
+        }
+        this.$visulContainer.empty().css("width", "100%");
+        this.$timeRange.val(0);
+        this.$searchResult.text(message);
+        this.timeLine = anime.timeline();
+    }
+
+    addRowLabel(text, left, top) {
+        const $label = $("<div></div>").addClass("text-search-row-label").text(text);
+        $label.css({left: left + "px", top: top + "px"});
+        this.$visulContainer.append($label);
+    }
+
+    addTextCharacters(characters, left) {
+        characters.forEach(function (character, index) {
+            const $cell = this.createCharacterCell(character, "text", index);
+            $cell.css({left: left + index * this.cellWidth + "px", top: "144px"});
+            this.$visulContainer.append($cell);
+            const $index = $("<span></span>")
+                .addClass("text-search-index")
+                .text(index.toString())
+                .css({left: left + index * this.cellWidth + "px", top: "190px"});
+            this.$visulContainer.append($index);
+        }.bind(this));
+    }
+
+    createCharacterCell(character, row, index) {
+        return $("<div></div>")
+            .attr("id", "text-search-" + row + "-" + index)
+            .addClass("text-search-cell")
+            .css("width", this.cellSize + "px")
+            .text(character);
+    }
+}

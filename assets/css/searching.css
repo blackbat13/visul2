@@ -102,3 +102,43 @@
     font-size: 10px;
     letter-spacing: -0.5px;
 }
+
+.text-search-row {
+    position: absolute;
+    display: flex;
+    gap: 4px;
+    white-space: pre;
+}
+
+.text-search-row-label {
+    position: absolute;
+    color: #66716c;
+    font: 600 12px "IBM Plex Mono", monospace;
+}
+
+.text-search-cell {
+    position: absolute;
+    box-sizing: border-box;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(20, 33, 31, 0.42);
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(20, 33, 31, 0.12);
+    color: #14211f;
+    font: 600 16px "IBM Plex Mono", monospace;
+}
+
+.text-search-row .text-search-cell {
+    position: relative;
+    flex: 0 0 42px;
+}
+
+.text-search-index {
+    position: absolute;
+    width: 42px;
+    text-align: center;
+    color: #66716c;
+    font: 11px "IBM Plex Mono", monospace;
+}

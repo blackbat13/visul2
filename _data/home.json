@@ -1,6 +1,6 @@
 ﻿{
   "pl": {
-    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, przeszukiwania z powrotami i struktur danych.",
+    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, algorytmów tekstowych, przeszukiwania z powrotami i struktur danych.",
     "title": "Visul2 — algorytmy w ruchu",
     "brandLabel": "Visul2 — strona główna",
     "languageLabel": "Zmień język",
@@ -16,6 +16,7 @@
     "searchingStep": "SZUKAJ",
     "treesStep": "BUDUJ",
     "backtrackingStep": "COFAJ",
+    "textAlgorithmsStep": "DOPASUJ",
     "sceneLabel": "SORTOWANIE BĄBELKOWE",
     "sceneStatus": "KROK 04 / 09",
     "sceneChartLabel": "Słupki o wartościach 8, 3, 6, 2, 7, 1, 5 i 4; aktualnie porównywane są wartości 6 i 2",
@@ -33,6 +34,8 @@
     "treesCount": "2 wizualizacje",
     "backtrackingTitle": "Przeszukiwanie z powrotami",
     "backtrackingCount": "2 wizualizacje",
+    "textAlgorithmsTitle": "Algorytmy tekstowe",
+    "textAlgorithmsCount": "1 wizualizacja",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -67,10 +70,13 @@
     "backtracking": [
       { "name": "Problem n królowych", "href": "/backtracking/n_queens/", "badge": true },
       { "name": "Problem skoczka szachowego", "href": "/backtracking/knights_tour/", "badge": true }
+    ],
+    "textAlgorithms": [
+      { "name": "Naiwne wyszukiwanie wzorca", "href": "/text_algorithms/naive_string_search/", "badge": true }
     ]
   },
   "en": {
-    "description": "Interactive visualizations of sorting, searching, backtracking algorithms, and data structures.",
+    "description": "Interactive visualizations of sorting, searching, text algorithms, backtracking, and data structures.",
     "title": "Visul2 — algorithms in motion",
     "brandLabel": "Visul2 — home",
     "languageLabel": "Change language",
@@ -86,6 +92,7 @@
     "searchingStep": "SEARCH",
     "treesStep": "BUILD",
     "backtrackingStep": "BACKTRACK",
+    "textAlgorithmsStep": "MATCH",
     "sceneLabel": "BUBBLE SORT",
     "sceneStatus": "STEP 04 / 09",
     "sceneChartLabel": "Bars with values 8, 3, 6, 2, 7, 1, 5, and 4; values 6 and 2 are currently being compared",
@@ -103,6 +110,8 @@
     "treesCount": "2 visualizations",
     "backtrackingTitle": "Backtracking",
     "backtrackingCount": "2 visualizations",
+    "textAlgorithmsTitle": "Text algorithms",
+    "textAlgorithmsCount": "1 visualization",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -137,6 +146,9 @@
     "backtracking": [
       { "name": "N-Queens problem", "href": "/backtracking/n_queens/", "badge": true },
       { "name": "Knight's tour problem", "href": "/backtracking/knights_tour/", "badge": true }
+    ],
+    "textAlgorithms": [
+      { "name": "Naive string search", "href": "/text_algorithms/naive_string_search/", "badge": true }
     ]
   }
 }

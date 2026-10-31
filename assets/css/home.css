@@ -433,6 +433,7 @@
 .searching-symbol { color: var(--home-coral); }
 .trees-symbol { color: var(--home-blue); }
 .backtracking-symbol { color: #a45ca8; }
+.text-algorithms-symbol { color: #29826a; font: 600 16px var(--home-mono); }
 
 .algorithm-list {
     margin: 0;
