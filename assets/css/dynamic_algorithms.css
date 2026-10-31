@@ -1,0 +1,88 @@
+.dynamic-programming-page .container-row,
+.dynamic-programming-page .visul-container {
+    min-height: 690px;
+}
+
+.lcs-table {
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    border-spacing: 3px;
+    transform: translateX(-50%);
+    color: #14211f;
+    font-family: "IBM Plex Mono", monospace;
+    text-align: center;
+}
+
+.lcs-table-caption {
+    padding-bottom: 12px;
+    color: #66716c;
+    font: 600 12px "IBM Plex Mono", monospace;
+    text-align: center;
+}
+
+.lcs-table th,
+.lcs-table td {
+    box-sizing: border-box;
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+    padding: 0;
+}
+
+.lcs-table th {
+    color: #344640;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.lcs-table .lcs-corner {
+    min-width: 84px;
+    padding: 0 8px;
+    color: #66716c;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.lcs-table .lcs-row-header {
+    width: 38px;
+    min-width: 38px;
+    border-right: 2px solid #29826a;
+}
+
+.lcs-table .lcs-column-header {
+    border-bottom: 2px solid #29826a;
+}
+
+.lcs-table .lcs-empty-header {
+    color: #66716c;
+    font-size: 11px;
+}
+
+.lcs-table td {
+    border: 1px solid rgba(20, 33, 31, 0.42);
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(20, 33, 31, 0.1);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .lcs-table {
+        border-spacing: 2px;
+    }
+
+    .lcs-table th,
+    .lcs-table td {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+    }
+
+    .lcs-table .lcs-corner {
+        min-width: 68px;
+        padding: 0 4px;
+        font-size: 9px;
+    }
+}

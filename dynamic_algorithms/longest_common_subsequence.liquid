@@ -1,0 +1,43 @@
+---
+title: Najdłuższy wspólny podciąg
+longest_common_subsequence: active
+alg: prepareLongestCommonSubsequence
+name: longest_common_subsequence
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/dynamic_algorithms/longest_common_subsequence/index.html{% else %}dynamic_algorithms/longest_common_subsequence/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/dynamic_algorithms.css' | url }}"/>
+</head>
+<body class="dynamic-programming-page">
+<div class="container-fluid">
+    {% include "_dynamic_algorithms_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1>{{ copy.algorithms.longest_common_subsequence }}</h1>
+            {% include "_lcs_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_longest_common_subsequence.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+<script src="{{ '/assets/js/dynamic_algorithms.js' | url }}"></script>
+{% include "_lcs_script.liquid" %}
+</body>
+</html>

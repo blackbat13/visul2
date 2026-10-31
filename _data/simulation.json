@@ -18,6 +18,10 @@
       "text": "Przeszukiwany tekst:",
       "pattern": "Wzorzec:",
       "applyTextSearch": "Zastosuj tekst i wzorzec",
+      "firstSequence": "Pierwszy ciąg (wiersze):",
+      "secondSequence": "Drugi ciąg (kolumny):",
+      "applyLcs": "Oblicz LCS",
+      "sequenceLengthHelp": "Każdy ciąg może mieć maksymalnie 12 znaków.",
       "play": "Odtwórz symulację",
       "pause": "Wstrzymaj symulację",
       "restart": "Uruchom ponownie symulację",
@@ -61,6 +65,8 @@
       "knuth_morris_pratt": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)",
       "boyer_moore": "Wyszukiwanie Boyera-Moore'a",
       "rabin_karp": "Wyszukiwanie Rabina-Karpa",
+      "longest_common_subsequence": "Najdłuższy wspólny podciąg (LCS)",
+      "longest_common_subsequence": "Najdłuższy wspólny podciąg (LCS)",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -121,6 +127,12 @@
       { "id": "knuth_morris_pratt", "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)" },
       { "id": "boyer_moore", "name": "Wyszukiwanie Boyera-Moore'a" },
       { "id": "rabin_karp", "name": "Wyszukiwanie Rabina-Karpa" }
+    ],
+    "dynamicAlgorithms": [
+      { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" }
+    ],
+    "dynamicAlgorithms": [
+      { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" }
     ]
   },
   "en": {
@@ -142,6 +154,10 @@
       "text": "Text to search:",
       "pattern": "Pattern:",
       "applyTextSearch": "Apply text and pattern",
+      "firstSequence": "First sequence (rows):",
+      "secondSequence": "Second sequence (columns):",
+      "applyLcs": "Compute LCS",
+      "sequenceLengthHelp": "Each sequence can contain up to 12 characters.",
       "play": "Play simulation",
       "pause": "Pause simulation",
       "restart": "Restart simulation",
@@ -185,6 +201,8 @@
       "knuth_morris_pratt": "Knuth-Morris-Pratt search (KMP)",
       "boyer_moore": "Boyer-Moore search",
       "rabin_karp": "Rabin-Karp search",
+      "longest_common_subsequence": "Longest common subsequence (LCS)",
+      "longest_common_subsequence": "Longest common subsequence (LCS)",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -245,6 +263,12 @@
       { "id": "knuth_morris_pratt", "name": "Knuth-Morris-Pratt search (KMP)" },
       { "id": "boyer_moore", "name": "Boyer-Moore search" },
       { "id": "rabin_karp", "name": "Rabin-Karp search" }
+    ],
+    "dynamicAlgorithms": [
+      { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" }
+    ],
+    "dynamicAlgorithms": [
+      { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" }
     ]
   }
 }

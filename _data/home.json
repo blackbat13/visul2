@@ -1,6 +1,6 @@
 ﻿{
   "pl": {
-    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, algorytmów tekstowych, przeszukiwania z powrotami i struktur danych.",
+    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, tekstowych, dynamicznych, przeszukiwania z powrotami i struktur danych.",
     "title": "Visul2 — algorytmy w ruchu",
     "brandLabel": "Visul2 — strona główna",
     "languageLabel": "Zmień język",
@@ -17,6 +17,7 @@
     "treesStep": "BUDUJ",
     "backtrackingStep": "COFAJ",
     "textAlgorithmsStep": "DOPASUJ",
+    "dynamicAlgorithmsStep": "OPTYMALIZUJ",
     "sceneLabel": "SORTOWANIE BĄBELKOWE",
     "sceneStatus": "KROK 04 / 09",
     "sceneChartLabel": "Słupki o wartościach 8, 3, 6, 2, 7, 1, 5 i 4; aktualnie porównywane są wartości 6 i 2",
@@ -36,6 +37,8 @@
     "backtrackingCount": "2 wizualizacje",
     "textAlgorithmsTitle": "Algorytmy tekstowe",
     "textAlgorithmsCount": "5 wizualizacji",
+    "dynamicAlgorithmsTitle": "Algorytmy dynamiczne",
+    "dynamicAlgorithmsCount": "1 wizualizacja",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -77,10 +80,13 @@
       { "name": "Wyszukiwanie Knutha-Morrisa-Pratta (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
       { "name": "Wyszukiwanie Boyera-Moore'a", "href": "/text_algorithms/boyer_moore/", "badge": true },
       { "name": "Wyszukiwanie Rabina-Karpa", "href": "/text_algorithms/rabin_karp/", "badge": true }
+    ],
+    "dynamicAlgorithms": [
+      { "name": "Najdłuższy wspólny podciąg (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true }
     ]
   },
   "en": {
-    "description": "Interactive visualizations of sorting, searching, text algorithms, backtracking, and data structures.",
+    "description": "Interactive visualizations of sorting, searching, text, dynamic programming, backtracking, and data structures.",
     "title": "Visul2 — algorithms in motion",
     "brandLabel": "Visul2 — home",
     "languageLabel": "Change language",
@@ -97,6 +103,7 @@
     "treesStep": "BUILD",
     "backtrackingStep": "BACKTRACK",
     "textAlgorithmsStep": "MATCH",
+    "dynamicAlgorithmsStep": "OPTIMIZE",
     "sceneLabel": "BUBBLE SORT",
     "sceneStatus": "STEP 04 / 09",
     "sceneChartLabel": "Bars with values 8, 3, 6, 2, 7, 1, 5, and 4; values 6 and 2 are currently being compared",
@@ -116,6 +123,8 @@
     "backtrackingCount": "2 visualizations",
     "textAlgorithmsTitle": "Text algorithms",
     "textAlgorithmsCount": "5 visualizations",
+    "dynamicAlgorithmsTitle": "Dynamic programming",
+    "dynamicAlgorithmsCount": "1 visualization",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -157,6 +166,9 @@
       { "name": "Knuth-Morris-Pratt search (KMP)", "href": "/text_algorithms/knuth_morris_pratt/", "badge": true },
       { "name": "Boyer-Moore search", "href": "/text_algorithms/boyer_moore/", "badge": true },
       { "name": "Rabin-Karp search", "href": "/text_algorithms/rabin_karp/", "badge": true }
+    ],
+    "dynamicAlgorithms": [
+      { "name": "Longest common subsequence (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true }
     ]
   }
 }

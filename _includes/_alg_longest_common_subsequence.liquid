@@ -1,0 +1,20 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{LongestCommonSubsequence}
+    \begin{algorithmic}
+    \FUNCTION{LCS}{A, B, m, n}
+        \STATE Create $dp[0 \ldots m][0 \ldots n]$ filled with $0$
+        \FOR{$i \gets 1$ \TO $m$}
+            \FOR{$j \gets 1$ \TO $n$}
+                \IF{$A[i - 1] = B[j - 1]$}
+                    \STATE $dp[i][j] \gets dp[i - 1][j - 1] + 1$
+                \ELSE
+                    \STATE $dp[i][j] \gets \max(dp[i - 1][j], dp[i][j - 1])$
+                \ENDIF
+            \ENDFOR
+        \ENDFOR
+        \RETURN $dp[m][n]$ and a subsequence found by tracing back through $dp$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
