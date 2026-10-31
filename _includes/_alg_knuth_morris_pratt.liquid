@@ -1,0 +1,28 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{KnuthMorrisPratt}
+    \begin{algorithmic}
+    \FUNCTION{KnuthMorrisPratt}{T, P, n, m}
+        \STATE $LPS \gets ComputeLPS(P, m)$
+        \STATE $i \gets 0$
+        \STATE $j \gets 0$
+        \WHILE{$i < n$}
+            \IF{$T[i] = P[j]$}
+                \STATE $i \gets i + 1$
+                \STATE $j \gets j + 1$
+            \ENDIF
+            \IF{$j = m$}
+                \RETURN $i - j$
+            \ELSIF{$i < n$ \AND $T[i] \neq P[j]$}
+                \IF{$j \neq 0$}
+                    \STATE $j \gets LPS[j - 1]$
+                \ELSE
+                    \STATE $i \gets i + 1$
+                \ENDIF
+            \ENDIF
+        \ENDWHILE
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
