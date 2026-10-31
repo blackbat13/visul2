@@ -1,0 +1,131 @@
+.chess-container-row {
+    min-height: 540px;
+}
+
+#visul-container.chess-visualization {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 540px;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(24px, 6vw, 88px);
+    padding: 28px;
+}
+
+.chess-board {
+    width: min(460px, 62vh, 58vw);
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-columns: repeat(var(--board-size), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--board-size), minmax(0, 1fr));
+    border: 5px solid #14211f;
+    box-shadow: 0 14px 34px rgba(20, 33, 31, 0.16);
+}
+
+.chess-square {
+    min-width: 0;
+    display: grid;
+    place-items: center;
+    color: #14211f;
+    font-size: clamp(18px, 4vw, 42px);
+    line-height: 1;
+    user-select: none;
+}
+
+.chess-square.is-light {
+    background: #e7eadf;
+}
+
+.chess-square.is-dark {
+    background: #6e8a80;
+}
+
+.chess-square.is-current {
+    background: #d8f36a;
+    box-shadow: inset 0 0 0 3px #14211f;
+}
+
+.chess-square.is-rejected {
+    background: #f0745c;
+}
+
+.chess-square.is-solution {
+    background: #b9efc5;
+}
+
+.chess-square.has-queen {
+    color: #14211f;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.chess-step-panel {
+    width: min(300px, 34vw);
+    color: #14211f;
+}
+
+.chess-step-panel h2 {
+    margin: 0 0 12px;
+    font: 600 12px var(--visul-mono);
+    text-transform: uppercase;
+}
+
+.chess-step-panel p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.queen-settings h1,
+.knight-settings h1 {
+    margin-bottom: 16px;
+    font-size: 21px;
+}
+
+.queen-size-help {
+    margin-top: 8px;
+    color: var(--visul-muted);
+    font-size: 12px;
+}
+
+.queen-step-status {
+    max-width: 540px;
+    min-height: 48px;
+    margin: 20px auto 0;
+    color: #344640;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.chess-square.has-knight {
+    font: 600 clamp(13px, 2.4vw, 22px) var(--visul-mono);
+}
+
+.chess-square.has-knight.is-current {
+    font: 42px/1 var(--visul-display);
+}
+
+@media (max-width: 760px) {
+    #visul-container.chess-visualization {
+        height: auto;
+        min-height: 0;
+        flex-direction: column;
+        gap: 20px;
+        padding: 24px 12px;
+    }
+
+    .chess-board {
+        width: min(460px, 88vw);
+    }
+
+    .chess-step-panel {
+        width: min(460px, 88vw);
+    }
+
+    .chess-step-panel p {
+        font-size: 14px;
+    }
+}

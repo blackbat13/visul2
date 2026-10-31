@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wyszukiwanie Rabina-Karpa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/searching.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/visul2/">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Przełącz nawigację">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../naive_string_search/">Naiwne wyszukiwanie wzorca</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../longest_prefix_suffix/">Maksymalny prefikso-sufiks (LPS)</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../knuth_morris_pratt/">Wyszukiwanie Knutha-Morrisa-Pratta (KMP)</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../boyer_moore/">Wyszukiwanie Boyera-Moore'a</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link active" href="../rabin_karp/">Wyszukiwanie Rabina-Karpa</a>
+                </li>
+                
+            </ul>
+        </div>
+        <a class="simulation-language-switch" href="/visul2/en/text_algorithms/rabin_karp/" lang="en" aria-label="Zmień język">English</a>
+    </div>
+</nav>
+
+
+    <div class="row container-row">
+    <div class="col-12 visul-container" id="visul-container">
+    </div>
+</div>
+
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1>Wyszukiwanie Rabina-Karpa</h1>
+            <div class="row col-12 mt-3">
+    <label for="text-input" class="col-12 col-form-label">Przeszukiwany tekst:</label>
+    <div class="col-12">
+        <input id="text-input" type="text" class="form-control" maxlength="40" required value="ABABDABACDABABCABAB"/>
+    </div>
+</div>
+<div class="row col-12 mt-3">
+    <label for="pattern-input" class="col-12 col-form-label">Wzorzec:</label>
+    <div class="col-12">
+        <input id="pattern-input" type="text" class="form-control" maxlength="40" required value="ABABCABAB"/>
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <button id="apply-text-search-button" type="button" class="btn btn-outline-primary">
+        <i class="fa fa-check" aria-hidden="true"></i> Zastosuj tekst i wzorzec
+    </button>
+</div>
+<p id="search-result" class="mt-3" aria-live="polite"></p>
+
+        </div>
+        <div class="col-4 controls-div">
+            <button id="start-button" type="button" class="btn btn-primary" aria-label="Odtwórz symulację" title="Odtwórz symulację"><i class="fa fa-play" aria-hidden="true"></i></button>
+<button id="pause-button" type="button" class="btn btn-primary" aria-label="Wstrzymaj symulację" title="Wstrzymaj symulację"><i class="fa fa-pause" aria-hidden="true"></i></button>
+<button id="restart-button" type="button" class="btn btn-primary" aria-label="Uruchom ponownie symulację" title="Uruchom ponownie symulację"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<input id="time-range" class="form-range" type="range" min="0" max="100" step=".001" value="0" aria-label="Oś czasu symulacji"/>
+<button id="export-slides-button" type="button" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Eksportuj slajdy PDF</button>
+
+        </div>
+        <div class="col-4">
+            <pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{RabinKarp}
+    \begin{algorithmic}
+    \FUNCTION{RabinKarp}{T, P, n, m}
+        \STATE $q \gets 101$
+        \STATE $d \gets 256$
+        \STATE $h \gets d^{m - 1} \bmod q$
+        \STATE Compute hash of $P$ and first length-$m$ window of $T$
+        \FOR{$s \gets 0$ \TO $n - m$}
+            \IF{$hash(P) = hash(T[s \ldots s + m - 1])$}
+                \IF{$P = T[s \ldots s + m - 1]$}
+                    \RETURN $s$
+                \ENDIF
+            \ENDIF
+            \IF{$s < n - m$}
+                \STATE Remove leading character and append next character to update window hash
+                \STATE $hash \gets (d(hash - T[s]h) + T[s + m]) \bmod q$
+            \ENDIF
+        \ENDFOR
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
+
+        </div>
+    </div>
+</div>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
+<script src="/visul2/node_modules/underscore/underscore-min.js"></script>
+<script src="/visul2/node_modules/html2canvas/dist/html2canvas.min.js"></script>
+<script src="/visul2/node_modules/jspdf/dist/jspdf.umd.min.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
+<script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
+<script src="/visul2/assets/js/localization.js"></script>
+<script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        let searching = new TextSearching();
+        let $textInput = $("#text-input");
+        let $patternInput = $("#pattern-input");
+
+        function prepareSimulation() {
+            searching.prepareRabinKarp($textInput.val(), $patternInput.val());
+        }
+
+        renderPseudocode();
+        prepareSimulation();
+        searching.bindControls();
+
+        $("#apply-text-search-button").click(prepareSimulation);
+        $textInput.add($patternInput).on("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                prepareSimulation();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive visualizations of sorting, searching, text, dynamic programming, backtracking, and data structures.">
+    <title>Visul2 — algorithms in motion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/home.css"/>
+</head>
+<body class="home-page">
+<header class="home-header">
+    <a class="home-brand" href="/visul2/" aria-label="Visul2 — home">
+        <span class="home-brand-mark">V2</span>
+        <span>Visul2</span>
+    </a>
+    <nav class="home-nav" aria-label="Main navigation">
+        <a href="#algorithms">Algorithms</a>
+        <a href="#about">About</a>
+    </nav>
+    <div class="home-header-actions">
+        <a class="home-language-switch" href="/visul2/" lang="pl" aria-label="Change language">
+            Polski
+        </a>
+        <span class="home-header-note">LAB / 01</span>
+    </div>
+</header>
+
+<main>
+    <section class="home-hero" aria-labelledby="hero-title">
+        <div class="home-hero-inner">
+            <div class="hero-copy">
+                <p class="hero-kicker"><span class="hero-kicker-dot"></span> INTERACTIVE ALGORITHM LAB</p>
+                <h1 id="hero-title">Visul<span>2</span></h1>
+                <p class="hero-description">See how an algorithm thinks. Step by step, comparison by comparison.</p>
+                <a class="hero-cta" href="#algorithms">
+                    Explore visualizations
+                    <span aria-hidden="true">&#8595;</span>
+                </a>
+                <p class="hero-footnote"><span>01</span> SORT &nbsp; <span>02</span> SEARCH &nbsp; <span>03</span> BUILD &nbsp; <span>04</span> BACKTRACK &nbsp; <span>05</span> MATCH &nbsp; <span>06</span> OPTIMIZE</p>
+            </div>
+
+            <figure class="algorithm-scene" aria-label="Bars with values 8, 3, 6, 2, 7, 1, 5, and 4; values 6 and 2 are currently being compared">
+                <div class="scene-heading">
+                    <span class="scene-label">BUBBLE SORT</span>
+                    <span class="scene-status"><span></span> STEP 04 / 09</span>
+                </div>
+                <div class="scene-chart" role="img" aria-label="Bars with values 8, 3, 6, 2, 7, 1, 5, and 4; values 6 and 2 are currently being compared">
+                    <div class="chart-baseline"></div>
+                    <div class="chart-bars" aria-hidden="true">
+                        <div class="chart-bar" style="--bar-size: 74%"><span>8</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 33%"><span>3</span><i></i></div>
+                        <div class="chart-bar is-active" style="--bar-size: 58%"><span>6</span><i></i></div>
+                        <div class="chart-bar is-compare" style="--bar-size: 24%"><span>2</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 66%"><span>7</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 16%"><span>1</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 49%"><span>5</span><i></i></div>
+                        <div class="chart-bar" style="--bar-size: 41%"><span>4</span><i></i></div>
+                    </div>
+                </div>
+                <figcaption class="scene-caption">
+                    <span><i class="legend-dot legend-current"></i> current element</span>
+                    <span><i class="legend-dot legend-compare"></i> comparison</span>
+                    <span class="scene-caption-index">A[2] &gt; A[3]</span>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="hero-coordinate" aria-hidden="true">52&deg;13' N<br>21&deg;00' E</div>
+    </section>
+
+    <section class="algorithm-directory" id="algorithms" aria-labelledby="directory-title">
+        <div class="directory-heading">
+            <p class="section-kicker">01 / CATALOG</p>
+            <h2 id="directory-title">Choose what to<br>break down step by step.</h2>
+            <p class="directory-intro">Each visualization shows an algorithm in action on a live data structure.</p>
+        </div>
+
+        <div class="directory-groups">
+            <section class="directory-group" aria-labelledby="sorting-title">
+                <div class="group-heading">
+                    <span class="group-index">01</span>
+                    <div>
+                        <h3 id="sorting-title">Sorting</h3>
+                        <p>10 visualizations</p>
+                    </div>
+                    <span class="group-symbol sorting-symbol" aria-hidden="true">&#8645;</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/sorting/bubble_sort/">Bubble sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/cocktail_shaker_sort/">Cocktail shaker sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/comb_sort/">Comb sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/gnome_sort/">Gnome sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/insertion_sort/">Insertion sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/odd_even_sort/">Odd-even sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/selection_sort/">Selection sort <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/shell_sort/">Shell sort <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/merge_sort/">Merge sort <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/sorting/quick_sort_last/">Quicksort <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="searching-title">
+                <div class="group-heading">
+                    <span class="group-index">02</span>
+                    <div>
+                        <h3 id="searching-title">Searching</h3>
+                        <p>10 visualizations</p>
+                    </div>
+                    <span class="group-symbol searching-symbol" aria-hidden="true">&#8981;</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/searching/find_min/">Find minimum <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/find_max/">Find maximum <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/min_max_optimal/">Optimal min and max <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/linear_search/">Linear search <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/binary_search_lower/">Binary search <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/jump_search/">Jump search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/exponential_search/">Exponential search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/fibonacci_search/">Fibonacci search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/ternary_search/">Ternary search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/searching/longest_increasing_subarray/">Longest increasing subarray <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="trees-title">
+                <div class="group-heading">
+                    <span class="group-index">03</span>
+                    <div>
+                        <h3 id="trees-title">Trees</h3>
+                        <p>2 visualizations</p>
+                    </div>
+                    <span class="group-symbol trees-symbol" aria-hidden="true">&#9698;</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/trees/build_binary_tree/">Binary tree <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/trees/build_binary_search_tree/">Binary search tree <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="backtracking-title">
+                <div class="group-heading">
+                    <span class="group-index">04</span>
+                    <div>
+                        <h3 id="backtracking-title">Backtracking</h3>
+                        <p>2 visualizations</p>
+                    </div>
+                    <span class="group-symbol backtracking-symbol" aria-hidden="true">&#8634;</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/backtracking/n_queens/">N-Queens problem <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/backtracking/knights_tour/">Knight's tour problem <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="text-algorithms-title">
+                <div class="group-heading">
+                    <span class="group-index">05</span>
+                    <div>
+                        <h3 id="text-algorithms-title">Text algorithms</h3>
+                        <p>5 visualizations</p>
+                    </div>
+                    <span class="group-symbol text-algorithms-symbol" aria-hidden="true">Aa</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/text_algorithms/naive_string_search/">Naive string search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/text_algorithms/longest_prefix_suffix/">Longest proper prefix-suffix (LPS) <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/text_algorithms/knuth_morris_pratt/">Knuth-Morris-Pratt search (KMP) <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/text_algorithms/boyer_moore/">Boyer-Moore search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/text_algorithms/rabin_karp/">Rabin-Karp search <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+
+            <section class="directory-group" aria-labelledby="dynamic-algorithms-title">
+                <div class="group-heading">
+                    <span class="group-index">06</span>
+                    <div>
+                        <h3 id="dynamic-algorithms-title">Dynamic programming</h3>
+                        <p>2 visualizations</p>
+                    </div>
+                    <span class="group-symbol dynamic-algorithms-symbol" aria-hidden="true">DP</span>
+                </div>
+                <ul class="algorithm-list">
+                    
+                    <li><a href="/visul2/en/dynamic_algorithms/longest_common_subsequence/">Longest common subsequence (LCS) <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                    <li><a href="/visul2/en/dynamic_algorithms/levenshtein_distance/">Levenshtein edit distance <em class="new-badge">NEW</em> <span>&#8599;</span></a></li>
+                    
+                </ul>
+            </section>
+        </div>
+    </section>
+
+    <section class="home-note" id="about" aria-label="About this project">
+        <span class="note-mark">V2</span>
+        <p>Data structures and algorithms — visible at every step.</p>
+        <span class="note-meta">VISUL2 / 2026</span>
+    </section>
+</main>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+

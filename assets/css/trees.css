@@ -1,0 +1,47 @@
+.visul-container {
+    min-height: 480px;
+}
+
+.sorting-block {
+    position: absolute;
+    top: 10px;
+    border: 2px solid #f4f6f1;
+    border-radius: 50%;
+    box-shadow: 0 3px 9px rgba(20, 33, 31, 0.18);
+    z-index: 1;
+}
+
+.sorting-number {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tree-edge {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.tree-edge svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.tree-edge line {
+    stroke: #40584d;
+    stroke-width: 3;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.sorting-number-long {
+    font-size: 10px;
+    letter-spacing: -0.5px;
+}

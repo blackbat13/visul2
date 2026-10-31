@@ -1,0 +1,149 @@
+.visul-container {
+    min-height: max(40vh, 490px);
+}
+
+.binary-search-page .container-row,
+.binary-search-page .visul-container {
+    min-height: 620px;
+}
+
+.boyer-moore-page .container-row,
+.boyer-moore-page .visul-container {
+    min-height: 510px;
+}
+
+.jump-block-frame {
+    position: absolute;
+    top: 8px;
+    bottom: 50px;
+    box-sizing: border-box;
+    border: 2px dashed #14211f;
+    border-radius: 4px;
+    background: rgba(216, 243, 106, 0.22);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.searching-pointer {
+    position: absolute;
+    left: 0;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+    z-index: 4;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.searching-pointer-label {
+    font-size: 0.85rem;
+    background-color: #f4f6f1;
+    color: #14211f;
+    padding: 2px 6px;
+    border: 1px solid #c8d2ca;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+.searching-pointer-arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.searching-pointer-top {
+    top: 4px;
+}
+
+.searching-pointer-top .searching-pointer-arrow::before {
+    content: "↓";
+    color: #29826a;
+}
+
+.searching-pointer-bottom {
+    bottom: 12px;
+    flex-direction: column-reverse;
+}
+
+.searching-pointer-bottom .searching-pointer-arrow::before {
+    content: "↑";
+    color: #f0745c;
+}
+
+.searching-group-label {
+    position: absolute;
+    top: auto;
+    bottom: 6px;
+    transform: translateX(-50%);
+    font-weight: 700;
+    color: #14211f;
+    white-space: nowrap;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.sorting-block {
+    position: absolute;
+    bottom: 80px;
+    border: 1px solid rgba(20, 33, 31, 0.42);
+    border-radius: 2px;
+    box-shadow: 0 3px 8px rgba(20, 33, 31, 0.12);
+}
+
+.sorting-number {
+    position: absolute;
+    bottom: -22px;
+    width: 100%;
+    text-align: center;
+    color: #14211f;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sorting-number-long {
+    font-size: 10px;
+    letter-spacing: -0.5px;
+}
+
+.text-search-row {
+    position: absolute;
+    display: flex;
+    gap: 4px;
+    white-space: pre;
+}
+
+.text-search-row-label {
+    position: absolute;
+    color: #66716c;
+    font: 600 12px "IBM Plex Mono", monospace;
+}
+
+.text-search-cell {
+    position: absolute;
+    box-sizing: border-box;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(20, 33, 31, 0.42);
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 3px 8px rgba(20, 33, 31, 0.12);
+    color: #14211f;
+    font: 600 16px "IBM Plex Mono", monospace;
+}
+
+.text-search-row .text-search-cell {
+    position: relative;
+    flex: 0 0 42px;
+}
+
+.text-search-index {
+    position: absolute;
+    width: 42px;
+    text-align: center;
+    color: #66716c;
+    font: 11px "IBM Plex Mono", monospace;
+}
