@@ -1,0 +1,42 @@
+---
+title: Maksymalny prefikso-sufiks
+longest_prefix_suffix: active
+alg: prepareLongestPrefixSuffix
+name: longest_prefix_suffix
+pagination:
+  data: locales
+  size: 1
+  alias: locale
+permalink: "{% if locale == 'en' %}en/text_algorithms/longest_prefix_suffix/index.html{% else %}text_algorithms/longest_prefix_suffix/index.html{% endif %}"
+---
+{% assign copy = simulation[locale] %}
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    {% include "_visul_head.liquid" %}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/searching.css' | url }}"/>
+</head>
+<body>
+<div class="container-fluid">
+    {% include "_text_algorithms_nav.liquid" %}
+
+    {% include "_visul_container.liquid" %}
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1>{{ copy.algorithms.longest_prefix_suffix }}</h1>
+            {% include "_text_prefix_suffix_settings.liquid" %}
+        </div>
+        <div class="col-4 controls-div">
+            {% include "_visul_sim_controls.liquid" %}
+        </div>
+        <div class="col-4">
+            {% include "_alg_longest_prefix_suffix.liquid" %}
+        </div>
+    </div>
+</div>
+
+{% include "_visul_scripts.liquid" %}
+{% include "_text_prefix_suffix_script.liquid" %}
+</body>
+</html>

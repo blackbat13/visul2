@@ -132,6 +132,158 @@ class TextSearching extends Animation {
         this.timeLine.pause();
     }
 
+    prepareLongestPrefixSuffix(text) {
+        const characters = Array.from(text || "");
+        if (!characters.length) {
+            this.showInputError(this.translate("invalidTextSearchInput"));
+            return;
+        }
+
+        const stageWidth = this.$visulContainer.parent().width();
+        const textWidth = characters.length * this.cellWidth;
+        const containerWidth = Math.max(stageWidth, textWidth + 48);
+        const textLeft = Math.floor((containerWidth - textWidth) / 2);
+        const lps = new Array(characters.length).fill(0);
+        const lpsCells = [];
+
+        this.$visulContainer.empty().css("width", containerWidth + "px");
+        this.$searchResult.text(this.translate("lpsInProgress", {text: text}));
+        this.$timeRange.val(0);
+
+        this.addRowLabel(this.translate("textLabel"), textLeft, 112);
+        this.addTextCharacters(characters, textLeft);
+        this.addRowLabel(this.translate("lpsArrayLabel"), textLeft, 230);
+
+        const $lpsRow = $("<div></div>")
+            .attr("id", "lps-array")
+            .addClass("text-search-row")
+            .attr("aria-label", this.translate("lpsArrayLabel"))
+            .css({left: textLeft + "px", top: "262px"});
+        characters.forEach(function (_, index) {
+            const $cell = this.createCharacterCell(lps[index].toString(), "lps", index);
+            lpsCells.push($cell[0]);
+            $lpsRow.append($cell);
+        }.bind(this));
+        this.$visulContainer.append($lpsRow);
+
+        this.timeLine = anime.timeline({
+            easing: "easeInOutQuad",
+            duration: 500,
+            update: function () {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const firstCell = lpsCells[0];
+        this.timeLine.add({
+            targets: firstCell,
+            backgroundColor: this.colors.sorted,
+            duration: 1
+        });
+
+        let previousPair = null;
+        let length = 0;
+        let i = 1;
+        while (i < characters.length) {
+            const prefixIndex = length;
+            const suffixIndex = i;
+            const prefixCell = this.$visulContainer.find("#text-search-text-" + prefixIndex)[0];
+            const suffixCell = this.$visulContainer.find("#text-search-text-" + suffixIndex)[0];
+            const pair = [prefixCell, suffixCell];
+            const isEqual = characters[prefixIndex] === characters[suffixIndex];
+
+            if (previousPair) {
+                this.timeLine.add({
+                    targets: previousPair,
+                    backgroundColor: "#ffffff",
+                    duration: 1
+                });
+            }
+            this.timeLine.add({
+                targets: pair,
+                backgroundColor: isEqual ? this.colors.first : this.colors.second
+            });
+            this.timeLine.add({
+                duration: 1,
+                complete: function () {
+                    this.$searchResult.text(this.translate("lpsCompare", {
+                        prefixPosition: prefixIndex + 1,
+                        suffixPosition: suffixIndex + 1
+                    }));
+                }.bind(this)
+            });
+            previousPair = pair;
+
+            if (isEqual) {
+                length++;
+                lps[suffixIndex] = length;
+                this.timeLine.add({
+                    targets: lpsCells[suffixIndex],
+                    backgroundColor: this.colors.sorted
+                });
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        lpsCells[suffixIndex].textContent = lps[suffixIndex].toString();
+                    }.bind(this)
+                });
+                i++;
+            } else if (length !== 0) {
+                length = lps[length - 1];
+                const fallbackLength = length;
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        this.$searchResult.text(this.translate("lpsFallback", {length: fallbackLength}));
+                    }.bind(this)
+                });
+            } else {
+                lps[suffixIndex] = 0;
+                this.timeLine.add({
+                    targets: lpsCells[suffixIndex],
+                    backgroundColor: this.colors.sorted
+                });
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        lpsCells[suffixIndex].textContent = "0";
+                    }.bind(this)
+                });
+                i++;
+            }
+        }
+
+        if (previousPair) {
+            this.timeLine.add({
+                targets: previousPair,
+                backgroundColor: "#ffffff",
+                duration: 1
+            });
+        }
+        if (length > 0) {
+            const matchedCells = [];
+            for (let index = 0; index < length; index++) {
+                matchedCells.push(
+                    this.$visulContainer.find("#text-search-text-" + index)[0],
+                    this.$visulContainer.find("#text-search-text-" + (characters.length - length + index))[0]
+                );
+            }
+            this.timeLine.add({
+                targets: matchedCells,
+                backgroundColor: this.colors.sorted
+            });
+        }
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                this.$searchResult.text(this.translate("lpsResult", {values: lps.join(", ")}));
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
     showInputError(message) {
         if (this.timeLine) {
             this.timeLine.pause();

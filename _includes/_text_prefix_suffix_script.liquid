@@ -1,0 +1,16 @@
+<script>
+    $(document).ready(function () {
+        let searching = new TextSearching();
+        let $textInput = $("#text-input");
+
+        function prepareSimulation() {
+            searching.prepareLongestPrefixSuffix($textInput.val());
+        }
+
+        renderPseudocode();
+        prepareSimulation();
+        searching.bindControls();
+
+        $textInput.on("input", prepareSimulation);
+    });
+</script>

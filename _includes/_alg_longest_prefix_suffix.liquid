@@ -1,0 +1,25 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{ComputeLPS}
+    \begin{algorithmic}
+    \FUNCTION{ComputeLPS}{P, m}
+        \STATE $LPS[0] \gets 0$
+        \STATE $len \gets 0$
+        \STATE $i \gets 1$
+        \WHILE{$i < m$}
+            \IF{$P[i] = P[len]$}
+                \STATE $len \gets len + 1$
+                \STATE $LPS[i] \gets len$
+                \STATE $i \gets i + 1$
+            \ELSIF{$len \neq 0$}
+                \STATE $len \gets LPS[len - 1]$
+            \ELSE
+                \STATE $LPS[i] \gets 0$
+                \STATE $i \gets i + 1$
+            \ENDIF
+        \ENDWHILE
+        \RETURN $LPS$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

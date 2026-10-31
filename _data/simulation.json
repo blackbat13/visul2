@@ -57,6 +57,7 @@
       "ternary_search": "Wyszukiwanie trójkowe",
       "longest_increasing_subarray": "Najdłuższa rosnąca podtablica",
       "naive_string_search": "Naiwne wyszukiwanie wzorca w tekście",
+      "longest_prefix_suffix": "Maksymalny prefikso-sufiks (LPS)",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -112,7 +113,8 @@
       { "id": "knights_tour", "name": "Problem skoczka szachowego" }
     ],
     "textAlgorithms": [
-      { "id": "naive_string_search", "name": "Naiwne wyszukiwanie wzorca" }
+      { "id": "naive_string_search", "name": "Naiwne wyszukiwanie wzorca" },
+      { "id": "longest_prefix_suffix", "name": "Maksymalny prefikso-sufiks (LPS)" }
     ]
   },
   "en": {
@@ -173,6 +175,7 @@
       "ternary_search": "Ternary search",
       "longest_increasing_subarray": "Longest increasing subarray",
       "naive_string_search": "Naive string search",
+      "longest_prefix_suffix": "Longest proper prefix-suffix (LPS)",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -228,7 +231,8 @@
       { "id": "knights_tour", "name": "Knight's tour problem" }
     ],
     "textAlgorithms": [
-      { "id": "naive_string_search", "name": "Naive string search" }
+      { "id": "naive_string_search", "name": "Naive string search" },
+      { "id": "longest_prefix_suffix", "name": "Longest proper prefix-suffix (LPS)" }
     ]
   }
 }
