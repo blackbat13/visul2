@@ -1,0 +1,19 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{GrahamScan}
+    \begin{algorithmic}
+    \FUNCTION{GrahamScan}{points}
+        \STATE $pivot \gets$ point with the lowest $y$ (then lowest $x$)
+        \STATE Sort the remaining points by polar angle around $pivot$
+        \STATE $stack \gets [pivot, sorted[0], sorted[1]]$
+        \FOR{each remaining point $p$}
+            \WHILE{$|stack| \geq 2$ and $\operatorname{orientation}(stack[-2], stack[-1], p) \leq 0$}
+                \STATE Pop the top point from $stack$
+            \ENDWHILE
+            \STATE Push $p$ onto $stack$
+        \ENDFOR
+        \RETURN $stack$ as the convex hull in counterclockwise order
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

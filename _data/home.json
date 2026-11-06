@@ -1,6 +1,6 @@
 ﻿{
   "pl": {
-    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, tekstowych, dynamicznych, przeszukiwania z powrotami i struktur danych.",
+    "description": "Interaktywne wizualizacje algorytmów sortowania, wyszukiwania, tekstowych, dynamicznych, geometrycznych, przeszukiwania z powrotami i struktur danych.",
     "title": "Visul2 — algorytmy w ruchu",
     "brandLabel": "Visul2 — strona główna",
     "languageLabel": "Zmień język",
@@ -18,6 +18,7 @@
     "backtrackingStep": "COFAJ",
     "textAlgorithmsStep": "DOPASUJ",
     "dynamicAlgorithmsStep": "OPTYMALIZUJ",
+    "geometryAlgorithmsStep": "GEOMETRIA",
     "sceneLabel": "SORTOWANIE BĄBELKOWE",
     "sceneStatus": "KROK 04 / 09",
     "sceneChartLabel": "Słupki o wartościach 8, 3, 6, 2, 7, 1, 5 i 4; aktualnie porównywane są wartości 6 i 2",
@@ -39,6 +40,8 @@
     "textAlgorithmsCount": "5 wizualizacji",
     "dynamicAlgorithmsTitle": "Algorytmy dynamiczne",
     "dynamicAlgorithmsCount": "3 wizualizacje",
+    "geometryAlgorithmsTitle": "Geometria obliczeniowa",
+    "geometryAlgorithmsCount": "1 wizualizacja",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -85,10 +88,13 @@
       { "name": "Najdłuższy wspólny podciąg (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
       { "name": "Odległość Levenshteina", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true },
       { "name": "Problem wydawania reszty", "href": "/dynamic_algorithms/coin_change/", "badge": true }
+    ],
+    "geometryAlgorithms": [
+      { "name": "Otoczka wypukła — algorytm Grahama", "href": "/geometry_algorithms/graham_scan/", "badge": true }
     ]
   },
   "en": {
-    "description": "Interactive visualizations of sorting, searching, text, dynamic programming, backtracking, and data structures.",
+    "description": "Interactive visualizations of sorting, searching, text, dynamic programming, computational geometry, backtracking, and data structures.",
     "title": "Visul2 — algorithms in motion",
     "brandLabel": "Visul2 — home",
     "languageLabel": "Change language",
@@ -106,6 +112,7 @@
     "backtrackingStep": "BACKTRACK",
     "textAlgorithmsStep": "MATCH",
     "dynamicAlgorithmsStep": "OPTIMIZE",
+    "geometryAlgorithmsStep": "GEOMETRY",
     "sceneLabel": "BUBBLE SORT",
     "sceneStatus": "STEP 04 / 09",
     "sceneChartLabel": "Bars with values 8, 3, 6, 2, 7, 1, 5, and 4; values 6 and 2 are currently being compared",
@@ -127,6 +134,8 @@
     "textAlgorithmsCount": "5 visualizations",
     "dynamicAlgorithmsTitle": "Dynamic programming",
     "dynamicAlgorithmsCount": "3 visualizations",
+    "geometryAlgorithmsTitle": "Computational geometry",
+    "geometryAlgorithmsCount": "1 visualization",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -173,6 +182,9 @@
       { "name": "Longest common subsequence (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
       { "name": "Levenshtein edit distance", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true },
       { "name": "Coin change (minimum coins)", "href": "/dynamic_algorithms/coin_change/", "badge": true }
+    ],
+    "geometryAlgorithms": [
+      { "name": "Convex hull — Graham's scan", "href": "/geometry_algorithms/graham_scan/", "badge": true }
     ]
   }
 }

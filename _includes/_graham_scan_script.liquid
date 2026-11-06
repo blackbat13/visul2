@@ -1,0 +1,26 @@
+<script>
+    $(document).ready(function () {
+        let algorithms = new GeometryAlgorithms();
+        let $pointsInput = $("#graham-points-input");
+
+        renderPseudocode();
+        algorithms.prepareGrahamScan($pointsInput.val());
+        algorithms.bindControls();
+        algorithms.$startButton.off("click").on("click", function () {
+            const input = String($pointsInput.val()).trim();
+            if (input !== algorithms.currentInput && !algorithms.prepareGrahamScan(input)) {
+                return;
+            }
+            algorithms.timeLine.play();
+            algorithms.activateButton(algorithms.$startButton);
+            algorithms.deactivateButton(algorithms.$pauseButton);
+        });
+        $("#time-range").on("input.grahamScan", function () {
+            algorithms.updateStepCaption(Number($(this).val()));
+        });
+
+        $("#randomize-graham-points-button").click(function () {
+            algorithms.randomizePoints();
+        });
+    });
+</script>
