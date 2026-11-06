@@ -38,7 +38,7 @@
     "textAlgorithmsTitle": "Algorytmy tekstowe",
     "textAlgorithmsCount": "5 wizualizacji",
     "dynamicAlgorithmsTitle": "Algorytmy dynamiczne",
-    "dynamicAlgorithmsCount": "2 wizualizacje",
+    "dynamicAlgorithmsCount": "3 wizualizacje",
     "newBadge": "nowość",
     "aboutLabel": "Informacje o projekcie",
     "aboutText": "Struktury danych i algorytmy — widoczne w każdym kroku.",
@@ -83,7 +83,8 @@
     ],
     "dynamicAlgorithms": [
       { "name": "Najdłuższy wspólny podciąg (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
-      { "name": "Odległość Levenshteina", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true }
+      { "name": "Odległość Levenshteina", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true },
+      { "name": "Problem wydawania reszty", "href": "/dynamic_algorithms/coin_change/", "badge": true }
     ]
   },
   "en": {
@@ -125,7 +126,7 @@
     "textAlgorithmsTitle": "Text algorithms",
     "textAlgorithmsCount": "5 visualizations",
     "dynamicAlgorithmsTitle": "Dynamic programming",
-    "dynamicAlgorithmsCount": "2 visualizations",
+    "dynamicAlgorithmsCount": "3 visualizations",
     "newBadge": "NEW",
     "aboutLabel": "About this project",
     "aboutText": "Data structures and algorithms — visible at every step.",
@@ -170,7 +171,8 @@
     ],
     "dynamicAlgorithms": [
       { "name": "Longest common subsequence (LCS)", "href": "/dynamic_algorithms/longest_common_subsequence/", "badge": true },
-      { "name": "Levenshtein edit distance", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true }
+      { "name": "Levenshtein edit distance", "href": "/dynamic_algorithms/levenshtein_distance/", "badge": true },
+      { "name": "Coin change (minimum coins)", "href": "/dynamic_algorithms/coin_change/", "badge": true }
     ]
   }
 }

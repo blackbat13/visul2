@@ -21,6 +21,10 @@
       "firstSequence": "Pierwszy ciąg (wiersze):",
       "secondSequence": "Drugi ciąg (kolumny):",
       "applyLcs": "Oblicz LCS",
+      "coinDenominations": "Nominały monet:",
+      "coinTargetAmount": "Kwota do wydania:",
+      "coinChangeInputHelp": "Podaj od 1 do 8 różnych nominałów od 1 do 15. Kwota może wynosić od 0 do 15. Każdej monety można użyć dowolną liczbę razy.",
+      "applyCoinChange": "Oblicz minimalną liczbę monet",
       "sequenceLengthHelp": "Każdy ciąg może mieć maksymalnie 12 znaków.",
       "play": "Odtwórz symulację",
       "pause": "Wstrzymaj symulację",
@@ -67,6 +71,7 @@
       "rabin_karp": "Wyszukiwanie Rabina-Karpa",
       "longest_common_subsequence": "Najdłuższy wspólny podciąg (LCS)",
       "levenshtein_distance": "Odległość Levenshteina",
+      "coin_change": "Problem wydawania reszty",
       "build_binary_tree": "Budowanie drzewa binarnego",
       "build_binary_search_tree": "Budowanie drzewa BST",
       "n_queens": "Problem n królowych — przeszukiwanie z powrotami",
@@ -130,7 +135,8 @@
     ],
     "dynamicAlgorithms": [
       { "id": "longest_common_subsequence", "name": "Najdłuższy wspólny podciąg (LCS)" },
-      { "id": "levenshtein_distance", "name": "Odległość Levenshteina" }
+      { "id": "levenshtein_distance", "name": "Odległość Levenshteina" },
+      { "id": "coin_change", "name": "Problem wydawania reszty" }
     ]
   },
   "en": {
@@ -155,6 +161,10 @@
       "firstSequence": "First sequence (rows):",
       "secondSequence": "Second sequence (columns):",
       "applyLcs": "Compute LCS",
+      "coinDenominations": "Coin denominations:",
+      "coinTargetAmount": "Target amount:",
+      "coinChangeInputHelp": "Enter 1 to 8 distinct denominations from 1 to 15. The amount can be 0 to 15. Each denomination can be used without limit.",
+      "applyCoinChange": "Compute minimum coins",
       "sequenceLengthHelp": "Each sequence can contain up to 12 characters.",
       "play": "Play simulation",
       "pause": "Pause simulation",
@@ -201,6 +211,7 @@
       "rabin_karp": "Rabin-Karp search",
       "longest_common_subsequence": "Longest common subsequence (LCS)",
       "levenshtein_distance": "Levenshtein edit distance",
+      "coin_change": "Coin change (minimum coins)",
       "build_binary_tree": "Build binary tree",
       "build_binary_search_tree": "Build binary search tree (BST)",
       "n_queens": "N-Queens — backtracking",
@@ -264,7 +275,8 @@
     ],
     "dynamicAlgorithms": [
       { "id": "longest_common_subsequence", "name": "Longest common subsequence (LCS)" },
-      { "id": "levenshtein_distance", "name": "Levenshtein edit distance" }
+      { "id": "levenshtein_distance", "name": "Levenshtein edit distance" },
+      { "id": "coin_change", "name": "Coin change (minimum coins)" }
     ]
   }
 }

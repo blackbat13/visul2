@@ -14,11 +14,11 @@ class DynamicAlgorithms extends Animation {
         const maxLength = 12;
 
         if (!firstCharacters.length || !secondCharacters.length) {
-            this.showLcsInputError(this.translate("invalidLcsInput"));
+            this.showDynamicInputError(this.translate("invalidLcsInput"));
             return;
         }
         if (firstCharacters.length > maxLength || secondCharacters.length > maxLength) {
-            this.showLcsInputError(this.translate("lcsInputTooLong", {maxLength: maxLength}));
+            this.showDynamicInputError(this.translate("lcsInputTooLong", {maxLength: maxLength}));
             return;
         }
 
@@ -274,7 +274,7 @@ class DynamicAlgorithms extends Animation {
         const maxLength = 12;
 
         if (firstCharacters.length > maxLength || secondCharacters.length > maxLength) {
-            this.showLcsInputError(this.translate("editDistanceInputTooLong", {maxLength: maxLength}));
+            this.showDynamicInputError(this.translate("editDistanceInputTooLong", {maxLength: maxLength}));
             return;
         }
 
@@ -531,7 +531,282 @@ class DynamicAlgorithms extends Animation {
         this.timeLine.pause();
     }
 
-    showLcsInputError(message) {
+    prepareCoinChange(coinInput, amountInput) {
+        const maxAmount = 15;
+        const maxCoins = 8;
+        const maxDenomination = 15;
+        const coinTokens = (coinInput || "").trim().split(/[\s,]+/).filter(Boolean);
+        const coins = coinTokens.map(Number);
+        const amount = String(amountInput).trim() === "" ? NaN : Number(amountInput);
+
+        if (!coinTokens.length || coins.some(function (coin, index) {
+            return !/^[1-9]\d*$/.test(coinTokens[index]) || coin > maxDenomination;
+        }) || new Set(coins).size !== coins.length || coins.length > maxCoins) {
+            this.showDynamicInputError(this.translate("invalidCoinChangeCoins", {
+                maxCoins: maxCoins,
+                maxDenomination: maxDenomination
+            }));
+            return;
+        }
+        if (!Number.isInteger(amount) || amount < 0 || amount > maxAmount) {
+            this.showDynamicInputError(this.translate("invalidCoinChangeAmount", {
+                maxAmount: maxAmount
+            }));
+            return;
+        }
+        coins.sort(function (a, b) {
+            return a - b;
+        });
+
+        const rowCount = coins.length + 1;
+        const columnCount = amount + 1;
+        const table = Array.from({length: rowCount}, function () {
+            return new Array(columnCount).fill(Infinity);
+        });
+        table[0][0] = 0;
+        for (let row = 1; row < rowCount; row++) {
+            table[row][0] = 0;
+            for (let currentAmount = 1; currentAmount < columnCount; currentAmount++) {
+                const withoutCoin = table[row - 1][currentAmount];
+                const withCoin = currentAmount >= coins[row - 1]
+                    ? table[row][currentAmount - coins[row - 1]] + 1
+                    : Infinity;
+                table[row][currentAmount] = Math.min(withoutCoin, withCoin);
+            }
+        }
+
+        const isReachable = Number.isFinite(table[rowCount - 1][amount]);
+        const optimalPath = [];
+        const selectedCoins = [];
+        if (isReachable) {
+            let row = coins.length;
+            let remaining = amount;
+            optimalPath.push([row, remaining]);
+            while (row > 0 || remaining > 0) {
+                if (row > 0 && table[row][remaining] === table[row - 1][remaining]) {
+                    row--;
+                } else if (row > 0 && remaining >= coins[row - 1] &&
+                    table[row][remaining] === table[row][remaining - coins[row - 1]] + 1) {
+                    selectedCoins.push(coins[row - 1]);
+                    remaining -= coins[row - 1];
+                } else {
+                    break;
+                }
+                optimalPath.push([row, remaining]);
+            }
+        }
+
+        const cellPitch = this.cellSize + this.cellGap;
+        const rowHeaderWidth = 110;
+        const tableWidth = rowHeaderWidth + columnCount * cellPitch;
+        const stageWidth = this.$visulContainer.parent().width();
+        const containerWidth = Math.max(stageWidth, tableWidth + 48);
+        const tableLeft = Math.floor((containerWidth - tableWidth) / 2);
+        const $table = $("<table></table>")
+            .attr("id", "coin-change-table")
+            .attr("aria-label", this.translate("coinChangeTableLabel", {
+                amount: amount,
+                coins: coins.join(", ")
+            }))
+            .addClass("dp-table coin-change-table")
+            .css({left: tableLeft + "px", transform: "none"});
+        $table.append(
+            $("<caption></caption>")
+                .addClass("dp-table-caption")
+                .text(this.translate("coinChangeTableCaption", {
+                    amount: amount,
+                    coins: coins.join(", ")
+                }))
+        );
+
+        const $headerRow = $("<tr></tr>").append(
+            $("<th></th>")
+                .attr("scope", "col")
+                .addClass("lcs-corner")
+                .text(this.translate("coinChangeTableCorner"))
+        );
+        const columnHeaders = [];
+        const rowHeaders = [];
+        const valueCells = [];
+        for (let currentAmount = 0; currentAmount < columnCount; currentAmount++) {
+            const $header = $("<th></th>")
+                .attr("scope", "col")
+                .addClass("lcs-column-header")
+                .text(currentAmount.toString());
+            columnHeaders.push($header[0]);
+            $headerRow.append($header);
+        }
+        $table.append($("<thead></thead>").append($headerRow));
+
+        const $body = $("<tbody></tbody>");
+        for (let row = 0; row < rowCount; row++) {
+            const $tableRow = $("<tr></tr>");
+            const $rowHeader = $("<th></th>")
+                .attr("scope", "row")
+                .addClass("lcs-row-header" + (row === 0 ? " lcs-empty-header" : ""))
+                .text(row === 0 ? "∅" : coins[row - 1].toString());
+            if (row > 0) {
+                rowHeaders.push($rowHeader[0]);
+            }
+            $tableRow.append($rowHeader);
+
+            const rowCells = [];
+            for (let currentAmount = 0; currentAmount < columnCount; currentAmount++) {
+                const value = table[row][currentAmount];
+                const $cell = $("<td></td>")
+                    .attr("id", "coin-change-cell-" + row + "-" + currentAmount)
+                    .attr("aria-label", this.translate("coinChangeCellLabel", {
+                        row: row,
+                        amount: currentAmount,
+                        value: Number.isFinite(value) ? value : "∞"
+                    }));
+                const $value = $("<span></span>")
+                    .text(Number.isFinite(value) ? value.toString() : "∞")
+                    .css("opacity", 0);
+                $cell.append($value);
+                rowCells.push($cell[0]);
+                $tableRow.append($cell);
+            }
+            valueCells.push(rowCells);
+            $body.append($tableRow);
+        }
+        $table.append($body);
+
+        this.$visulContainer.empty().css({width: containerWidth + "px", height: "690px"});
+        this.$visulContainer.append($table);
+        this.$timeRange.val(0);
+        this.$searchResult.text(this.translate("coinChangeInProgress", {
+            amount: amount,
+            coins: coins.join(", ")
+        }));
+
+        this.timeLine = anime.timeline({
+            easing: "easeInOutQuad",
+            duration: 400,
+            update: function () {
+                this.$timeRange.val(this.timeLine.progress);
+            }.bind(this)
+        });
+
+        const revealCell = function (cell) {
+            this.timeLine.add({
+                targets: cell,
+                backgroundColor: this.colors.sorted,
+                duration: 1
+            });
+            this.timeLine.add({
+                targets: cell.firstElementChild,
+                opacity: 1,
+                duration: 250
+            });
+        }.bind(this);
+        const formatValue = function (value) {
+            return Number.isFinite(value) ? value : "∞";
+        };
+
+        revealCell(valueCells[0][0]);
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                this.$searchResult.text(this.translate("coinChangeBaseStep"));
+            }.bind(this)
+        });
+        for (let currentAmount = 1; currentAmount < columnCount; currentAmount++) {
+            revealCell(valueCells[0][currentAmount]);
+        }
+        for (let row = 1; row < rowCount; row++) {
+            revealCell(valueCells[row][0]);
+        }
+
+        let previousDependencies = [];
+        for (let row = 1; row < rowCount; row++) {
+            const coin = coins[row - 1];
+            for (let currentAmount = 1; currentAmount < columnCount; currentAmount++) {
+                const dependencies = [valueCells[row - 1][currentAmount]];
+                if (currentAmount >= coin) {
+                    dependencies.push(valueCells[row][currentAmount - coin]);
+                }
+                if (previousDependencies.length) {
+                    this.timeLine.add({
+                        targets: previousDependencies,
+                        backgroundColor: "#ffffff",
+                        duration: 1
+                    });
+                }
+                this.timeLine.add({
+                    targets: [rowHeaders[row - 1], columnHeaders[currentAmount]],
+                    backgroundColor: this.colors.second,
+                    duration: 1
+                });
+                this.timeLine.add({
+                    targets: dependencies,
+                    backgroundColor: this.colors.first,
+                    duration: 1
+                });
+                revealCell(valueCells[row][currentAmount]);
+                const withoutCoin = table[row - 1][currentAmount];
+                const withCoin = currentAmount >= coin
+                    ? table[row][currentAmount - coin] + 1
+                    : Infinity;
+                this.timeLine.add({
+                    duration: 1,
+                    complete: function () {
+                        this.$searchResult.text(this.translate(
+                            currentAmount >= coin ? "coinChangeStep" : "coinChangeSkipStep",
+                            {
+                                amount: currentAmount,
+                                coin: coin,
+                                withoutCoin: formatValue(withoutCoin),
+                                withCoin: formatValue(withCoin),
+                                value: formatValue(table[row][currentAmount])
+                            }
+                        ));
+                    }.bind(this)
+                });
+                previousDependencies = dependencies;
+            }
+        }
+
+        if (previousDependencies.length) {
+            this.timeLine.add({
+                targets: previousDependencies,
+                backgroundColor: "#ffffff",
+                duration: 1
+            });
+        }
+        if (isReachable) {
+            this.timeLine.add({
+                targets: optimalPath.map(function (coordinate) {
+                    return valueCells[coordinate[0]][coordinate[1]];
+                }),
+                backgroundColor: this.colors.sorted,
+                duration: 300
+            });
+        } else {
+            this.timeLine.add({
+                targets: valueCells[rowCount - 1][amount],
+                backgroundColor: this.colors.second,
+                duration: 300
+            });
+        }
+        this.timeLine.add({
+            duration: 1,
+            complete: function () {
+                this.$searchResult.text(isReachable
+                    ? this.translate("coinChangeResult", {
+                        amount: amount,
+                        count: table[rowCount - 1][amount],
+                        coins: selectedCoins.length ? selectedCoins.join(" + ") : this.translate("coinChangeNoCoins")
+                    })
+                    : this.translate("coinChangeNoSolution", {amount: amount}));
+            }.bind(this)
+        });
+
+        this.timeLine.restart();
+        this.timeLine.pause();
+    }
+
+    showDynamicInputError(message) {
         if (this.timeLine) {
             this.timeLine.pause();
         }

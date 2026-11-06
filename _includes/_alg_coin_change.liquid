@@ -1,0 +1,20 @@
+<pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{MinimumCoinChange}
+    \begin{algorithmic}
+    \FUNCTION{MinimumCoinChange}{coins, amount}
+        \STATE Create $dp[0 \ldots |coins|][0 \ldots amount]$ filled with $\infty$
+        \STATE $dp[i][0] \gets 0$ for every $i$
+        \FOR{$i \gets 1$ \TO $|coins|$}
+            \FOR{$value \gets 1$ \TO $amount$}
+                \STATE $dp[i][value] \gets dp[i - 1][value]$
+                \IF{$value \geq coins[i - 1]$}
+                    \STATE $dp[i][value] \gets \min(dp[i][value], 1 + dp[i][value - coins[i - 1]])$
+                \ENDIF
+            \ENDFOR
+        \ENDFOR
+        \RETURN $dp[|coins|][amount]$ and one optimal coin combination
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>

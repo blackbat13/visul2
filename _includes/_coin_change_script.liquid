@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function () {
+        let algorithms = new DynamicAlgorithms();
+        let $coinsInput = $("#coin-change-coins-input");
+        let $amountInput = $("#coin-change-amount-input");
+
+        function prepareSimulation() {
+            algorithms.prepareCoinChange($coinsInput.val(), $amountInput.val());
+        }
+
+        renderPseudocode();
+        prepareSimulation();
+        algorithms.bindControls();
+
+        $("#apply-coin-change-button").click(prepareSimulation);
+        $coinsInput.add($amountInput).on("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                prepareSimulation();
+            }
+        });
+    });
+</script>
