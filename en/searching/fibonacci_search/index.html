@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fibonacci search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/searching.css"/>
+</head>
+<body class="binary-search-page">
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/visul2/en/">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../find_min/">Find minimum</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../find_max/">Find maximum</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../min_max_optimal/">Optimal min and max search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../linear_search/">Linear search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Binary search</a>
+                    <ul class="dropdown-menu">
+                        
+                        <li><a class="dropdown-item " href="../binary_search_lower/">Lower bound</a></li>
+                        
+                        <li><a class="dropdown-item " href="../binary_search_upper/">Upper bound</a></li>
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../jump_search/">Jump search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../exponential_search/">Exponential search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link active" href="../fibonacci_search/">Fibonacci search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../ternary_search/">Ternary search</a>
+                </li>
+                
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../longest_increasing_subarray/">Longest increasing subarray</a>
+                </li>
+                
+                
+            </ul>
+        </div>
+        <a class="simulation-language-switch" href="/visul2/searching/fibonacci_search/" lang="pl" aria-label="Change language">Polski</a>
+    </div>
+</nav>
+
+
+    <div class="row container-row">
+    <div class="col-12 visul-container" id="visul-container">
+    </div>
+</div>
+
+
+    <div class="row controls-row ps-2">
+        <div class="col-4">
+            <h1 class="text-center">Simulation settings</h1>
+<form class="row g-3 mt-5">
+    <div class="row col-12">
+        <label for="size-input" class="col-8 col-form-label">Array size:</label>
+        <div class="col-4">
+            <input id="size-input" type="number" class="form-control" min="2" max="15" step="1" value="10"/>
+        </div>
+    </div>
+    <div class="col-12">
+        <button id="prep-random-array-button" type="button" class="btn btn-primary">Generate sorted array</button>
+    </div>
+    <div class="col-12">
+    <label for="custom-array-input" class="form-label">Custom array (2–15 numbers from 0–999, separated by spaces or commas; use a period as the decimal separator):</label>
+    <div class="input-group">
+        <input id="custom-array-input" type="text" class="form-control" placeholder="e.g. 5 3.5 12 0.25 8" autocomplete="off"/>
+        <button id="custom-array-button" type="button" class="btn btn-primary">Use array</button>
+    </div>
+    <div id="custom-array-error" class="text-danger small mt-1" aria-live="polite"></div>
+</div>
+
+</form>
+            <div class="row col-12 mt-3">
+    <label for="search-target" class="col-8 col-form-label">Search for:</label>
+    <div class="col-4">
+        <input id="search-target" type="number" class="form-control" min="0" max="999" step="any" required/>
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <button id="random-search-target-button" type="button" class="btn btn-outline-primary">
+        <i class="fa fa-random" aria-hidden="true"></i> Randomize target
+    </button>
+</div>
+<p id="search-result" class="mt-3" aria-live="polite"></p>
+        </div>
+        <div class="col-4 controls-div">
+            <button id="start-button" type="button" class="btn btn-primary" aria-label="Play simulation" title="Play simulation"><i class="fa fa-play" aria-hidden="true"></i></button>
+<button id="pause-button" type="button" class="btn btn-primary" aria-label="Pause simulation" title="Pause simulation"><i class="fa fa-pause" aria-hidden="true"></i></button>
+<button id="restart-button" type="button" class="btn btn-primary" aria-label="Restart simulation" title="Restart simulation"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<input id="time-range" class="form-range" type="range" min="0" max="100" step=".001" value="0" aria-label="Simulation timeline"/>
+<button id="export-slides-button" type="button" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Export PDF slides</button>
+
+        </div>
+        <div class="col-4">
+            <pre id="pseudocode" style="display : none;">
+    \begin{algorithm}
+    \caption{FibonacciSearch}
+    \begin{algorithmic}
+    \FUNCTION{FibonacciSearch}{A, n, target}
+        \STATE $fib2 \gets 0$, $fib1 \gets 1$, $fib \gets 1$
+        \WHILE{$fib < n$}
+            \STATE $fib2 \gets fib1$
+            \STATE $fib1 \gets fib$
+            \STATE $fib \gets fib1 + fib2$
+        \ENDWHILE
+        \STATE $offset \gets -1$
+        \WHILE{$fib > 1$}
+            \STATE $i \gets \min(offset + fib2, n - 1)$
+            \IF{$A[i] < target$}
+                \STATE $fib \gets fib1$
+                \STATE $fib1 \gets fib2$
+                \STATE $fib2 \gets fib - fib1$
+                \STATE $offset \gets i$
+            \ELIF{$A[i] > target$}
+                \STATE $fib \gets fib2$
+                \STATE $fib1 \gets fib1 - fib2$
+                \STATE $fib2 \gets fib - fib1$
+            \ELSE
+                \RETURN $i$
+            \ENDIF
+        \ENDWHILE
+        \IF{$offset + 1 < n$ \AND $A[offset + 1] = target$}
+            \RETURN $offset + 1$
+        \ENDIF
+        \RETURN $-1$
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
+
+        </div>
+    </div>
+</div>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
+<script src="/visul2/node_modules/underscore/underscore-min.js"></script>
+<script src="/visul2/node_modules/html2canvas/dist/html2canvas.min.js"></script>
+<script src="/visul2/node_modules/jspdf/dist/jspdf.umd.min.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
+<script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
+<script src="/visul2/assets/js/localization.js"></script>
+<script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        let searching = new Searching();
+        searching.boundType = "";
+        if ("prepareFibonacciSearch" === "prepareTernarySearch") {
+            searching.barHeadroom = 230;
+        }
+        let $prepRandomArrayButton = $("#prep-random-array-button");
+        let $prepRandomOrderButton = $("#prep-random-order-button");
+        let $prepReverseOrderButton = $("#prep-reverse-order-button");
+        let $sizeInput = $("#size-input");
+        let $searchTarget = $("#search-target");
+
+        function prepareSimulation(randomizeTarget) {
+            if ("prepareFibonacciSearch" === "prepareBinarySearch" || "prepareFibonacciSearch" === "prepareJumpSearch" || "prepareFibonacciSearch" === "prepareExponentialSearch" || "prepareFibonacciSearch" === "prepareFibonacciSearch" || "prepareFibonacciSearch" === "prepareTernarySearch") {
+                searching.array.sort(function (a, b) { return a - b; });
+            }
+
+            searching.showArray();
+            if ($searchTarget.length) {
+                if (randomizeTarget) {
+                    searching.randomizeSearchTarget();
+                }
+                searching.prepareFibonacciSearch();
+            } else {
+                searching.prepareFibonacciSearch();
+            }
+        }
+
+        renderPseudocode();
+
+        searching.loadOrPrepareArray();
+        prepareSimulation($searchTarget.length > 0);
+        searching.bindControls();
+
+        searching.bindCustomArray(function () {
+            prepareSimulation($searchTarget.length > 0);
+        });
+        $prepRandomArrayButton.click(function () {
+            searching.prepareRandomArray($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $prepRandomOrderButton.click(function () {
+            searching.prepareRandomOrder($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $prepReverseOrderButton.click(function () {
+            searching.prepareReverseOrder($sizeInput.val());
+            prepareSimulation($searchTarget.length > 0);
+        });
+
+        $searchTarget.on("change", function () {
+            if (this.checkValidity()) {
+                prepareSimulation(false);
+            }
+        });
+
+        $("#random-search-target-button").click(function () {
+            searching.randomizeSearchTarget();
+            prepareSimulation(false);
+        });
+    });
+</script>
+
+</body>
+</html>

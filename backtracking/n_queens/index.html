@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem n królowych — przeszukiwanie z powrotami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/node_modules/pseudocode/build/pseudocode.min.css"/>
+<link rel="stylesheet" type="text/css" href="/visul2/assets/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/visul2/assets/css/backtracking.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/visul2/">Visul2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Przełącz nawigację">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                <li class="nav-item">
+                    <a class="nav-link active" href="../n_queens/">Problem n królowych</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link " href="../knights_tour/">Problem skoczka szachowego</a>
+                </li>
+                
+            </ul>
+        </div>
+        <a class="simulation-language-switch" href="/visul2/en/backtracking/n_queens/" lang="en" aria-label="Zmień język">English</a>
+    </div>
+</nav>
+
+
+    <div class="row container-row chess-container-row">
+        <div class="col-12 visul-container" id="visul-container"></div>
+    </div>
+
+    <div class="row controls-row ps-2">
+        <div class="col-lg-3 col-md-4 queen-settings">
+            <h1>Problem n królowych — przeszukiwanie z powrotami</h1>
+            <label for="queen-size">Liczba królowych:</label>
+            <select id="queen-size" class="form-select" aria-describedby="queen-size-help">
+                <option value="4" selected>4 × 4</option>
+                <option value="5">5 × 5</option>
+                <option value="6">6 × 6</option>
+                <option value="7">7 × 7</option>
+                <option value="8">8 × 8</option>
+            </select>
+            <p id="queen-size-help" class="queen-size-help">Wybierz rozmiar szachownicy (od 4 do 8).</p>
+        </div>
+        <div class="col-lg-5 col-md-4 controls-div">
+            <button id="start-button" type="button" class="btn btn-primary" aria-label="Odtwórz symulację" title="Odtwórz symulację"><i class="fa fa-play" aria-hidden="true"></i></button>
+<button id="pause-button" type="button" class="btn btn-primary" aria-label="Wstrzymaj symulację" title="Wstrzymaj symulację"><i class="fa fa-pause" aria-hidden="true"></i></button>
+<button id="restart-button" type="button" class="btn btn-primary" aria-label="Uruchom ponownie symulację" title="Uruchom ponownie symulację"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+<input id="time-range" class="form-range" type="range" min="0" max="100" step=".001" value="0" aria-label="Oś czasu symulacji"/>
+<button id="export-slides-button" type="button" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Eksportuj slajdy PDF</button>
+
+            <p id="queen-step-status" class="queen-step-status" aria-live="polite"></p>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <pre id="pseudocode" style="display: none;">
+    \begin{algorithm}
+    \caption{SolveNQueens}
+    \begin{algorithmic}
+    \FUNCTION{SolveNQueens}{row}
+        \IF{$row = n$}
+            \RETURN true
+        \ENDIF
+        \FOR{$col \gets 0$ \TO $n - 1$}
+            \IF{IsSafe(row, col)}
+                \STATE $queen[row] \gets col$
+                \IF{SolveNQueens(row + 1)}
+                    \RETURN true
+                \ENDIF
+                \STATE $queen[row] \gets empty$
+            \ENDIF
+        \ENDFOR
+        \RETURN false
+    \ENDFUNCTION
+    \end{algorithmic}
+    \end{algorithm}
+</pre>
+
+        </div>
+    </div>
+</div>
+
+<script src="/visul2/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/visul2/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/visul2/node_modules/animejs/lib/anime.min.js"></script>
+<script src="/visul2/node_modules/underscore/underscore-min.js"></script>
+<script src="/visul2/node_modules/html2canvas/dist/html2canvas.min.js"></script>
+<script src="/visul2/node_modules/jspdf/dist/jspdf.umd.min.js"></script>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="/visul2/node_modules/mathjax/es5/tex-chtml.js"></script>
+<script src="/visul2/node_modules/pseudocode/build/pseudocode.min.js"></script>
+<script src="/visul2/assets/js/localization.js"></script>
+<script src="/visul2/assets/js/visul2.min.js"></script>
+<script>
+    function renderPseudocode() {
+        return MathJax.startup.promise.then(function () {
+            pseudocode.renderElement(document.getElementById("pseudocode"), { lineNumber: true });
+            return MathJax.typesetPromise();
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        let backtracking = new Backtracking();
+
+        renderPseudocode();
+        if ("n_queens" === "n_queens") {
+            let $queenSize = $("#queen-size");
+            backtracking.prepareNQueens(parseInt($queenSize.val(), 10));
+            $queenSize.on("change", function () {
+                backtracking.prepareNQueens(parseInt($queenSize.val(), 10));
+            });
+        } else {
+            backtracking.prepareKnightsTour();
+        }
+        backtracking.bindControls();
+    });
+</script>
+
+</body>
+</html>
